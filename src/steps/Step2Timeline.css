@@ -1,0 +1,151 @@
+.hio-container {
+  overflow-x: auto;
+  border: 1px solid var(--border-light);
+  background: white;
+  margin-top: 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.hio-grid {
+  display: grid;
+  min-width: 1000px;
+}
+
+.hio-cell {
+  padding: 0.75rem 0.5rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.border-b { border-bottom: 1px solid var(--border-light); }
+.border-r { border-right: 1px solid var(--border-light); }
+.bg-light { background-color: var(--row-highlight); }
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+
+.text-green { color: var(--variance-green); font-weight: 600; }
+.text-red { color: var(--variance-red); font-weight: 600; }
+
+.hio-header-cell {
+  font-weight: 700;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-medium);
+  color: var(--text-secondary);
+}
+
+.hio-fin-label {
+  justify-content: flex-end;
+  font-weight: 700;
+  padding-right: 1.25rem;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+
+.hio-fin-val {
+  justify-content: center;
+}
+
+/* Timeline Specifics */
+.hio-timeline-cell {
+  height: 56px;
+  position: relative;
+}
+
+.dotted-midline {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed var(--border-medium);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.gantt-bar {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 8px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, var(--accent-light) 0%, #fff 50%, var(--accent-light) 100%);
+  border-radius: 4px;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.milestone-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.milestone-marker:hover {
+  transform: translate(-50%, -55%) scale(1.2);
+}
+
+.milestone-marker.selected {
+  color: var(--accent-primary);
+  filter: drop-shadow(0 2px 4px rgba(240, 78, 35, 0.3));
+}
+
+.milestone-label {
+  position: absolute;
+  top: 100%;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  background: rgba(255,255,255,0.9);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+/* Today Marker */
+.today-marker {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.today-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: var(--text-primary);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Segmented today line */
+.today-line-segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--text-primary), transparent);
+  transform: translateX(-50%);
+  z-index: 5;
+  opacity: 0.8;
+}
+

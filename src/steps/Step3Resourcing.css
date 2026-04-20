@@ -1,0 +1,87 @@
+.resourcing-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--border-light);
+  background: white;
+  margin-top: 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.resourcing-table {
+  width: 100%;
+  min-width: 1300px;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.resourcing-table th,
+.resourcing-table td {
+  border: 1px solid var(--border-light);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+/* Premium Orange Headers */
+.resourcing-table thead th {
+  background: var(--accent-gradient);
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resourcing-table thead tr:first-child th {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.resourcing-table thead th.sign-off {
+  background: #334155; /* Slate-800 for sign-off */
+}
+
+.resourcing-table thead th.prior-approval {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Row Alignments & Hover */
+.resourcing-table td.row-label {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.resourcing-table tbody tr:hover {
+  background-color: var(--row-highlight);
+}
+
+.resourcing-table tr.category-row td {
+  background-color: #f8fafc;
+}
+
+.resourcing-table tr.category-row td.row-label {
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.resourcing-table tr.child-row td.row-label {
+  padding-left: 2.5rem;
+  color: var(--text-secondary);
+  position: relative;
+}
+
+.resourcing-table tr.child-row td.row-label::before {
+  content: '└';
+  position: absolute;
+  left: 1.25rem;
+  color: var(--border-medium);
+}
+
+/* Total Row */
+.resourcing-table tfoot td {
+  background: #1e293b;
+  color: white;
+  font-weight: 700;
+  border: none;
+}
+

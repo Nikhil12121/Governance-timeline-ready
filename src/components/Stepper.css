@@ -1,0 +1,107 @@
+.stepper-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-8);
+  margin: var(--space-6) 0;
+  overflow-x: auto;
+}
+
+.step-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.step-wrapper:last-child {
+  flex: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  opacity: 0.4;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+}
+
+.step.active {
+  opacity: 1;
+}
+
+.step.current {
+  background: var(--accent-glow);
+  transform: scale(1.05);
+}
+
+.step.current .step-number {
+  box-shadow: 0 0 20px var(--accent-glow);
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px var(--accent-glow); }
+  50% { box-shadow: 0 0 20px var(--accent-glow); }
+  100% { box-shadow: 0 0 5px var(--accent-glow); }
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px; /* Squircle look */
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.4s ease;
+  color: var(--text-secondary);
+}
+
+.step.active .step-number {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: white;
+  transform: rotate(360deg);
+}
+
+.step-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+
+.step.current .step-name {
+  color: var(--accent-primary);
+}
+
+.step-divider {
+  flex: 1;
+  height: 2px;
+  background: var(--border-light);
+  margin: 0 var(--space-6);
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.step-divider::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background: var(--accent-gradient);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-divider.active::after {
+  width: 100%;
+}
+
