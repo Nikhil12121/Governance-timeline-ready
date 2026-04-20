@@ -77,7 +77,7 @@ const Step5Preview = () => {
           </h1>
           
           <div style={{ position: 'absolute', bottom: '2rem', right: '3rem', color: 'white', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontFamily: 'system-ui, sans-serif', fontWeight: 500 }}>
-            <span style={{ display: 'inline-block', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🌐</span>
+            <span style={{ display: 'flex', width: '18px', height: '18px', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🌐</span>
             gsk.com
           </div>
         </div>
