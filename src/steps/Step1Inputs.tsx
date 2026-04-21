@@ -4,6 +4,25 @@ import { useDeck } from '../context/DeckContext';
 const Step1Inputs = () => {
   const { data, updateData } = useDeck();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isParaphrasingRTB, setIsParaphrasingRTB] = useState<string | null>(null);
+
+  const handleParaphraseRTB = (field: string) => {
+    setIsParaphrasingRTB(field);
+    setTimeout(() => {
+      // Simulation of professional paraphrase
+      const currentText = (data.reasonsToBelieve as any)[field];
+      let newText = currentText;
+      
+      if (field === 'unmetNeed') newText = "• Significant therapeutic gap in 3rd line oncology treatments.\n• Current standards of care deliver sub-optimal Objective Response Rates (<30%).\n• High morbidity associated with existing treatment regimens necessitates novel interventions.";
+      if (field === 'moa') newText = "• Dual-action mechanism targets primary and secondary resistance pathways.\n• Superior selectivity minimizes systemic toxicity vs. competitor agents.\n• Optimized pharmacokinetic profile supports convenient weekly dosing schedules.";
+      if (field === 'reasonsNotToBelieve') newText = "• Long-term safety and tolerability profile remains to be established in larger cohorts.\n• Competitive market entry anticipated from two major pharmaceutical rivals in Phase II.\n• Inherent technical risks associated with large-scale manufacturing and formulation.";
+      if (field === 'preclinical') newText = "• Demonstrated consistent tumor regression across multiple orthotopic models.\n• Synergistic activity confirmed when paired with current frontline standards.\n• Safety margins established in non-human primate studies indicate low toxicity risk.";
+      if (field === 'clinical') newText = "• Proof of Concept (PoC) achieved in initial cohort with significant response duration.\n• Early pharmacokinetic data confirms target engagement and metabolic stability.\n• No dose-limiting toxicities (DLTs) reported in the escalating dose segments.";
+
+      updateData({ reasonsToBelieve: { ...data.reasonsToBelieve, [field]: newText } });
+      setIsParaphrasingRTB(null);
+    }, 1200);
+  };
 
   const projects = [
     { id: 'PRJ-101', name: 'Oncology Phase II' },
@@ -152,7 +171,16 @@ const Step1Inputs = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div>
-              <label style={{ color: 'var(--info)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Unmet need - key disease(s)</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label style={{ color: 'var(--info)', fontWeight: 600, margin: 0 }}>Unmet need - key disease(s)</label>
+                <button 
+                  onClick={() => handleParaphraseRTB('unmetNeed')}
+                  disabled={isParaphrasingRTB !== null}
+                  style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.65rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                >
+                  {isParaphrasingRTB === 'unmetNeed' ? '...' : '✨ Paraphrase'}
+                </button>
+              </div>
               <textarea 
                 rows={3} 
                 value={data.reasonsToBelieve.unmetNeed}
@@ -160,7 +188,16 @@ const Step1Inputs = () => {
               />
             </div>
             <div>
-              <label style={{ color: 'var(--info)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>MoA and differentiation</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label style={{ color: 'var(--info)', fontWeight: 600, margin: 0 }}>MoA and differentiation</label>
+                <button 
+                  onClick={() => handleParaphraseRTB('moa')}
+                  disabled={isParaphrasingRTB !== null}
+                  style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.65rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                >
+                  {isParaphrasingRTB === 'moa' ? '...' : '✨ Paraphrase'}
+                </button>
+              </div>
               <textarea 
                 rows={3} 
                 value={data.reasonsToBelieve.moa}
@@ -168,7 +205,16 @@ const Step1Inputs = () => {
               />
             </div>
             <div>
-              <label style={{ color: 'var(--warning)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Reasons not to believe</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label style={{ color: 'var(--warning)', fontWeight: 600, margin: 0 }}>Reasons not to believe</label>
+                <button 
+                  onClick={() => handleParaphraseRTB('reasonsNotToBelieve')}
+                  disabled={isParaphrasingRTB !== null}
+                  style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.65rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                >
+                  {isParaphrasingRTB === 'reasonsNotToBelieve' ? '...' : '✨ Paraphrase'}
+                </button>
+              </div>
               <textarea 
                 rows={3} 
                 value={data.reasonsToBelieve.reasonsNotToBelieve}
@@ -179,7 +225,16 @@ const Step1Inputs = () => {
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div>
-              <label style={{ color: 'var(--info)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Key biological / preclinical data</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label style={{ color: 'var(--info)', fontWeight: 600, margin: 0 }}>Key biological / preclinical data</label>
+                <button 
+                  onClick={() => handleParaphraseRTB('preclinical')}
+                  disabled={isParaphrasingRTB !== null}
+                  style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.65rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                >
+                  {isParaphrasingRTB === 'preclinical' ? '...' : '✨ Paraphrase'}
+                </button>
+              </div>
               <textarea 
                 rows={4} 
                 value={data.reasonsToBelieve.preclinical}
@@ -187,7 +242,16 @@ const Step1Inputs = () => {
               />
             </div>
             <div>
-              <label style={{ color: 'var(--info)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Key clinical data</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label style={{ color: 'var(--info)', fontWeight: 600, margin: 0 }}>Key clinical data</label>
+                <button 
+                  onClick={() => handleParaphraseRTB('clinical')}
+                  disabled={isParaphrasingRTB !== null}
+                  style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.65rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                >
+                  {isParaphrasingRTB === 'clinical' ? '...' : '✨ Paraphrase'}
+                </button>
+              </div>
               <textarea 
                 rows={4} 
                 value={data.reasonsToBelieve.clinical}
