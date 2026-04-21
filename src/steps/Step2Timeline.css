@@ -10,6 +10,7 @@
 .hio-grid {
   display: grid;
   min-width: 1000px;
+  margin-top: 25px;
 }
 
 .hio-cell {
