@@ -506,160 +506,11 @@ const Step5Preview = () => {
         </div>
         {/* Page Number */}
         <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
-          6
+          5
         </div>
       </div>
     ),
-    // Slide 6: High-level Investment Overview
-    (
-      <div style={slideStyle} key="slide3">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
-            High-level Investment Overview
-          </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Key contact: {data.owner}</span>
-        </div>
-        
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
-
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', position: 'relative', overflow: 'hidden', padding: '1rem' }}>
-             {/* Mini Gantt Grid */}
-             <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', height: '100%', gap: '1px', background: '#e2e8f0' }}>
-                <div style={{ background: '#f1f5f9', padding: '0.5rem', fontWeight: 600, fontSize: '0.75rem' }}>SWIMLANE</div>
-                <div style={{ background: '#f1f5f9', display: 'flex', justifyContent: 'space-around', padding: '0.5rem', fontWeight: 600, fontSize: '0.75rem' }}>
-                   {Array.from({ length: 10 }, (_, i) => 2023 + i).map(y => <span key={y}>{y}</span>)}
-                </div>
-                {data.swimlanes.slice(0, 4).map(lane => (
-                   <React.Fragment key={lane}>
-                      <div style={{ background: 'white', padding: '0.5rem', fontSize: '0.7rem', fontWeight: 500 }}>{lane}</div>
-                      <div style={{ background: 'white', position: 'relative' }}>
-                         <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#f1f5f9', transform: 'translateY(-50%)' }} />
-                         {data.milestones.filter(m => m.swimlane === lane && m.isSelected).map(m => (
-                            <div key={m.id} style={{ 
-                               position: 'absolute', 
-                               left: `${((m.year - 2023) * 10) + (m.position / 10)}%`, 
-                               top: '50%', 
-                               transform: 'translate(-50%, -50%)',
-                               display: 'flex', flexDirection: 'column', alignItems: 'center'
-                            }}>
-                               <span style={{ color: '#F04E23', fontSize: '10px' }}>▲</span>
-                               <span style={{ fontSize: '8px', whiteSpace: 'nowrap', fontWeight: 700 }}>{m.name}</span>
-                            </div>
-                         ))}
-                      </div>
-                   </React.Fragment>
-                ))}
-             </div>
-          </div>
-        </div>
-      </div>
-    ),
-    // Slide 4: Resourcing Estimates
-    (
-      <div style={slideStyle} key="slide4">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
-            {data.projectId}: Resourcing estimates shared with Functional Leads
-          </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Validated from RM System</span>
-        </div>
-        
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
-
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-             
-             <div style={{ height: '40px', background: '#F04E23', width: '100%', display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
-                <span style={{ color: 'white', fontSize: '0.8rem', fontWeight: 700 }}>FUNCTIONAL RESOURCE ESTIMATES (FTE)</span>
-             </div>
-             
-             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px' }}>
-                <thead style={{ background: '#f1f5f9' }}>
-                   <tr>
-                      <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #e2e8f0' }}>FUNCTION</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2026</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2027</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2028</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>SIGN-OFF</th>
-                   </tr>
-                </thead>
-                <tbody>
-                   {data.resourcingData.flatMap(cat => [
-                      <tr key={cat.id} style={{ background: '#f8fafc' }}>
-                         <td style={{ padding: '6px 8px', fontWeight: 700, color: '#F04E23' }}>{cat.name}</td>
-                         <td colSpan={4}></td>
-                      </tr>,
-                      ...(cat.children || []).map(child => (
-                         <tr key={child.id}>
-                            <td style={{ padding: '4px 20px', color: '#475569' }}>{child.name}</td>
-                            <td style={{ textAlign: 'center' }}>0.4</td>
-                            <td style={{ textAlign: 'center' }}>0.8</td>
-                            <td style={{ textAlign: 'center' }}>1.2</td>
-                            <td style={{ textAlign: 'center', color: '#10b981', fontWeight: 600 }}>Validated</td>
-                         </tr>
-                      ))
-                   ])}
-                </tbody>
-             </table>
-             
-             <div style={{ marginTop: 'auto', padding: '1rem', background: '#f1f5f9', fontSize: '9px', color: '#64748b', borderTop: '1px solid #e2e8f0' }}>
-                * FTE estimates are subject to functional lead approval during the Q3 planning cycle.
-             </div>
-          </div>
-        </div>
-      </div>
-    ),
-    // Slide 7: Risks & Dependencies
-    (
-      <div style={slideStyle} key="slide6">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#000', fontSize: '1.8rem', fontWeight: 600 }}>
-            Risks & Dependencies
-          </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Critical Board Awareness</span>
-        </div>
-        
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
-
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem' }}>
-            {data.risks.slice(0, 4).map(risk => (
-              <div key={risk.id} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ background: risk.impact === 'High' ? '#fee2e2' : risk.impact === 'Medium' ? '#fef3c7' : '#dcfce7', padding: '0.75rem 1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1e293b' }}>{risk.description || "Project Risk"}</span>
-                  <span style={{ 
-                    fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px',
-                    background: risk.impact === 'High' ? '#ef4444' : risk.impact === 'Medium' ? '#f59e0b' : '#10b981',
-                    color: 'white'
-                  }}>{risk.impact}</span>
-                </div>
-                <div style={{ padding: '1rem', flex: 1 }}>
-                  <p style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.5rem' }}>Mitigation Plan</p>
-                  <p style={{ fontSize: '0.85rem', color: '#334155', lineHeight: '1.4' }}>{risk.mitigation || "Ongoing monitoring and assessment..."}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginTop: 'auto', background: '#F1F5F9', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '1rem' }}>
-             <h4 style={{ fontSize: '0.8rem', color: '#0F172A', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-               <span>⛓</span> Key Dependencies
-             </h4>
-             <p style={{ fontSize: '0.8rem', color: '#475569' }}>
-               Dependency on shared resource pool in Asia (Clinical Ops) and regulatory approval of the Phase II protocol amendment.
-             </p>
-          </div>
-        </div>
-      </div>
-    ),
-    // Slide 7: Key Valuation Inputs & Milestones
+    // Slide 6: Key Valuation Inputs & Milestones
     (
       <div 
         style={{ ...slideStyle, cursor: isAddingComment ? 'crosshair' : 'default' }} 
@@ -837,7 +688,168 @@ const Step5Preview = () => {
         </div>
         {/* Page Number */}
         <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666', pointerEvents: 'none' }}>
+          6
+        </div>
+      </div>
+    ),
+    // Slide 7: High-level Investment Overview
+    (
+      <div style={slideStyle} key="slide3">
+        {/* Professional PPT Header */}
+        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
+          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
+            High-level Investment Overview
+          </h2>
+          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Key contact: {data.owner}</span>
+        </div>
+        
+        {/* GSK Accent Line */}
+        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
+
+        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
+          <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', position: 'relative', overflow: 'hidden', padding: '1rem' }}>
+             {/* Mini Gantt Grid */}
+             <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', height: '100%', gap: '1px', background: '#e2e8f0' }}>
+                <div style={{ background: '#f1f5f9', padding: '0.5rem', fontWeight: 600, fontSize: '0.75rem' }}>SWIMLANE</div>
+                <div style={{ background: '#f1f5f9', display: 'flex', justifyContent: 'space-around', padding: '0.5rem', fontWeight: 600, fontSize: '0.75rem' }}>
+                   {Array.from({ length: 10 }, (_, i) => 2023 + i).map(y => <span key={y}>{y}</span>)}
+                </div>
+                {data.swimlanes.slice(0, 4).map(lane => (
+                   <React.Fragment key={lane}>
+                      <div style={{ background: 'white', padding: '0.5rem', fontSize: '0.7rem', fontWeight: 500 }}>{lane}</div>
+                      <div style={{ background: 'white', position: 'relative' }}>
+                         <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#f1f5f9', transform: 'translateY(-50%)' }} />
+                         {data.milestones.filter(m => m.swimlane === lane && m.isSelected).map(m => (
+                            <div key={m.id} style={{ 
+                               position: 'absolute', 
+                               left: `${((m.year - 2023) * 10) + (m.position / 10)}%`, 
+                               top: '50%', 
+                               transform: 'translate(-50%, -50%)',
+                               display: 'flex', flexDirection: 'column', alignItems: 'center'
+                            }}>
+                               <span style={{ color: '#F04E23', fontSize: '10px' }}>▲</span>
+                               <span style={{ fontSize: '8px', whiteSpace: 'nowrap', fontWeight: 700 }}>{m.name}</span>
+                            </div>
+                         ))}
+                      </div>
+                   </React.Fragment>
+                ))}
+             </div>
+          </div>
+        </div>
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
           7
+        </div>
+      </div>
+    ),
+    // Slide 4: Resourcing Estimates
+    (
+      <div style={slideStyle} key="slide4">
+        {/* Professional PPT Header */}
+        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
+          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
+            {data.projectId}: Resourcing estimates shared with Functional Leads
+          </h2>
+          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Validated from RM System</span>
+        </div>
+        
+        {/* GSK Accent Line */}
+        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
+
+        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
+          <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+             
+             <div style={{ height: '40px', background: '#F04E23', width: '100%', display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
+                <span style={{ color: 'white', fontSize: '0.8rem', fontWeight: 700 }}>FUNCTIONAL RESOURCE ESTIMATES (FTE)</span>
+             </div>
+             
+             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px' }}>
+                <thead style={{ background: '#f1f5f9' }}>
+                   <tr>
+                      <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #e2e8f0' }}>FUNCTION</th>
+                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2026</th>
+                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2027</th>
+                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2028</th>
+                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>SIGN-OFF</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   {data.resourcingData.flatMap(cat => [
+                      <tr key={cat.id} style={{ background: '#f8fafc' }}>
+                         <td style={{ padding: '6px 8px', fontWeight: 700, color: '#F04E23' }}>{cat.name}</td>
+                         <td colSpan={4}></td>
+                      </tr>,
+                      ...(cat.children || []).map(child => (
+                         <tr key={child.id}>
+                            <td style={{ padding: '4px 20px', color: '#475569' }}>{child.name}</td>
+                            <td style={{ textAlign: 'center' }}>0.4</td>
+                            <td style={{ textAlign: 'center' }}>0.8</td>
+                            <td style={{ textAlign: 'center' }}>1.2</td>
+                            <td style={{ textAlign: 'center', color: '#10b981', fontWeight: 600 }}>Validated</td>
+                         </tr>
+                      ))
+                   ])}
+                </tbody>
+             </table>
+             
+             <div style={{ marginTop: 'auto', padding: '1rem', background: '#f1f5f9', fontSize: '9px', color: '#64748b', borderTop: '1px solid #e2e8f0' }}>
+                * FTE estimates are subject to functional lead approval during the Q3 planning cycle.
+             </div>
+          </div>
+        </div>
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+          8
+        </div>
+      </div>
+    ),
+    // Slide 9: Risks & Dependencies
+    (
+      <div style={slideStyle} key="slide6">
+        {/* Professional PPT Header */}
+        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
+          <h2 style={{ margin: 0, color: '#000', fontSize: '1.8rem', fontWeight: 600 }}>
+            Risks & Dependencies
+          </h2>
+          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Critical Board Awareness</span>
+        </div>
+        
+        {/* GSK Accent Line */}
+        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
+
+        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem' }}>
+            {data.risks.slice(0, 4).map(risk => (
+              <div key={risk.id} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: risk.impact === 'High' ? '#fee2e2' : risk.impact === 'Medium' ? '#fef3c7' : '#dcfce7', padding: '0.75rem 1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1e293b' }}>{risk.description || "Project Risk"}</span>
+                  <span style={{ 
+                    fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px',
+                    background: risk.impact === 'High' ? '#ef4444' : risk.impact === 'Medium' ? '#f59e0b' : '#10b981',
+                    color: 'white'
+                  }}>{risk.impact}</span>
+                </div>
+                <div style={{ padding: '1rem', flex: 1 }}>
+                  <p style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.5rem' }}>Mitigation Plan</p>
+                  <p style={{ fontSize: '0.85rem', color: '#334155', lineHeight: '1.4' }}>{risk.mitigation || "Ongoing monitoring and assessment..."}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 'auto', background: '#F1F5F9', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '1rem' }}>
+             <h4 style={{ fontSize: '0.8rem', color: '#0F172A', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+               <span>⛓</span> Key Dependencies
+             </h4>
+             <p style={{ fontSize: '0.8rem', color: '#475569' }}>
+               Dependency on shared resource pool in Asia (Clinical Ops) and regulatory approval of the Phase II protocol amendment.
+             </p>
+          </div>
+        </div>
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+          9
         </div>
       </div>
     )
@@ -882,7 +894,7 @@ const Step5Preview = () => {
           Previous Slide
         </button>
 
-        {currentSlideIndex === 6 && (
+        {currentSlideIndex === 5 && (
           <button 
             className={`btn ${isAddingComment ? 'btn-danger' : 'btn-primary'}`}
             onClick={() => setIsAddingComment(!isAddingComment)}
