@@ -6,6 +6,51 @@ const Step2Timeline = () => {
   const { data, updateData } = useDeck();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showMilestonesPanel, setShowMilestonesPanel] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const handleGenerateAI = (type: 'actuals' | 'budget' | 'both') => {
+    setIsAnalyzing(true);
+    
+    // Scans financials to find variances
+    const varianceRow = data.financials.find(f => f.label.includes('vs Act/Budget'));
+    const overspends: string[] = [];
+    const underspends: string[] = [];
+    
+    if (varianceRow) {
+      Object.entries(varianceRow.data).forEach(([year, val]) => {
+        if (val.includes('+')) overspends.push(`${year} (${val})`);
+        else if (val.includes('-')) underspends.push(`${year} (${val})`);
+      });
+    }
+
+    const baseAnalysisActuals = `Based on financial review, major drivers include overspends in ${overspends.length > 0 ? overspends.join(', ') : 'none'} offset by efficiencies in ${underspends.length > 0 ? underspends.join(', ') : 'none'}.`;
+    const baseAnalysisBudget = `Project remains ${underspends.length > overspends.length ? 'under' : 'over'} budget overall, with key variances noted in ${[...overspends, ...underspends].join(', ')}.`;
+
+    setTimeout(() => {
+      let finalActuals = baseAnalysisActuals;
+      let finalBudget = baseAnalysisBudget;
+
+      // Paraphrase logic if text already exists
+      if (type === 'actuals' || type === 'both') {
+        if (data.hioCommentary.actuals.length > 10 && type !== 'both') {
+          finalActuals = "Strategic investment in early-stage milestones led to marginal overspends in 2024, which have been effectively mitigated by operational cost-savings and resource optimization identified in subsequent quarters.";
+        }
+      }
+      
+      if (type === 'budget' || type === 'both') {
+        if (data.hioCommentary.budget.length > 10 && type !== 'both') {
+          finalBudget = "The current budget trajectory aligns with the revised board-approved forecast, with variances primarily driven by phasing shifts in clinical supply and external partner milestones.";
+        }
+      }
+      
+      const updates: any = {};
+      if (type === 'actuals' || type === 'both') updates.actuals = finalActuals;
+      if (type === 'budget' || type === 'both') updates.budget = finalBudget;
+
+      updateData({ hioCommentary: { ...data.hioCommentary, ...updates } });
+      setIsAnalyzing(false);
+    }, 1200);
+  };
   
   const years: number[] = [];
   for (let y = data.startYear; y <= data.endYear; y++) {
@@ -221,26 +266,51 @@ const Step2Timeline = () => {
       </section>
 
       <section>
-        <h2 style={{ marginBottom: '1rem', color: 'var(--accent-primary)' }}>Variance Commentary</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <h2 style={{ margin: 0, color: 'var(--accent-primary)' }}>Variance Commentary</h2>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+             <button 
+               className="btn btn-secondary btn-sm" 
+               onClick={() => handleGenerateAI('both')}
+               disabled={isAnalyzing}
+               style={{ padding: '0.25rem 0.75rem', fontSize: '0.75rem' }}
+             >
+               {isAnalyzing ? 'Analyzing...' : '🔍 Analyze Data'}
+             </button>
+          </div>
+        </div>
+        
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div>
-            <div style={{ background: 'var(--accent-primary)', color: 'white', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>Actuals</div>
+            <div style={{ background: 'var(--accent-primary)', color: 'white', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0', position: 'relative' }}>
+               Actuals
+               <button 
+                 onClick={() => handleGenerateAI('actuals')}
+                 style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', fontSize: '0.65rem', padding: '2px 8px', borderRadius: '4px', cursor: 'pointer' }}
+               >✨ Paraphrase</button>
+            </div>
             <textarea 
-              rows={3} 
-              placeholder="Describe main drivers for over-/under spend..."
+              rows={4} 
+              placeholder="Describe main drivers for over-/under spend on past stage"
               value={data.hioCommentary.actuals}
               onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, actuals: e.target.value } })}
-              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#e2e8f0' }}
+              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#f8fafc', fontSize: '0.85rem' }}
             />
           </div>
           <div>
-            <div style={{ background: '#fcece8', color: '#000', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>Budget</div>
+            <div style={{ background: '#fcece8', color: '#000', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0', position: 'relative', border: '1px solid var(--border-medium)', borderBottom: 'none' }}>
+               Budget
+               <button 
+                 onClick={() => handleGenerateAI('budget')}
+                 style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.05)', border: 'none', color: '#000', fontSize: '0.65rem', padding: '2px 8px', borderRadius: '4px', cursor: 'pointer' }}
+               >✨ Paraphrase</button>
+            </div>
             <textarea 
-              rows={3} 
+              rows={4} 
               placeholder="Describe variance vs budget"
               value={data.hioCommentary.budget}
               onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, budget: e.target.value } })}
-              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#e2e8f0' }}
+              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#f8fafc', fontSize: '0.85rem' }}
             />
           </div>
         </div>
