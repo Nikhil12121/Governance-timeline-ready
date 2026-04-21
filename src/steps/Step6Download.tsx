@@ -6,6 +6,12 @@ const Step6Download = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadComplete, setDownloadComplete] = useState(false);
 
+  // Helper to ensure every table cell is a valid object with a text string
+  const safeCell = (text: any, options: any = {}) => ({
+    text: text === undefined || text === null ? '' : String(text),
+    options: options || {}
+  });
+
   // Helper for Slide Headers (mirrors the Triangle + Orange Text style)
   const addSlideHeader = (slide: any, title: string, subtitle?: string) => {
     // Triangle
@@ -15,7 +21,7 @@ const Step6Download = () => {
       rotate: 90
     });
     // Title
-    slide.addText(title, {
+    slide.addText(title || '', {
       x: 0.7, y: 0.45, w: 8, h: 0.4,
       fontSize: 22,
       color: 'F04E23',
@@ -50,49 +56,48 @@ const Step6Download = () => {
 
     try {
       // @ts-ignore
-      const PptxClass = window.PptxGenJS || window.pptxgen;
-      if (!PptxClass) {
-        throw new Error('PptxGenJS library not found. Please refresh and check your connection.');
+      const PptxGen = window.PptxGenJS || window.pptxgen;
+      if (!PptxGen) {
+        throw new Error('PowerPoint Engine (PptxGenJS) not found. Please refresh the page and ensure you have an internet connection.');
       }
       
       // @ts-ignore
-      let pptx = new PptxClass();
+      let pptx = new PptxGen();
       pptx.layout = 'LAYOUT_16x9';
 
       // ==========================================
       // SLIDE 1: COVER
       // ==========================================
       let slide1 = pptx.addSlide();
-      // Orange gradient background (simulation with color)
       slide1.background = { color: 'F04E23' };
-      slide1.addText(data.boardHeading, { 
+      slide1.addText(data.boardHeading || 'Governance Deck', { 
         x: 0.5, y: 2.2, w: 9, h: 1,
         fontSize: 44, color: 'FFFFFF', bold: true, align: 'center' 
       });
-      slide1.addText(data.projectName, { 
+      slide1.addText(data.projectName || '', { 
         x: 0.5, y: 3.2, w: 9, h: 0.5,
         fontSize: 22, color: 'FFFFFF', align: 'center' 
       });
-      slide1.addText(`Prepared for: ${data.owner} | ${new Date(data.date).toLocaleDateString()}`, { 
+      slide1.addText(`Prepared for: ${data.owner || 'GSK Board'} | ${new Date(data.date).toLocaleDateString()}`, { 
         x: 0.5, y: 5, w: 9, h: 0.4,
         fontSize: 14, color: 'FFFFFF', opacity: 0.8, align: 'center' 
       });
-      // GSK Logo in top right
       slide1.addShape('rect', { x: 8.5, y: 0.2, w: 1, h: 0.6, fill: { color: 'FFFFFF' } });
       slide1.addText('GSK', { x: 8.5, y: 0.2, w: 1, h: 0.6, fontSize: 24, bold: true, color: 'F04E23', align: 'center' });
 
       // ==========================================
-      // SLIDE 2: STRUCTURE (Governance Material)
+      // SLIDE 2: STRUCTURE
       // ==========================================
       let slide2 = pptx.addSlide();
       addSlideHeader(slide2, 'DRB Governance Material Structure');
+      const sHeadOpt = { fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true };
       const structureRows = [
-        [{ text: 'Slides', options: { fill: 'F04E23', color: 'FFFFFF', bold: true } }, { text: 'Section', options: { fill: 'F04E23', color: 'FFFFFF', bold: true } }, { text: 'Core Slides', options: { fill: 'F04E23', color: 'FFFFFF', bold: true } }],
-        ['3', '1. Introduction', 'Executive Summary'],
-        ['4-5', '2. Asset Potential', 'Reasons to Believe / Interdependencies'],
-        ['6-9', '3. Project Potential', 'Value Creation / CDP Options / Sensitivities'],
-        ['10-18', '4. Delivering Label', 'TPP / Integrated Evidence / Risks'],
-        ['19-20', '5. Investment Plan', 'Investment Overview (HIO) / Resourcing']
+        [safeCell('Slides', sHeadOpt), safeCell('Section', sHeadOpt), safeCell('Core Slides', sHeadOpt)],
+        [safeCell('3'), safeCell('1. Introduction'), safeCell('Executive Summary')],
+        [safeCell('4-5'), safeCell('2. Asset Potential'), safeCell('Reasons to Believe / Interdependencies')],
+        [safeCell('6-9'), safeCell('3. Project Potential'), safeCell('Value Creation / CDP Options / Sensitivities')],
+        [safeCell('10-18'), safeCell('4. Delivering Label'), safeCell('TPP / Integrated Evidence / Risks')],
+        [safeCell('19-20'), safeCell('5. Investment Plan'), safeCell('Investment Overview (HIO) / Resourcing')]
       ];
       slide2.addTable(structureRows, { x: 0.5, y: 1.2, w: 9, rowH: 0.5, fontSize: 11, border: { pt: 1, color: 'F04E23' } });
 
@@ -100,16 +105,18 @@ const Step6Download = () => {
       // SLIDE 3: EXECUTIVE SUMMARY
       // ==========================================
       let slide3 = pptx.addSlide();
-      addSlideHeader(slide3, `Executive Summary: ${data.projectId}`);
-      // Context Section
-      slide3.addText('CONTEXT', { x: 0.5, y: 1.2, w: 9, h: 0.3, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 12 });
-      slide3.addText(data.executiveSummary?.context || '', { x: 0.5, y: 1.5, w: 9, h: 1, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
-      // Proposal Section
-      slide3.addText('TEAM PROPOSAL', { x: 0.5, y: 2.7, w: 9, h: 0.3, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 12 });
-      slide3.addText(data.executiveSummary?.teamProposal || '', { x: 0.5, y: 3.0, w: 9, h: 1, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
-      // Questions Section
-      slide3.addText('KEY QUESTIONS', { x: 0.5, y: 4.2, w: 9, h: 0.3, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 12 });
-      slide3.addText(data.executiveSummary?.keyQuestions || '', { x: 0.5, y: 4.5, w: 9, h: 0.7, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
+      addSlideHeader(slide3, `Executive Summary: ${data.projectId || ''}`);
+      const bandOpt = { fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 12 };
+      const boxOpt = { fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' };
+      
+      slide3.addText('CONTEXT', { x: 0.5, y: 1.2, w: 9, h: 0.3, ...bandOpt });
+      slide3.addText(data.executiveSummary?.context || '', { x: 0.5, y: 1.5, w: 9, h: 1, ...boxOpt });
+      
+      slide3.addText('TEAM PROPOSAL', { x: 0.5, y: 2.7, w: 9, h: 0.3, ...bandOpt });
+      slide3.addText(data.executiveSummary?.teamProposal || '', { x: 0.5, y: 3.0, w: 9, h: 1, ...boxOpt });
+      
+      slide3.addText('KEY QUESTIONS', { x: 0.5, y: 4.2, w: 9, h: 0.3, ...bandOpt });
+      slide3.addText(data.executiveSummary?.keyQuestions || '', { x: 0.5, y: 4.5, w: 9, h: 0.7, ...boxOpt });
 
       // ==========================================
       // SLIDE 4: REASONS TO BELIEVE
@@ -118,18 +125,17 @@ const Step6Download = () => {
       addSlideHeader(slide4, "REASONS TO BELIEVE IN THE ASSET'S POTENTIAL");
       
       const rtbSections = [
-        { title: 'UNMET NEED', text: data.reasonsToBelieve.unmetNeed, x: 0.5, y: 1.2 },
-        { title: 'MOA AND DIFFERENTIATION', text: data.reasonsToBelieve.moa, x: 0.5, y: 2.5 },
-        { title: 'BIOLOGICAL / PRECLINICAL DATA', text: data.reasonsToBelieve.preclinical, x: 5.1, y: 1.2 },
-        { title: 'KEY CLINICAL DATA', text: data.reasonsToBelieve.clinical, x: 5.1, y: 3.5 }
+        { title: 'UNMET NEED', text: data.reasonsToBelieve?.unmetNeed, x: 0.5, y: 1.2 },
+        { title: 'MOA AND DIFFERENTIATION', text: data.reasonsToBelieve?.moa, x: 0.5, y: 2.5 },
+        { title: 'BIOLOGICAL / PRECLINICAL DATA', text: data.reasonsToBelieve?.preclinical, x: 5.1, y: 1.2 },
+        { title: 'KEY CLINICAL DATA', text: data.reasonsToBelieve?.clinical, x: 5.1, y: 3.5 }
       ];
 
       rtbSections.forEach(sec => {
-        slide4.addText(sec.title, { x: sec.x, y: sec.y, w: 4.4, h: 0.25, fontSize: 10, bold: true, color: '111111' });
-        slide4.addText(sec.text, { x: sec.x, y: sec.y + 0.3, w: 4.4, h: 1, fontSize: 9, color: '333333', fill: { color: 'F1F1F1' } });
+        slide4.addText(sec.title || '', { x: sec.x, y: sec.y, w: 4.4, h: 0.25, fontSize: 10, bold: true, color: '111111' });
+        slide4.addText(sec.text || '', { x: sec.x, y: sec.y + 0.3, w: 4.4, h: 1, fontSize: 9, color: '333333', fill: { color: 'F1F1F1' } });
       });
 
-      // Reasons not to believe (RED BOX)
       slide4.addText('REASONS NOT TO BELIEVE', { x: 0.5, y: 4.2, w: 4.4, h: 1, fontSize: 9, color: '333333', border: { pt: 2, color: 'F04E23' }, align: 'left', valign: 'top' });
       slide4.addText(data.reasonsToBelieve?.reasonsNotToBelieve || '', { x: 0.6, y: 4.5, w: 4.2, h: 0.6, fontSize: 8, color: '555555' });
 
@@ -139,60 +145,58 @@ const Step6Download = () => {
       let slide5 = pptx.addSlide();
       addSlideHeader(slide5, 'Value Creation Evolution');
       
+      const vH1 = { fill: { color: 'FCE4D6' }, color: '111111', bold: true };
+      const vH2 = { fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true };
+      const vH3 = { fill: { color: '555555' }, color: 'FFFFFF', bold: true };
+
       const valHeader = [
-        { text: 'Metric', options: { fill: 'FCE4D6', color: '111111', bold: true } },
-        { text: 'Current Estimate', options: { fill: 'F04E23', color: 'FFFFFF', bold: true } },
-        { text: 'Last Governed', options: { fill: '555555', color: 'FFFFFF', bold: true } },
-        { text: 'Comment', options: { fill: '555555', color: 'FFFFFF', bold: true } }
+        safeCell('Metric', vH1), safeCell('Current Estimate', vH2), safeCell('Last Governed', vH3), safeCell('Comment', vH3)
       ];
 
-      const valRows = data.valueCreation.items.map(item => [
-        { text: item.metric, options: { fill: 'FCE4D6' } },
-        { text: item.currentEstimate, options: { align: 'center' } },
-        { text: item.lastGoverned, options: { align: 'center' } },
-        { text: item.comment, options: { fontSize: 8 } }
+      const valRows = (data.valueCreation?.items || []).map(item => [
+        safeCell(item.metric, { fill: { color: 'FCE4D6' } }),
+        safeCell(item.currentEstimate, { align: 'center' }),
+        safeCell(item.lastGoverned, { align: 'center' }),
+        safeCell(item.comment, { fontSize: 8 })
       ]);
 
       slide5.addTable([valHeader, ...valRows], { x: 0.5, y: 1.5, w: 9, rowH: 0.3, fontSize: 10, border: { pt: 0.5, color: '999999' } });
 
       // ==========================================
-      // SLIDE 7: HIO (High-level Investment Overview)
+      // SLIDE 7: HIO
       // ==========================================
       let slide7 = pptx.addSlide();
       addSlideHeader(slide7, 'High-level Investment Overview', 'Key contact: Project manager / Finance');
 
-      // Drawing the Gantt and Financials as a complex table
       const years = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032];
-      const hioHeader = ['SWIMLANE', ...years.map(y => y.toString()), 'EPE', 'IPE', 'PTRS'];
+      const hioHeadOpt = { fill: { color: 'F8FAFC' }, bold: true, align: 'center' };
+      const hioHeader = [
+        safeCell('SWIMLANE', hioHeadOpt), 
+        ...years.map(y => safeCell(y.toString(), hioHeadOpt)), 
+        safeCell('EPE', hioHeadOpt), safeCell('IPE', hioHeadOpt), safeCell('PTRS', hioHeadOpt)
+      ];
       
-      const swimlaneRows = data.swimlanes.map((lane, idx) => [
-        lane, ...years.map(_ => ''), `£${idx*2+1}m`, `£${idx}m`, `${15 + idx*15}%`
+      const swimlaneRows = (data.swimlanes || []).map((lane, idx) => [
+        safeCell(lane || '', { fill: { color: 'F1F5F9' }, bold: true }), 
+        ...years.map(_ => safeCell('')), 
+        safeCell(`£${idx*2+1}m`), safeCell(`£${idx}m`), safeCell(`${15 + idx*15}%`)
       ]);
 
-      const finRows = data.financials.map(fin => [
-        fin.label || '', ...years.map(y => fin.data[y] || ''), fin.summaryEPE || '', fin.summaryIPE || '', ''
+      const finRows = (data.financials || []).map(fin => [
+        safeCell(fin.label || '', { fill: { color: 'F8FAFC' }, bold: true, align: 'right' }), 
+        ...years.map(y => safeCell(fin.data?.[y] || '')), 
+        safeCell(fin.summaryEPE || ''), safeCell(fin.summaryIPE || ''), safeCell('')
       ]);
 
-      const fullHioTable = [hioHeader, ...swimlaneRows, ...finRows];
-      
-      slide7.addTable(fullHioTable, { 
-        x: 0.5, y: 1.3, w: 9, 
-        fontSize: 7, 
-        rowH: 0.25,
-        border: { pt: 0.5, color: '999999' },
-        fill: 'FFFFFF',
-        align: 'center'
+      slide7.addTable([hioHeader, ...swimlaneRows, ...finRows], { 
+        x: 0.5, y: 1.3, w: 9, fontSize: 7, rowH: 0.25, border: { pt: 0.5, color: '999999' }, align: 'center'
       });
 
-      // Special handling for the "Today" marker line across the table
-      // Calculated position approx: years start at index 1 of the header
-      // 2026 is index 4.
       const colWidth = 9 / 14; 
       const lineX = 0.5 + (colWidth * 4.5); 
       slide7.addShape('line', { x: lineX, y: 1.1, w: 0, h: 2.5, line: { color: '333333', width: 2 } });
       slide7.addText('Today', { x: lineX - 0.2, y: 0.9, w: 0.4, h: 0.2, fontSize: 8, color: '333333', align: 'center', bold: true });
 
-      // Commentary at bottom
       slide7.addText('ACTUALS', { x: 0.5, y: 4.2, w: 4.4, h: 0.2, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 9 });
       slide7.addText(data.hioCommentary?.actuals || '', { x: 0.5, y: 4.4, w: 4.4, h: 0.6, fontSize: 8, color: '333333', border: { pt: 1, color: '999999' } });
       slide7.addText('BUDGET', { x: 5.1, y: 4.2, w: 4.4, h: 0.2, fill: { color: 'BBBBBB' }, color: '000000', bold: true, fontSize: 9 });
@@ -204,41 +208,37 @@ const Step6Download = () => {
       let slide8 = pptx.addSlide();
       addSlideHeader(slide8, 'Resourcing estimates shared with Functional Leads', 'Validated from RM System');
       
+      const rHeadOpt = { fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, align: 'center' };
       const resHeader1 = [
-        { text: 'R&D FUNCTION', options: { fill: 'F04E23', color: 'FFFFFF', bold: true } },
-        { text: 'CY FTE', options: { fill: 'F04E23', color: 'FFFFFF', bold: true, colSpan: 4, align: 'center' } },
-        { text: 'CY IPE', options: { fill: 'F04E23', color: 'FFFFFF', bold: true, align: 'center' } },
-        { text: '2027', options: { fill: 'F04E23', color: 'FFFFFF', bold: true, colSpan: 2, align: 'center' } },
-        { text: '2028', options: { fill: 'F04E23', color: 'FFFFFF', bold: true, colSpan: 2, align: 'center' } },
-        { text: '2029', options: { fill: 'F04E23', color: 'FFFFFF', bold: true, colSpan: 2, align: 'center' } },
-        { text: 'PROJECT TOTAL', options: { fill: 'F04E23', color: 'FFFFFF', bold: true, colSpan: 3, align: 'center' } }
+        safeCell('R&D FUNCTION', { ...rHeadOpt, align: 'left' }),
+        safeCell('CY FTE', { ...rHeadOpt, colSpan: 4 }),
+        safeCell('CY IPE', rHeadOpt),
+        safeCell('2027', { ...rHeadOpt, colSpan: 2 }),
+        safeCell('2028', { ...rHeadOpt, colSpan: 2 }),
+        safeCell('2029', { ...rHeadOpt, colSpan: 2 }),
+        safeCell('PROJECT TOTAL', { ...rHeadOpt, colSpan: 3 })
       ];
       
       const resRows: any[] = [];
-      data.resourcingData.forEach(cat => {
-        // Category Header Row
+      (data.resourcingData || []).forEach(cat => {
         resRows.push([
-          { text: cat.name, options: { fill: 'F1F5F9', color: 'F04E23', bold: true, colSpan: 15 } }
+          safeCell(cat.name || '', { fill: { color: 'F1F5F9' }, color: 'F04E23', bold: true, colSpan: 15 })
         ]);
-        // Child Rows
         cat.children?.forEach(child => {
           resRows.push([
-            '  ' + child.name,
-            child.cyFTE?.[0] || '', child.cyFTE?.[1] || '', child.cyFTE?.[2] || '', child.cyFTE?.[3] || '',
-            child.cyIPE || '',
-            child.y1FTE || '', child.y1IPE || '',
-            child.y2FTE || '', child.y2IPE || '',
-            child.y3FTE || '', child.y3IPE || '',
-            child.projAlgoFTE || '', child.projFnHeadFTE || '', child.projIPE || ''
+            safeCell('  ' + (child.name || ''), { align: 'left' }),
+            safeCell(child.cyFTE?.[0]), safeCell(child.cyFTE?.[1]), safeCell(child.cyFTE?.[2]), safeCell(child.cyFTE?.[3]),
+            safeCell(child.cyIPE),
+            safeCell(child.y1FTE), safeCell(child.y1IPE),
+            safeCell(child.y2FTE), safeCell(child.y2IPE),
+            safeCell(child.y3FTE), safeCell(child.y3IPE),
+            safeCell(child.projAlgoFTE), safeCell(child.projFnHeadFTE), safeCell(child.projIPE)
           ]);
         });
       });
 
       slide8.addTable([resHeader1, ...resRows], { 
-        x: 0.25, y: 1.3, w: 9.5, 
-        fontSize: 6, 
-        rowH: 0.15,
-        border: { pt: 0.5, color: 'E2E8F0' } 
+        x: 0.25, y: 1.3, w: 9.5, fontSize: 6, rowH: 0.15, border: { pt: 0.5, color: 'E2E8F0' } 
       });
 
       // ==========================================
@@ -247,16 +247,16 @@ const Step6Download = () => {
       let slide9 = pptx.addSlide();
       addSlideHeader(slide9, 'Risks & Dependencies', 'Critical Board Awareness');
       
-      data.risks.forEach((risk, i) => {
+      (data.risks || []).forEach((risk, i) => {
         const xPos = i % 2 === 0 ? 0.5 : 5.1;
         const yPos = 1.3 + (Math.floor(i / 2) * 1.5);
         if (i < 4) {
-          slide9.addText(risk.description, { x: xPos, y: yPos, w: 4.4, h: 0.3, fill: { color: risk.impact === 'High' ? 'FEE2E2' : 'FEF3C7' }, fontSize: 10, bold: true });
-          slide9.addText(`Impact: ${risk.impact}\nMitigation: ${risk.mitigation}`, { x: xPos, y: yPos + 0.35, w: 4.4, h: 0.8, fontSize: 9, color: '334155', border: { pt: 0.5, color: 'E2E8F0' } });
+          slide9.addText(risk.description || 'Risk', { x: xPos, y: yPos, w: 4.4, h: 0.3, fill: { color: risk.impact === 'High' ? 'FEE2E2' : 'FEF3C7' }, fontSize: 10, bold: true });
+          slide9.addText(`Impact: ${risk.impact || 'N/A'}\nMitigation: ${risk.mitigation || ''}`, { x: xPos, y: yPos + 0.35, w: 4.4, h: 0.8, fontSize: 9, color: '334155', border: { pt: 0.5, color: 'E2E8F0' } });
         }
       });
 
-      await pptx.writeFile({ fileName: `${data.projectId}_Governance_Deck.pptx` });
+      await pptx.writeFile({ fileName: `${data.projectId || 'Project'}_Governance_Deck.pptx` });
 
       setDownloadComplete(true);
     } catch (error: any) {
@@ -288,7 +288,7 @@ const Step6Download = () => {
           </div>
           <h2 style={{ marginBottom: '1rem', color: 'var(--text-primary)', fontSize: '2rem', fontWeight: 300 }}>Ready to Download</h2>
           <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', maxWidth: '450px', lineHeight: 1.6 }}>
-            Your governance deck for <strong>{data.projectName}</strong> is ready. The exported PowerPoint mirrors the high-fidelity visuals from your preview.
+            Your governance deck for <strong>{data.projectName || 'Project'}</strong> is ready. The exported PowerPoint mirrors the high-fidelity visuals from your preview.
           </p>
 
           <button 
@@ -313,7 +313,7 @@ const Step6Download = () => {
           </div>
           <h2 style={{ marginBottom: '1rem', color: '#047857' }}>Success!</h2>
           <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
-            <strong>{data.projectId}_Governance_Deck.pptx</strong> has been generated and saved.
+            <strong>{data.projectId || 'Project'}_Governance_Deck.pptx</strong> has been generated and saved.
           </p>
           
           <button className="btn btn-secondary" onClick={handleStartNew}>
