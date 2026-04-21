@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDeck, type CdpValuationMetric } from '../context/DeckContext';
+import { useDeck } from '../context/DeckContext';
 
 const Step1Inputs = () => {
   const { data, updateData } = useDeck();
@@ -269,174 +269,123 @@ const Step1Inputs = () => {
         </div>
       </section>
 
-      <div style={{ height: '1px', background: 'var(--border-light)', margin: '2rem 0' }} />
+      <div style={{ height: '1px', background: 'var(--border-light)' }} />
 
       <section>
-        <h2 style={{ marginBottom: '1rem', color: 'var(--accent-primary)' }}>6. CDP Options & Valuation</h2>
+        <h2 style={{ marginBottom: '1rem', color: 'var(--accent-primary)' }}>6. Key Valuation Inputs</h2>
         <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
-          Define the development options, timeline milestones, and valuation metrics for each candidate development path.
+          Define target indications and key valuation metrics for the asset.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          {data.cdpOptions.map((option, optIdx) => (
-            <div key={option.id} style={{ 
-              background: 'var(--bg-secondary)', 
-              padding: '1.5rem', 
-              borderRadius: 'var(--radius-md)', 
-              border: option.isRecommended ? '2px solid var(--accent-primary)' : '1px solid var(--border-light)',
-              transition: 'all 0.2s ease'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                  <span style={{ 
-                    background: option.isRecommended ? 'var(--accent-primary)' : 'var(--border-medium)', 
-                    color: 'white', 
-                    padding: '0.25rem 0.75rem', 
-                    borderRadius: '20px', 
-                    fontSize: '0.75rem', 
-                    fontWeight: 600 
-                  }}>
-                    {option.title}
-                  </span>
-                  <input 
-                    type="text" 
-                    value={option.subtitle} 
-                    onChange={e => {
-                      const newOptions = [...data.cdpOptions];
-                      newOptions[optIdx].subtitle = e.target.value;
-                      updateData({ cdpOptions: newOptions });
-                    }}
-                    style={{ fontWeight: 600, fontSize: '1rem', background: 'transparent', border: 'none', borderBottom: '1px dashed var(--border-medium)' }}
-                  />
-                </div>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', cursor: 'pointer' }}>
-                  <input 
-                    type="checkbox" 
-                    checked={option.isRecommended} 
-                    onChange={() => {
-                      const newOptions = data.cdpOptions.map((opt, i) => ({ ...opt, isRecommended: i === optIdx }));
-                      updateData({ cdpOptions: newOptions });
-                    }}
-                  />
-                  Recommended
-                </label>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '2rem' }}>
-                {/* Left side: Timeline & Box Comment */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div>
-                    <label style={{ fontSize: '0.875rem', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Timeline Overlay Comment (Box)</label>
-                    <textarea 
-                      rows={4} 
-                      value={option.boxComment}
-                      onChange={e => {
-                        const newOptions = [...data.cdpOptions];
-                        newOptions[optIdx].boxComment = e.target.value;
-                        updateData({ cdpOptions: newOptions });
-                      }}
-                      placeholder="Enter the text that appears in the box above the timeline..."
-                      style={{ fontSize: '0.85rem' }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ fontSize: '0.875rem', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Milestones (Quarters)</label>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
-                      {option.milestones.map((ms, msIdx) => (
-                        <div key={`${option.id}-ms-${msIdx}`} style={{ 
-                          padding: '0.5rem', 
-                          background: 'white', 
-                          border: '1px solid var(--border-light)', 
-                          borderRadius: '4px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '0.25rem'
-                        }}>
-                          <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>{ms.name}</div>
-                          <div style={{ display: 'flex', gap: '0.25rem' }}>
-                            <select 
-                              value={ms.yearOffset} 
-                              onChange={e => {
-                                const newOptions = [...data.cdpOptions];
-                                newOptions[optIdx].milestones[msIdx].yearOffset = parseInt(e.target.value);
-                                updateData({ cdpOptions: newOptions });
-                              }}
-                              style={{ fontSize: '0.75rem', padding: '2px' }}
-                            >
-                              {[0,1,2,3,4,5].map(v => <option key={v} value={v}>Year{v > 0 ? `+${v}` : ''}</option>)}
-                            </select>
-                            <select 
-                              value={ms.quarter} 
-                              onChange={e => {
-                                const newOptions = [...data.cdpOptions];
-                                newOptions[optIdx].milestones[msIdx].quarter = parseInt(e.target.value) as 1|2|3|4;
-                                updateData({ cdpOptions: newOptions });
-                              }}
-                              style={{ fontSize: '0.75rem', padding: '2px' }}
-                            >
-                              {[1,2,3,4].map(v => <option key={v} value={v}>Q{v}</option>)}
-                            </select>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right side: Valuation Table */}
-                <div>
-                  <label style={{ fontSize: '0.875rem', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Valuation Metrics & RAG</label>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
-                    <thead>
-                      <tr style={{ borderBottom: '1px solid var(--border-medium)' }}>
-                        <th style={{ padding: '0.5rem', textAlign: 'left' }}>Metric</th>
-                        <th style={{ padding: '0.5rem', textAlign: 'left' }}>Value</th>
-                        <th style={{ padding: '0.5rem', textAlign: 'left' }}>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(Object.entries(option.valuation) as [keyof typeof option.valuation, CdpValuationMetric][]).map(([key, metric]) => (
-                        <tr key={key} style={{ borderBottom: '1px solid var(--border-light)' }}>
-                          <td style={{ padding: '0.5rem', textTransform: 'capitalize' }}>
-                            {key.replace(/([A-Z])/g, ' $1').trim()}
-                          </td>
-                          <td style={{ padding: '0.25rem' }}>
-                            <input 
-                              type="text" 
-                              value={metric.value} 
-                              onChange={e => {
-                                const newOptions = [...data.cdpOptions];
-                                (newOptions[optIdx].valuation[key] as CdpValuationMetric).value = e.target.value;
-                                updateData({ cdpOptions: newOptions });
-                              }}
-                              style={{ width: '100%', background: 'white' }}
-                            />
-                          </td>
-                          <td style={{ padding: '0.25rem' }}>
-                            <select 
-                              value={metric.color} 
-                              onChange={e => {
-                                const newOptions = [...data.cdpOptions];
-                                (newOptions[optIdx].valuation[key] as CdpValuationMetric).color = e.target.value as any;
-                                updateData({ cdpOptions: newOptions });
-                              }}
-                              style={{ width: '100%', background: 'white' }}
-                            >
-                              <option value="none">None</option>
-                              <option value="green">Green (Better)</option>
-                              <option value="yellow">Yellow (Equal)</option>
-                              <option value="red">Red (Worse)</option>
-                            </select>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          {/* Indications Table */}
+          <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-light)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 600 }}>Primary Indications / Target Markets</h3>
+              <button 
+                className="btn btn-secondary btn-sm"
+                onClick={() => {
+                  const newInd = { id: `ind${Date.now()}`, indication: '', lineOfTherapy: '', targetPopulation: '', peakShare: '' };
+                  updateData({ valuationInputs: { ...data.valuationInputs, indications: [...data.valuationInputs.indications, newInd] } });
+                }}
+              >
+                + Add Indication
+              </button>
             </div>
-          ))}
+            <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border-medium)' }}>
+                  <th style={{ padding: '0.5rem', fontSize: '0.85rem' }}>Indication</th>
+                  <th style={{ padding: '0.5rem', fontSize: '0.85rem' }}>Line of Therapy</th>
+                  <th style={{ padding: '0.5rem', fontSize: '0.85rem' }}>Target Population</th>
+                  <th style={{ padding: '0.5rem', fontSize: '0.85rem' }}>Peak Share</th>
+                  <th style={{ width: '50px' }}></th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.valuationInputs.indications.map((ind, idx) => (
+                  <tr key={ind.id} style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <td style={{ padding: '0.5rem' }}>
+                      <input 
+                        type="text" 
+                        value={ind.indication} 
+                        placeholder="e.g. Lung Cancer"
+                        onChange={e => {
+                          const newInds = [...data.valuationInputs.indications];
+                          newInds[idx].indication = e.target.value;
+                          updateData({ valuationInputs: { ...data.valuationInputs, indications: newInds } });
+                        }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.5rem' }}>
+                      <input 
+                        type="text" 
+                        value={ind.lineOfTherapy} 
+                        placeholder="e.g. 1L"
+                        onChange={e => {
+                          const newInds = [...data.valuationInputs.indications];
+                          newInds[idx].lineOfTherapy = e.target.value;
+                          updateData({ valuationInputs: { ...data.valuationInputs, indications: newInds } });
+                        }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.5rem' }}>
+                      <input 
+                        type="text" 
+                        value={ind.targetPopulation} 
+                        placeholder="e.g. EGFR+"
+                        onChange={e => {
+                          const newInds = [...data.valuationInputs.indications];
+                          newInds[idx].targetPopulation = e.target.value;
+                          updateData({ valuationInputs: { ...data.valuationInputs, indications: newInds } });
+                        }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.5rem' }}>
+                      <input 
+                        type="text" 
+                        value={ind.peakShare} 
+                        placeholder="e.g. 20%"
+                        onChange={e => {
+                          const newInds = [...data.valuationInputs.indications];
+                          newInds[idx].peakShare = e.target.value;
+                          updateData({ valuationInputs: { ...data.valuationInputs, indications: newInds } });
+                        }}
+                      />
+                    </td>
+                    <td style={{ padding: '0.5rem' }}>
+                      <button 
+                        style={{ color: 'var(--danger)', background: 'none', border: 'none', cursor: 'pointer' }}
+                        onClick={() => {
+                          const newInds = data.valuationInputs.indications.filter(i => i.id !== ind.id);
+                          updateData({ valuationInputs: { ...data.valuationInputs, indications: newInds } });
+                        }}
+                      >
+                        ✕
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Valuation Summary */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            {Object.keys(data.valuationInputs.metrics).map(metric => (
+              <div key={metric}>
+                <label style={{ color: 'var(--text-primary)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>{metric}</label>
+                <input 
+                  type="text" 
+                  value={data.valuationInputs.metrics[metric]} 
+                  onChange={e => {
+                    const newMetrics = { ...data.valuationInputs.metrics, [metric]: e.target.value };
+                    updateData({ valuationInputs: { ...data.valuationInputs, metrics: newMetrics } });
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>

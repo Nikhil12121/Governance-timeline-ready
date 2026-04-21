@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useDeck } from '../context/DeckContext';
 
 const Step5Preview = () => {
-  const { data } = useDeck();
+  const { data, updateData } = useDeck();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isAddingComment, setIsAddingComment] = useState(false);
 
   const slideStyle: React.CSSProperties = {
     aspectRatio: '16 / 9',
@@ -613,22 +614,80 @@ const Step5Preview = () => {
         </div>
       </div>
     ),
-    // Slide 7: CDP Options and Recommendation
+    // Slide 7: Risks & Dependencies
     (
-      <div style={slideStyle} key="slide_cdp_options">
+      <div style={slideStyle} key="slide6">
+        {/* Professional PPT Header */}
+        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
+          <h2 style={{ margin: 0, color: '#000', fontSize: '1.8rem', fontWeight: 600 }}>
+            Risks & Dependencies
+          </h2>
+          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Critical Board Awareness</span>
+        </div>
+        
+        {/* GSK Accent Line */}
+        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
+
+        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem' }}>
+            {data.risks.slice(0, 4).map(risk => (
+              <div key={risk.id} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: risk.impact === 'High' ? '#fee2e2' : risk.impact === 'Medium' ? '#fef3c7' : '#dcfce7', padding: '0.75rem 1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1e293b' }}>{risk.description || "Project Risk"}</span>
+                  <span style={{ 
+                    fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px',
+                    background: risk.impact === 'High' ? '#ef4444' : risk.impact === 'Medium' ? '#f59e0b' : '#10b981',
+                    color: 'white'
+                  }}>{risk.impact}</span>
+                </div>
+                <div style={{ padding: '1rem', flex: 1 }}>
+                  <p style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.5rem' }}>Mitigation Plan</p>
+                  <p style={{ fontSize: '0.85rem', color: '#334155', lineHeight: '1.4' }}>{risk.mitigation || "Ongoing monitoring and assessment..."}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 'auto', background: '#F1F5F9', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '1rem' }}>
+             <h4 style={{ fontSize: '0.8rem', color: '#0F172A', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+               <span>⛓</span> Key Dependencies
+             </h4>
+             <p style={{ fontSize: '0.8rem', color: '#475569' }}>
+               Dependency on shared resource pool in Asia (Clinical Ops) and regulatory approval of the Phase II protocol amendment.
+             </p>
+          </div>
+        </div>
+      </div>
+    ),
+    // Slide 7: Key Valuation Inputs & Milestones
+    (
+      <div 
+        style={{ ...slideStyle, cursor: isAddingComment ? 'crosshair' : 'default' }} 
+        key="slide_valuation_inputs"
+        onClick={(e) => {
+          if (!isAddingComment) return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          updateData({ 
+            slideComments: [
+              ...data.slideComments, 
+              { id: `sc${Date.now()}`, text: 'New comment...', x, y }
+            ] 
+          });
+          setIsAddingComment(false);
+        }}
+      >
         {/* Top left CSI */}
         <div style={{ position: 'absolute', top: '0.5rem', left: '1rem', fontSize: '0.65rem', color: '#666' }}>
           CSI External Use
         </div>
 
-        {/* Top Right Callout */}
-        <div style={{ position: 'absolute', top: '0', right: '0', background: '#0284C7', color: 'white', padding: '0.4rem 1rem', fontSize: '0.7rem', borderBottomLeftRadius: '4px', textAlign: 'center' }}>
-          <i>Recommended to show alternative development options<br/>RAG only for PYS (and if available eROI)</i>
-        </div>
-
-        <div style={{ padding: '2.5rem 1.5rem 1rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
-          {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
+        {/* Container for main content */}
+        <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', height: '100%', position: 'relative' }}>
+          
+          {/* Header Row */}
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', marginBottom: '1rem' }}>
             <div style={{ 
               width: 0, height: 0, 
               borderTop: '8px solid transparent', 
@@ -637,190 +696,147 @@ const Step5Preview = () => {
               marginRight: '12px' 
             }}></div>
             <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
-              CDP Options and Recommendation
+              Key evaluation inputs - {data.projectName} / {data.projectId}
             </h2>
           </div>
 
-          <div style={{ display: 'flex', flex: 1, gap: '0.5rem' }}>
-            {/* Left: Timeline Grid (70%) */}
-            <div style={{ flex: '0 0 72%', display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
-              {/* Year Header */}
-              <div style={{ display: 'flex', background: '#611111', color: 'white', fontSize: '0.75rem', fontWeight: 600 }}>
-                <div style={{ flex: '0 0 100px' }}></div> {/* Option Label Column */}
-                {[0, 1, 2, 3, 4, 5].map((y) => (
-                  <div key={y} style={{ flex: 1, textAlign: 'center', padding: '0.25rem', borderLeft: '1px solid rgba(255,255,255,0.2)' }}>
-                    Year{y > 0 ? `+${y}` : ''}
-                  </div>
-                ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem' }}>
+            
+            {/* Top Grid: Indications and Valuation Summary */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.5rem' }}>
+              
+              {/* Indications Table */}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: '#F04E23', color: 'white', padding: '0.25rem 0.5rem', fontSize: '0.8rem', fontWeight: 600 }}>
+                  Primary indications / Target markets
+                </div>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.75rem', border: '1px solid #F04E23' }}>
+                  <thead>
+                    <tr style={{ background: '#f1f1f1' }}>
+                      <th style={{ padding: '4px', border: '1px solid #F04E23', textAlign: 'left' }}>Indication</th>
+                      <th style={{ padding: '4px', border: '1px solid #F04E23', textAlign: 'left' }}>LoT</th>
+                      <th style={{ padding: '4px', border: '1px solid #F04E23', textAlign: 'left' }}>Target Patient Pop</th>
+                      <th style={{ padding: '4px', border: '1px solid #F04E23', textAlign: 'left' }}>Peak Share</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.valuationInputs.indications.map(ind => (
+                      <tr key={ind.id}>
+                        <td style={{ padding: '4px', border: '1px solid #F04E23' }}>{ind.indication}</td>
+                        <td style={{ padding: '4px', border: '1px solid #F04E23' }}>{ind.lineOfTherapy}</td>
+                        <td style={{ padding: '4px', border: '1px solid #F04E23' }}>{ind.targetPopulation}</td>
+                        <td style={{ padding: '4px', border: '1px solid #F04E23' }}>{ind.peakShare}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              {/* Quarter Header */}
-              <div style={{ display: 'flex', background: '#FCE4D6', borderBottom: '1px solid #ccc', fontSize: '0.6rem', color: '#444' }}>
-                <div style={{ flex: '0 0 100px' }}></div>
-                {Array.from({ length: 24 }).map((_, i) => (
-                  <div key={i} style={{ flex: 1, textAlign: 'center', padding: '0.1rem', borderLeft: '1px solid #ccc' }}>
-                    Q{(i % 4) + 1}
-                  </div>
-                ))}
-              </div>
 
-              {/* Rows */}
-              <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column' }}>
-                {data.cdpOptions.map((option, optIdx) => (
-                  <div key={option.id} style={{ 
-                    flex: 1, 
-                    display: 'flex', 
-                    borderBottom: optIdx < data.cdpOptions.length - 1 ? '1px solid #ccc' : 'none',
-                    position: 'relative'
-                  }}>
-                    {/* Option Identifier */}
-                    <div style={{ 
-                      flex: '0 0 100px', 
-                      background: option.id === 'opt1' ? '#F04E23' : '#64748B', 
-                      color: 'white', 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      textAlign: 'center',
-                      padding: '0.25rem',
-                      lineHeight: '1.1'
-                    }}>
-                      <div style={{ fontSize: '0.7rem', fontWeight: 700 }}>{option.title}</div>
-                      <div style={{ fontSize: '0.55rem' }}>{option.subtitle}</div>
-                      {option.tagline && <div style={{ fontSize: '0.5rem', marginTop: '0.25rem', opacity: 0.9 }}>{option.tagline}</div>}
-                    </div>
-
-                    {/* Timeline Grid Area */}
-                    <div style={{ flex: 1, position: 'relative' }}>
-                      {/* Quarter Grid Lines */}
-                      <div style={{ position: 'absolute', inset: 0, display: 'flex', pointerEvents: 'none' }}>
-                        {Array.from({ length: 24 }).map((_, i) => (
-                          <div key={i} style={{ flex: 1, borderLeft: '1px solid #eee' }}></div>
-                        ))}
-                      </div>
-
-                      {/* Comment Box Overlay */}
-                      <div style={{ 
-                        position: 'absolute', 
-                        top: '10px', 
-                        left: '10%', 
-                        right: '10%', 
-                        background: 'white', 
-                        border: '1px solid #999', 
-                        borderRadius: '8px', 
-                        padding: '0.4rem', 
-                        fontSize: '0.55rem', 
-                        textAlign: 'center',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-                        zIndex: 2,
-                        whiteSpace: 'pre-line'
-                      }}>
-                        {option.boxComment}
-                      </div>
-
-                      {/* Milestones (Diamonds) */}
-                      {option.milestones.map((ms, msIdx) => {
-                        const colWidth = 100 / 24;
-                        const pos = (ms.yearOffset * 4 + (ms.quarter - 1)) * colWidth + (colWidth / 2);
-                        return (
-                          <div key={msIdx} style={{ 
-                            position: 'absolute', 
-                            left: `${pos}%`, 
-                            bottom: '15px', 
-                            transform: 'translateX(-50%)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            zIndex: 3
-                          }}>
-                            <div style={{ 
-                              width: '8px', 
-                              height: '8px', 
-                              background: ms.name.includes('Read-out') || ms.name.includes('Filing') ? '#F04E23' : '#10B981', 
-                              transform: 'rotate(45deg)',
-                              marginBottom: '2px'
-                            }}></div>
-                            <div style={{ fontSize: '0.45rem', fontWeight: 600, color: '#444', whiteSpace: 'nowrap' }}>{ms.name}</div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-                
-                {/* Visual Watermark CSI */}
-                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', color: 'rgba(0,0,0,0.05)', fontSize: '2rem', fontWeight: 800, whiteSpace: 'nowrap', pointerEvents: 'none' }}>
-                  CSI External Use
+              {/* Valuation Summary Table */}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: '#F04E23', color: 'white', padding: '0.25rem 0.5rem', fontSize: '0.8rem', fontWeight: 600 }}>
+                  Valuation metrics
+                </div>
+                <div style={{ border: '1px solid #F04E23', borderTop: 'none', padding: '0.5rem', flex: 1, background: 'white' }}>
+                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                      {Object.entries(data.valuationInputs.metrics).map(([key, val]) => (
+                        <div key={key} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #eee', paddingBottom: '2px' }}>
+                           <span style={{ fontWeight: 600, color: '#333', fontSize: '0.75rem' }}>{key}:</span>
+                           <span style={{ color: '#F04E23', fontWeight: 700, fontSize: '0.75rem' }}>{val}</span>
+                        </div>
+                      ))}
+                   </div>
                 </div>
               </div>
+
             </div>
 
-            {/* Right: Key Valuation Inputs (28%) */}
-            <div style={{ flex: '0 0 28%', display: 'flex', flexDirection: 'column' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ccc' }}>
-                <thead>
-                  <tr style={{ borderBottom: '2px solid #ccc' }}>
-                    <th style={{ padding: '0.5rem', fontSize: '0.7rem', fontWeight: 600, textAlign: 'left', background: '#f8fafc' }}>Key valuation inputs</th>
-                  </tr>
-                </thead>
-              </table>
-              <table style={{ width: '100%', borderCollapse: 'collapse', flex: 1, tableLayout: 'fixed' }}>
-                <thead>
-                  <tr style={{ fontSize: '0.6rem', color: '#444' }}>
-                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>PTRS</th>
-                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>LoP costs</th>
-                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>Launch, MMM YY</th>
-                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>Peak year sales / year</th>
-                    <th style={{ border: '1px solid #ccc', padding: '0.25rem', background: '#666', color: 'white' }}>eROI</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.cdpOptions.map((opt) => (
-                    <tr key={opt.id} style={{ height: '33.33%' }}>
-                      {[opt.valuation.ptrs, opt.valuation.lopCosts, opt.valuation.launchDate, opt.valuation.peakSales].map((v, i) => (
-                        <td key={i} style={{ 
-                          border: '1px solid #ccc', 
-                          padding: '0.25rem', 
-                          textAlign: 'center', 
-                          fontSize: '0.65rem', 
-                          fontWeight: 600,
-                          background: v.color === 'green' ? '#DCFCE7' : v.color === 'yellow' ? '#FEF3C7' : v.color === 'red' ? '#FEE2E2' : 'white'
-                        }}>
-                          {v.value}
-                        </td>
-                      ))}
-                      <td style={{ border: '1px solid #ccc', padding: '0.25rem', background: '#666', opacity: 0.8 }}></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            {/* Middle Section: Milestones Timeline */}
+            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '0.5rem' }}>
+               <div style={{ background: '#555', color: 'white', padding: '0.25rem 0.5rem', fontSize: '0.8rem', fontWeight: 600 }}>
+                  Key Project Milestones
+               </div>
+               <div style={{ border: '1px solid #555', borderTop: 'none', height: '120px', position: 'relative', background: '#f8fafc', padding: '1rem' }}>
+                  {/* Years axis */}
+                  <div style={{ position: 'absolute', bottom: '10px', left: 0, right: 0, display: 'flex', justifyContent: 'space-between', padding: '0 2rem' }}>
+                     {[2023, 2024, 2025, 2026, 2027, 2028].map(y => (
+                       <span key={y} style={{ fontSize: '0.65rem', color: '#999' }}>{y}</span>
+                     ))}
+                  </div>
+                  <div style={{ position: 'absolute', bottom: '25px', left: '2rem', right: '2rem', height: '2px', background: '#ddd' }} />
+                  
+                  {/* Milestones */}
+                  {data.milestones.slice(0, 10).map((m, i) => {
+                    const leftPos = ((m.year - 2023) / 5) * 85 + 5; // simplified positioning logic
+                    return (
+                      <div key={m.id} style={{ position: 'absolute', left: `${leftPos}%`, top: i % 2 === 0 ? '20%' : '45%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                         <div style={{ background: '#F04E23', width: '10px', height: '10px', transform: 'rotate(45deg)', marginBottom: '4px' }} />
+                         <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#333' }}>{m.name}</span>
+                         <span style={{ fontSize: '0.6rem', color: '#666' }}>Q{Math.ceil(m.position / 25)} {m.year}</span>
+                      </div>
+                    );
+                  })}
+               </div>
             </div>
-          </div>
 
-          {/* Color Legend */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginTop: '1rem', paddingLeft: '100px', paddingRight: '28%' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.65rem' }}>
-              <div style={{ width: '16px', height: '16px', background: '#DCFCE7', border: '1px solid #ccc' }}></div>
-              <span>More preferred / better</span>
+            {/* Interactive Comment Layer */}
+            <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10 }}>
+               {data.slideComments.map(comment => (
+                 <div 
+                   key={comment.id}
+                   onClick={(e) => e.stopPropagation()}
+                   style={{ 
+                     position: 'absolute', 
+                     left: `${comment.x}%`, 
+                     top: `${comment.y}%`, 
+                     background: '#FEF08A', 
+                     padding: '0.5rem', 
+                     borderLeft: '4px solid #EAB308',
+                     boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.2)',
+                     pointerEvents: 'auto',
+                     width: '180px',
+                     fontSize: '0.75rem',
+                     color: '#854d0e',
+                     borderRadius: '0 4px 4px 0',
+                     fontFamily: 'cursive'
+                   }}
+                 >
+                   <textarea
+                     value={comment.text}
+                     onChange={(e) => {
+                       const newComments = data.slideComments.map(c => c.id === comment.id ? { ...c, text: e.target.value } : c);
+                       updateData({ slideComments: newComments });
+                     }}
+                     style={{ 
+                       background: 'transparent', 
+                       border: 'none', 
+                       width: '100%', 
+                       resize: 'none', 
+                       outline: 'none',
+                       color: 'inherit',
+                       fontFamily: 'inherit',
+                       fontSize: 'inherit'
+                     }}
+                     rows={3}
+                   />
+                   <button 
+                     onClick={() => updateData({ slideComments: data.slideComments.filter(c => c.id !== comment.id) })}
+                     style={{ position: 'absolute', top: '-8px', right: '-8px', background: '#ef4444', color: 'white', border: 'none', borderRadius: '50%', width: '18px', height: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px' }}
+                   >✕</button>
+                 </div>
+               ))}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.65rem' }}>
-              <div style={{ width: '16px', height: '16px', background: '#FEF3C7', border: '1px solid #ccc' }}></div>
-              <span>Equally preferred / neutral</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.65rem' }}>
-              <div style={{ width: '16px', height: '16px', background: '#FEE2E2', border: '1px solid #ccc' }}></div>
-              <span>Less preferred / worse</span>
-            </div>
+
           </div>
         </div>
 
         {/* Bottom Right Logo */}
-        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right' }}>
+        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right', pointerEvents: 'none' }}>
           <div style={{ color: '#F04E23', fontSize: '1.5rem', fontWeight: 800, fontFamily: 'system-ui', lineHeight: 1 }}>GSK</div>
           <div style={{ color: '#666', fontSize: '0.55rem', marginTop: '2px' }}>CSI External Use</div>
         </div>
         {/* Page Number */}
-        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666', pointerEvents: 'none' }}>
           7
         </div>
       </div>
@@ -857,7 +873,7 @@ const Step5Preview = () => {
         </div>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem' }}>
         <button 
           className="btn btn-secondary" 
           disabled={currentSlideIndex === 0} 
@@ -865,6 +881,17 @@ const Step5Preview = () => {
         >
           Previous Slide
         </button>
+
+        {currentSlideIndex === 6 && (
+          <button 
+            className={`btn ${isAddingComment ? 'btn-danger' : 'btn-primary'}`}
+            onClick={() => setIsAddingComment(!isAddingComment)}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            {isAddingComment ? <span>✕ Cancel Placement</span> : <span>➕ Add Sticky Note</span>}
+          </button>
+        )}
+
         <button 
           className="btn btn-secondary" 
           disabled={currentSlideIndex === slides.length - 1} 

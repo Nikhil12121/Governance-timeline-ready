@@ -46,32 +46,20 @@ export type ValueCreationItem = {
   comment: string;
 };
 
-export type CdpMilestone = {
-  name: string;
-  yearOffset: number; // 0 = Year, 1 = Year+1, ..., 5 = Year+5
-  quarter: 1 | 2 | 3 | 4;
-};
-
-export type CdpValuationMetric = {
-  value: string;
-  color: 'green' | 'yellow' | 'red' | 'none';
-};
-
-export type CdpOption = {
+export type PrimaryIndication = {
   id: string;
-  title: string;
-  subtitle: string;
-  tagline: string;
-  isRecommended: boolean;
-  boxComment: string;
-  milestones: CdpMilestone[];
-  valuation: {
-    ptrs: CdpValuationMetric;
-    lopCosts: CdpValuationMetric;
-    launchDate: CdpValuationMetric;
-    peakSales: CdpValuationMetric;
-    eroi: CdpValuationMetric;
-  };
+  indication: string;
+  lineOfTherapy: string;
+  targetPopulation: string;
+  peakShare: string;
+};
+
+export type SlideComment = {
+  id: string;
+  text: string;
+  x: number; // percentage width
+  y: number; // percentage height
+  linkedMilestoneId?: string;
 };
 
 export type GovernanceData = {
@@ -104,7 +92,11 @@ export type GovernanceData = {
     items: ValueCreationItem[];
     comments: string;
   };
-  cdpOptions: CdpOption[];
+  valuationInputs: {
+    indications: PrimaryIndication[];
+    metrics: Record<string, string>; // e.g. { "PTRS": "30%", "eNPV": "£1.2B" }
+  };
+  slideComments: SlideComment[];
   summaryType: string;
   summaryInstruction: string;
   generatedSummary: string[];
@@ -155,73 +147,20 @@ const initialData: GovernanceData = {
     ],
     comments: ""
   },
-  cdpOptions: [
-    {
-      id: 'opt1',
-      title: 'Option 1',
-      subtitle: '(Time-Sensitive)',
-      tagline: "Team's recommended",
-      isRecommended: true,
-      boxComment: '1:2 Randomization without control arm\nborrowing\nn= 270 patients;\nWithout enrollment hold',
-      milestones: [
-        { name: 'FSFV', yearOffset: 1, quarter: 1 },
-        { name: 'LSFV', yearOffset: 2, quarter: 2 },
-        { name: 'IA', yearOffset: 2, quarter: 4 },
-        { name: 'Read-out', yearOffset: 3, quarter: 3 },
-        { name: 'Filing', yearOffset: 3, quarter: 4 },
-      ],
-      valuation: {
-        ptrs: { value: '50%', color: 'green' },
-        lopCosts: { value: '£175M', color: 'yellow' },
-        launchDate: { value: 'Jun 2027', color: 'green' },
-        peakSales: { value: '', color: 'green' },
-        eroi: { value: '', color: 'none' }
-      }
-    },
-    {
-      id: 'opt2',
-      title: 'Option 2',
-      subtitle: '(Stage-Gated)',
-      tagline: '',
-      isRecommended: false,
-      boxComment: '1:2 Randomization without control arm borrowing\nn= 270 patients;\nWith enrollment hold for 6 months after 120 pts enrolled',
-      milestones: [
-        { name: 'FSFV', yearOffset: 1, quarter: 1 },
-        { name: 'IA1', yearOffset: 1, quarter: 4 },
-        { name: 'LSFV', yearOffset: 2, quarter: 3 },
-        { name: 'IA2', yearOffset: 3, quarter: 1 },
-        { name: 'Read-out', yearOffset: 3, quarter: 4 },
-        { name: 'Filing', yearOffset: 4, quarter: 1 },
-      ],
-      valuation: {
-        ptrs: { value: '45%', color: 'yellow' },
-        lopCosts: { value: '£175M', color: 'yellow' },
-        launchDate: { value: 'Dec 2027', color: 'red' },
-        peakSales: { value: '', color: 'red' },
-        eroi: { value: '', color: 'none' }
-      }
-    },
-    {
-      id: 'opt3',
-      title: 'Option 3',
-      subtitle: '(Cost-Sensitive)',
-      tagline: '',
-      isRecommended: false,
-      boxComment: '1:4 Randomization with control arm\nborrowing\nn= 150 patients',
-      milestones: [
-        { name: 'FSFV', yearOffset: 1, quarter: 1 },
-        { name: 'LSFV', yearOffset: 1, quarter: 3 },
-        { name: 'Read-out', yearOffset: 3, quarter: 2 },
-        { name: 'Filing', yearOffset: 3, quarter: 3 },
-      ],
-      valuation: {
-        ptrs: { value: '40%', color: 'red' },
-        lopCosts: { value: '£90M', color: 'green' },
-        launchDate: { value: 'Jun 2027', color: 'green' },
-        peakSales: { value: '', color: 'red' },
-        eroi: { value: '', color: 'none' }
-      }
+  valuationInputs: {
+    indications: [
+      { id: 'ind1', indication: 'NSCLC 1st Line', lineOfTherapy: '1L', targetPopulation: 'PD-L1 High', peakShare: '25%' },
+      { id: 'ind2', indication: 'Head & Neck', lineOfTherapy: '2L', targetPopulation: 'All comers', peakShare: '15%' }
+    ],
+    metrics: {
+      'PTRS': '30%',
+      'eNPV': '£1.5B',
+      'eROI': '2.4',
+      'Peak Sales': '£1.8B'
     }
+  },
+  slideComments: [
+    { id: 'sc1', text: 'Team to refresh PTRS post-readout', x: 65, y: 70 }
   ],
   summaryType: 'Executive',
   summaryInstruction: '',
