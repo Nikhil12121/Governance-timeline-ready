@@ -939,43 +939,72 @@ const Step5Preview = () => {
         <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
 
         <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          <div style={{ flex: 1, background: 'white', border: '1px solid #999', position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
              
-             <div style={{ height: '40px', background: '#F04E23', width: '100%', display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
-                <span style={{ color: 'white', fontSize: '0.8rem', fontWeight: 700 }}>FUNCTIONAL RESOURCE ESTIMATES (FTE)</span>
-             </div>
-             
-             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10px' }}>
-                <thead style={{ background: '#f1f5f9' }}>
-                   <tr>
-                      <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #e2e8f0' }}>FUNCTION</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2026</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2027</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>2028</th>
-                      <th style={{ padding: '8px', borderBottom: '1px solid #e2e8f0' }}>SIGN-OFF</th>
+             <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+                <thead>
+                   <tr style={{ background: 'linear-gradient(90deg, #F04E23 0%, #EA580C 100%)', color: 'white', fontSize: '6px', fontWeight: 700, textTransform: 'uppercase' }}>
+                      <th rowSpan={2} style={{ textAlign: 'left', padding: '4px', border: '1px solid rgba(255,255,255,0.2)', width: '15%' }}>R&D FUNCTION</th>
+                      <th colSpan={4} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)' }}>CY FTE</th>
+                      <th rowSpan={2} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)' }}>CY IPE</th>
+                      <th colSpan={2} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)' }}>2027</th>
+                      <th colSpan={2} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)' }}>2028</th>
+                      <th colSpan={2} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)' }}>2029</th>
+                      <th colSpan={3} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)' }}>PROJECT TOTAL</th>
+                      <th colSpan={2} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)', background: '#F1F5F9', color: '#475569' }}>PRIOR APPROVAL</th>
+                      <th rowSpan={2} style={{ textAlign: 'center', padding: '2px', border: '1px solid rgba(255,255,255,0.2)', background: '#334155' }}>SIGN OFF</th>
+                   </tr>
+                   <tr style={{ background: 'linear-gradient(90deg, #F04E23 0%, #EA580C 100%)', color: 'white', fontSize: '5.5px' }}>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>1Q</th>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>2Q</th>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>3Q</th>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>4Q</th>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>FTE</th><th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>IPE</th>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>FTE</th><th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>IPE</th>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>FTE</th><th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>IPE</th>
+                      <th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>ALGO</th><th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>HEAD</th><th style={{ border: '1px solid rgba(255,255,255,0.2)' }}>IPE</th>
+                      <th style={{ border: '1px solid #ccc', background: '#F1F5F9', color: '#475569' }}>FTE</th><th style={{ border: '1px solid #ccc', background: '#F1F5F9', color: '#475569' }}>IPE</th>
                    </tr>
                 </thead>
                 <tbody>
                    {data.resourcingData.flatMap(cat => [
-                      <tr key={cat.id} style={{ background: '#f8fafc' }}>
-                         <td style={{ padding: '6px 8px', fontWeight: 700, color: '#F04E23' }}>{cat.name}</td>
-                         <td colSpan={4}></td>
+                      // Category Row
+                      <tr key={cat.id} style={{ background: '#f8fafc', height: '14px' }}>
+                         <td style={{ paddingLeft: '4px', border: '1px solid #e2e8f0', color: '#F04E23', fontWeight: 800, fontSize: '7px' }}>{cat.name}</td>
+                         {[...Array(17)].map((_, i) => <td key={i} style={{ border: '1px solid #e2e8f0' }}></td>)}
                       </tr>,
+                      // Child Rows
                       ...(cat.children || []).map(child => (
-                         <tr key={child.id}>
-                            <td style={{ padding: '4px 20px', color: '#475569' }}>{child.name}</td>
-                            <td style={{ textAlign: 'center' }}>0.4</td>
-                            <td style={{ textAlign: 'center' }}>0.8</td>
-                            <td style={{ textAlign: 'center' }}>1.2</td>
-                            <td style={{ textAlign: 'center', color: '#10b981', fontWeight: 600 }}>Validated</td>
+                         <tr key={child.id} style={{ height: '12px' }}>
+                            <td style={{ paddingLeft: '12px', border: '1px solid #e2e8f0', color: '#64748B', fontSize: '6px', position: 'relative' }}>
+                               <span style={{ position: 'absolute', left: '4px' }}>└</span> {child.name}
+                            </td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.cyFTE?.[0]}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.cyFTE?.[1]}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.cyFTE?.[2]}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.cyFTE?.[3]}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.cyIPE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.y1FTE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.y1IPE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.y2FTE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.y2IPE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.y3FTE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px' }}>{child.y3IPE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px', background: '#fef3c7' }}>{child.projAlgoFTE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px', background: '#fef3c7' }}>{child.projFnHeadFTE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px', background: '#fef3c7' }}>{child.projIPE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px', background: '#f1f5f9' }}>{child.priorFTE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px', background: '#f1f5f9' }}>{child.priorIPE}</td>
+                            <td style={{ textAlign: 'center', border: '1px solid #e2e8f0', fontSize: '5.5px', color: '#10B981', fontWeight: 700 }}>{child.signOff === 'Approved' ? '✓' : ''}</td>
                          </tr>
                       ))
                    ])}
                 </tbody>
              </table>
              
-             <div style={{ marginTop: 'auto', padding: '1rem', background: '#f1f5f9', fontSize: '9px', color: '#64748b', borderTop: '1px solid #e2e8f0' }}>
-                * FTE estimates are subject to functional lead approval during the Q3 planning cycle.
+             <div style={{ marginTop: 'auto', padding: '0.5rem 1rem', background: '#f1f5f9', fontSize: '7px', color: '#64748b', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between' }}>
+                <span>* FTE estimates are subject to functional lead approval during the Q3 planning cycle.</span>
+                <span style={{ fontWeight: 600 }}>Source: Data output from RM as of {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-').toUpperCase()}</span>
              </div>
           </div>
         </div>

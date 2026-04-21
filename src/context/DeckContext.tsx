@@ -196,37 +196,39 @@ const initialData: GovernanceData = {
     {
       id: 'cmo', name: 'Chief Medical Office', isCategory: true,
       children: [
-        { id: 'sf', name: 'Safety', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'rg', name: 'Regulatory', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' }
+        { id: 'sf', name: 'Safety', cyFTE: ['12.5','12.5','14.0','14.0'], cyIPE: '£2.4m', y1FTE: '15.2', y1IPE: '£3.0m', y2FTE: '15.5', y2IPE: '£3.2m', y3FTE: '10.8', y3IPE: '£2.1m', projAlgoFTE: '14.2', projFnHeadFTE: '14.5', projIPE: '£2.8m', priorFTE: '12.0', priorIPE: '£2.2m', signOff: 'Approved' },
+        { id: 'rg', name: 'Regulatory', cyFTE: ['8.2','8.2','8.5','8.5'], cyIPE: '£1.5m', y1FTE: '10.5', y1IPE: '£2.2m', y2FTE: '12.0', y2IPE: '£2.5m', y3FTE: '6.4', y3IPE: '£1.2m', projAlgoFTE: '9.8', projFnHeadFTE: '10.2', projIPE: '£2.0m', priorFTE: '8.0', priorIPE: '£1.5m', signOff: 'Pending' }
       ]
     },
     {
-      id: 'do', name: 'Development Operations', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a'
+      id: 'do', name: 'Development Operations', isCategory: true,
+      children: [
+        { id: 'do1', name: 'Global Ops', cyFTE: ['25.0','25.0','28.0','28.0'], cyIPE: '£5.2m', y1FTE: '32.5', y1IPE: '£6.8m', y2FTE: '35.0', y2IPE: '£7.5m', y3FTE: '20.5', y3IPE: '£4.2m', projAlgoFTE: '28.4', projFnHeadFTE: '30.5', projIPE: '£6.2m', priorFTE: '24.5', priorIPE: '£4.8m', signOff: 'Approved' }
+      ]
     },
     {
       id: 'tds', name: 'Transformational & Development Services', isCategory: true,
       children: [
-        { id: 'ad', name: 'Asia Development', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'ep1', name: 'Epidemiology', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'ep2', name: 'Epidemiology', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' }
+        { id: 'ad', name: 'Asia Development', cyFTE: ['15.2','15.2','18.5','18.5'], cyIPE: '£3.2m', y1FTE: '20.8', y1IPE: '£4.5m', y2FTE: '22.4', y2IPE: '£4.8m', y3FTE: '12.0', y3IPE: '£2.5m', projAlgoFTE: '18.5', projFnHeadFTE: '19.8', projIPE: '£4.2m', priorFTE: '14.8', priorIPE: '£3.0m', signOff: 'Approved' },
+        { id: 'ep1', name: 'Epidemiology', cyFTE: ['4.2','4.2','4.5','4.5'], cyIPE: '£0.8m', y1FTE: '5.2', y1IPE: '£1.2m', y2FTE: '5.5', y2IPE: '£1.4m', y3FTE: '3.2', y3IPE: '£0.8m', projAlgoFTE: '4.5', projFnHeadFTE: '4.8', projIPE: '£1.1m', priorFTE: '4.0', priorIPE: '£0.7m', signOff: 'Approved' }
       ]
     },
     {
       id: 'dds', name: 'Drug Development and Supply', isCategory: true,
       children: [
-        { id: 'ds', name: 'Drug Substance', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'dp', name: 'Drug Product', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'cs', name: 'Clinical Supply', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' }
+        { id: 'ds', name: 'Drug Substance', cyFTE: ['18.5','18.5','22.4','22.4'], cyIPE: '£4.8m', y1FTE: '25.2', y1IPE: '£8.5m', y2FTE: '28.4', y2IPE: '£9.2m', y3FTE: '15.8', y3IPE: '£5.4m', projAlgoFTE: '22.4', projFnHeadFTE: '24.2', projIPE: '£7.8m', priorFTE: '17.5', priorIPE: '£4.2m', signOff: 'Approved' },
+        { id: 'dp', name: 'Drug Product', cyFTE: ['12.4','12.4','15.8','15.8'], cyIPE: '£3.2m', y1FTE: '18.5', y1IPE: '£6.4m', y2FTE: '20.2', y2IPE: '£7.0m', y3FTE: '10.4', y3IPE: '£3.8m', projAlgoFTE: '15.5', projFnHeadFTE: '16.8', projIPE: '£5.2m', priorFTE: '11.8', priorIPE: '£2.8m', signOff: 'Approved' },
+        { id: 'cs', name: 'Clinical Supply', cyFTE: ['8.5','8.5','10.2','10.2'], cyIPE: '£1.5m', y1FTE: '12.4', y1IPE: '£2.5m', y2FTE: '14.8', y2IPE: '£3.2m', y3FTE: '6.2', y3IPE: '£1.5m', projAlgoFTE: '10.4', projFnHeadFTE: '11.2', projIPE: '£2.2m', priorFTE: '7.5', priorIPE: '£1.2m', signOff: 'Approved' }
       ]
     },
     {
       id: 'ta', name: 'Therapy Area', isCategory: true,
       children: [
-        { id: 'bs', name: 'Biostatistics', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'csc', name: 'Clinical Science', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'ppm', name: 'Pipeline Project Management', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'rs', name: 'Research', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
-        { id: 'xdl', name: 'xDL', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'bs', name: 'Biostatistics', cyFTE: ['6.2','6.2','6.8','6.8'], cyIPE: '£1.2m', y1FTE: '8.5', y1IPE: '£1.8m', y2FTE: '9.2', y2IPE: '£2.0m', y3FTE: '5.4', y3IPE: '£1.0m', projAlgoFTE: '7.4', projFnHeadFTE: '7.8', projIPE: '£1.6m', priorFTE: '5.8', priorIPE: '£1.0m', signOff: 'Approved' },
+        { id: 'csc', name: 'Clinical Science', cyFTE: ['10.5','10.5','12.8','12.8'], cyIPE: '£2.4m', y1FTE: '15.2', y1IPE: '£3.5m', y2FTE: '18.0', y2IPE: '£4.2m', y3FTE: '9.2', y3IPE: '£2.0m', projAlgoFTE: '12.8', projFnHeadFTE: '14.5', projIPE: '£3.2m', priorFTE: '9.5', priorIPE: '£2.1m', signOff: 'Approved' },
+        { id: 'ppm', name: 'Pipeline Project Management', cyFTE: ['4.2','4.2','4.5','4.5'], cyIPE: '£0.6m', y1FTE: '5.8', y1IPE: '£0.8m', y2FTE: '6.2', y2IPE: '£1.0m', y3FTE: '3.5', y3IPE: '£0.5m', projAlgoFTE: '4.8', projFnHeadFTE: '5.2', projIPE: '£0.8m', priorFTE: '3.8', priorIPE: '£0.5m', signOff: 'Approved' },
+        { id: 'rs', name: 'Research', cyFTE: ['20.4','20.4','24.2','24.2'], cyIPE: '£4.2m', y1FTE: '28.5', y1IPE: '£6.5m', y2FTE: '30.4', y2IPE: '£7.2m', y3FTE: '15.2', y3IPE: '£3.2m', projAlgoFTE: '24.2', projFnHeadFTE: '26.5', projIPE: '£5.8m', priorFTE: '18.5', priorIPE: '£3.5m', signOff: 'Approved' },
+        { id: 'xdl', name: 'xDL', cyFTE: ['5.2','5.2','5.8','5.8'], cyIPE: '£1.0m', y1FTE: '7.2', y1IPE: '£1.5m', y2FTE: '8.4', y2IPE: '£1.8m', y3FTE: '4.2', y3IPE: '£0.8m', projAlgoFTE: '6.4', projFnHeadFTE: '6.8', projIPE: '£1.4m', priorFTE: '4.8', priorIPE: '£0.8m', signOff: 'Approved' },
       ]
     }
   ],
