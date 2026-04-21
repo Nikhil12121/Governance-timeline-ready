@@ -59,6 +59,8 @@ export type SlideComment = {
   text: string;
   x: number; // percentage width
   y: number; // percentage height
+  width: number; // percentage width
+  height: number; // percentage height
   linkedMilestoneId?: string;
 };
 
@@ -160,7 +162,7 @@ const initialData: GovernanceData = {
     }
   },
   slideComments: [
-    { id: 'sc1', text: 'Team to refresh PTRS post-readout', x: 65, y: 70 }
+    { id: 'sc1', text: 'Team to refresh PTRS post-readout', x: 65, y: 70, width: 20, height: 15 }
   ],
   summaryType: 'Executive',
   summaryInstruction: '',

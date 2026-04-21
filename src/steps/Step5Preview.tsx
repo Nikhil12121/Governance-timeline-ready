@@ -1,10 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDeck } from '../context/DeckContext';
+
+type Interaction = {
+  id: string;
+  type: 'drag' | 'resize';
+  startX: number;
+  startY: number;
+  initialX: number;
+  initialY: number;
+  initialW: number;
+  initialH: number;
+};
 
 const Step5Preview = () => {
   const { data, updateData } = useDeck();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isAddingComment, setIsAddingComment] = useState(false);
+  const [activeInteraction, setActiveInteraction] = useState<Interaction | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMove = (e: MouseEvent) => {
+      if (!activeInteraction || !containerRef.current) return;
+      
+      const rect = containerRef.current.getBoundingClientRect();
+      const deltaX = ((e.clientX - activeInteraction.startX) / rect.width) * 100;
+      const deltaY = ((e.clientY - activeInteraction.startY) / rect.height) * 100;
+
+      const newComments = data.slideComments.map(c => {
+        if (c.id !== activeInteraction.id) return c;
+        
+        if (activeInteraction.type === 'drag') {
+          return {
+            ...c,
+            x: Math.min(Math.max(0, activeInteraction.initialX + deltaX), 100 - c.width),
+            y: Math.min(Math.max(0, activeInteraction.initialY + deltaY), 100 - c.height)
+          };
+        } else {
+          return {
+            ...c,
+            width: Math.max(10, activeInteraction.initialW + deltaX),
+            height: Math.max(5, activeInteraction.initialH + deltaY)
+          };
+        }
+      });
+
+      updateData({ slideComments: newComments });
+    };
+
+    const handleUp = () => {
+      setActiveInteraction(null);
+    };
+
+    if (activeInteraction) {
+      window.addEventListener('mousemove', handleMove);
+      window.addEventListener('mouseup', handleUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, [activeInteraction, data.slideComments, updateData]);
 
   const slideStyle: React.CSSProperties = {
     aspectRatio: '16 / 9',
@@ -513,17 +570,18 @@ const Step5Preview = () => {
     // Slide 6: Key Valuation Inputs & Milestones
     (
       <div 
+        ref={containerRef}
         style={{ ...slideStyle, cursor: isAddingComment ? 'crosshair' : 'default' }} 
         key="slide_valuation_inputs"
         onClick={(e) => {
-          if (!isAddingComment) return;
-          const rect = e.currentTarget.getBoundingClientRect();
+          if (!isAddingComment || !containerRef.current) return;
+          const rect = containerRef.current.getBoundingClientRect();
           const x = ((e.clientX - rect.left) / rect.width) * 100;
           const y = ((e.clientY - rect.top) / rect.height) * 100;
           updateData({ 
             slideComments: [
               ...data.slideComments, 
-              { id: `sc${Date.now()}`, text: 'New comment...', x, y }
+              { id: `sc${Date.now()}`, text: 'New comment...', x, y, width: 20, height: 15 }
             ] 
           });
           setIsAddingComment(false);
@@ -632,50 +690,103 @@ const Step5Preview = () => {
 
             {/* Interactive Comment Layer */}
             <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10 }}>
-               {data.slideComments.map(comment => (
-                 <div 
-                   key={comment.id}
-                   onClick={(e) => e.stopPropagation()}
-                   style={{ 
-                     position: 'absolute', 
-                     left: `${comment.x}%`, 
-                     top: `${comment.y}%`, 
-                     background: '#FEF08A', 
-                     padding: '0.5rem', 
-                     borderLeft: '4px solid #EAB308',
-                     boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.2)',
-                     pointerEvents: 'auto',
-                     width: '180px',
-                     fontSize: '0.75rem',
-                     color: '#854d0e',
-                     borderRadius: '0 4px 4px 0',
-                     fontFamily: 'cursive'
+             {data.slideComments.map(comment => (
+               <div 
+                 key={comment.id}
+                 onClick={(e) => e.stopPropagation()}
+                 onMouseDown={(e) => {
+                   if (isAddingComment) return;
+                   e.stopPropagation();
+                   setActiveInteraction({
+                     id: comment.id,
+                     type: 'drag',
+                     startX: e.clientX,
+                     startY: e.clientY,
+                     initialX: comment.x,
+                     initialY: comment.y,
+                     initialW: comment.width,
+                     initialH: comment.height
+                   });
+                 }}
+                 style={{ 
+                   position: 'absolute', 
+                   left: `${comment.x}%`, 
+                   top: `${comment.y}%`, 
+                   width: `${comment.width}%`,
+                   height: `${comment.height}%`,
+                   background: '#FEF08A', 
+                   padding: '0.5rem', 
+                   borderLeft: '4px solid #EAB308',
+                   boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.2)',
+                   pointerEvents: 'auto',
+                   fontSize: '0.75rem',
+                   color: '#854d0e',
+                   borderRadius: '0 4px 4px 0',
+                   fontFamily: 'cursive',
+                   cursor: 'move',
+                   display: 'flex',
+                   flexDirection: 'column',
+                   zIndex: activeInteraction?.id === comment.id ? 100 : 10
+                 }}
+               >
+                 {/* Drag handle overlay */}
+                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1.5rem', cursor: 'move' }} />
+                 
+                 <textarea
+                   value={comment.text}
+                   onMouseDown={(e) => e.stopPropagation()} // Allow text selection
+                   onChange={(e) => {
+                     const newComments = data.slideComments.map(c => c.id === comment.id ? { ...c, text: e.target.value } : c);
+                     updateData({ slideComments: newComments });
                    }}
-                 >
-                   <textarea
-                     value={comment.text}
-                     onChange={(e) => {
-                       const newComments = data.slideComments.map(c => c.id === comment.id ? { ...c, text: e.target.value } : c);
-                       updateData({ slideComments: newComments });
-                     }}
-                     style={{ 
-                       background: 'transparent', 
-                       border: 'none', 
-                       width: '100%', 
-                       resize: 'none', 
-                       outline: 'none',
-                       color: 'inherit',
-                       fontFamily: 'inherit',
-                       fontSize: 'inherit'
-                     }}
-                     rows={3}
-                   />
-                   <button 
-                     onClick={() => updateData({ slideComments: data.slideComments.filter(c => c.id !== comment.id) })}
-                     style={{ position: 'absolute', top: '-8px', right: '-8px', background: '#ef4444', color: 'white', border: 'none', borderRadius: '50%', width: '18px', height: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px' }}
-                   >✕</button>
-                 </div>
-               ))}
+                   style={{ 
+                     background: 'transparent', 
+                     border: 'none', 
+                     width: '100%', 
+                     height: '100%',
+                     resize: 'none', 
+                     outline: 'none',
+                     color: 'inherit',
+                     fontFamily: 'inherit',
+                     fontSize: 'inherit'
+                   }}
+                 />
+
+                 {/* Resize Handle */}
+                 <div 
+                   onMouseDown={(e) => {
+                     e.stopPropagation();
+                     e.preventDefault();
+                     setActiveInteraction({
+                       id: comment.id,
+                       type: 'resize',
+                       startX: e.clientX,
+                       startY: e.clientY,
+                       initialX: comment.x,
+                       initialY: comment.y,
+                       initialW: comment.width,
+                       initialH: comment.height
+                     });
+                   }}
+                   style={{ 
+                     position: 'absolute', bottom: '0', right: '0', 
+                     width: '12px', height: '12px', 
+                     cursor: 'se-resize',
+                     background: 'linear-gradient(135deg, transparent 50%, #EAB308 50%)',
+                     borderRadius: '0 0 4px 0'
+                   }} 
+                 />
+
+                 <button 
+                   onClick={(e) => {
+                     e.stopPropagation();
+                     updateData({ slideComments: data.slideComments.filter(c => c.id !== comment.id) });
+                   }}
+                   onMouseDown={(e) => e.stopPropagation()}
+                   style={{ position: 'absolute', top: '-8px', right: '-8px', background: '#ef4444', color: 'white', border: 'none', borderRadius: '50%', width: '18px', height: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', zIndex: 110 }}
+                 >✕</button>
+               </div>
+             ))}
             </div>
 
           </div>
