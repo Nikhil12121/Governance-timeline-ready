@@ -455,7 +455,7 @@ const Step5Preview = () => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem', paddingBottom: '2.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem', paddingBottom: '1rem' }}>
             
             {/* Main Table */}
             <table style={{ width: '100%', borderCollapse: 'collapse', height: '100%', tableLayout: 'fixed' }}>
@@ -463,31 +463,31 @@ const Step5Preview = () => {
                 <tr>
                   {/* Empty top left corner */}
                   <th style={{ width: '20%', border: 'none' }}></th>
-                  <th style={{ width: '25%', background: '#F04E23', color: 'white', padding: '0.5rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Current Estimate</th>
-                  <th style={{ width: '25%', background: '#555', color: 'white', padding: '0.5rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Last Governed</th>
-                  <th style={{ width: '30%', background: '#555', color: 'white', padding: '0.5rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Comment</th>
+                  <th style={{ width: '25%', background: '#F04E23', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Current Estimate</th>
+                  <th style={{ width: '25%', background: '#555', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Last Governed</th>
+                  <th style={{ width: '30%', background: '#555', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Comment</th>
                 </tr>
               </thead>
               <tbody>
                 {data.valueCreation.items.map((item) => (
                   <tr key={item.id}>
                     {/* Pink metric cell */}
-                    <td style={{ background: '#FCE4D6', border: '1px solid #C55A11', padding: '0.5rem', textAlign: 'center', fontSize: '0.75rem', color: '#111' }}>
+                    <td style={{ background: '#FCE4D6', border: '1px solid #C55A11', padding: '0.15rem 0.5rem', textAlign: 'center', fontSize: '0.75rem', color: '#111' }}>
                       {item.metric}
                     </td>
                     {/* Current Estimate cell */}
-                    <td style={{ border: '1px solid #7F7F7F', padding: '0.5rem', textAlign: 'center', background: 'white' }}>
-                      {item.currentEstimate === 'green-up' ? <div style={{ color: '#10B981', fontSize: '1.2rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
-                       item.currentEstimate === 'red-up' ? <div style={{ color: '#EF4444', fontSize: '1.2rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
-                       item.currentEstimate === 'similar' ? <div style={{ color: '#111', fontSize: '1.2rem', fontWeight: 800, lineHeight: 1 }}>⇔</div> :
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.15rem 0.5rem', textAlign: 'center', background: 'white' }}>
+                      {item.currentEstimate === 'green-up' ? <div style={{ color: '#10B981', fontSize: '1.1rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
+                       item.currentEstimate === 'red-up' ? <div style={{ color: '#EF4444', fontSize: '1.1rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
+                       item.currentEstimate === 'similar' ? <div style={{ color: '#111', fontSize: '1.1rem', fontWeight: 800, lineHeight: 1 }}>⇔</div> :
                        <div style={{ color: '#333', fontSize: '0.75rem' }}>{item.currentEstimate}</div>}
                     </td>
                     {/* Last Governed cell */}
-                    <td style={{ border: '1px solid #7F7F7F', padding: '0.5rem', textAlign: 'center', background: 'white', fontSize: '0.75rem' }}>
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.15rem 0.5rem', textAlign: 'center', background: 'white', fontSize: '0.75rem' }}>
                       {item.lastGoverned}
                     </td>
                     {/* Comment cell */}
-                    <td style={{ border: '1px solid #7F7F7F', padding: '0.5rem', background: 'white', fontSize: '0.75rem', verticalAlign: 'top' }}>
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.15rem 0.5rem', background: 'white', fontSize: '0.75rem', verticalAlign: 'top' }}>
                       {item.comment}
                     </td>
                   </tr>
