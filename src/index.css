@@ -22,7 +22,7 @@
   --accent-gradient: linear-gradient(135deg, #F04E23 0%, #D94620 100%);
   
   /* Table row highlights */
-  --row-highlight: rgba(15, 23, 42, 0.03);
+  --row-highlight: #f1f5f9;
   
   /* Chart Colors */
   --chart-orange: #f59e0b;

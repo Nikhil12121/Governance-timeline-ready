@@ -126,9 +126,9 @@ const Step2Timeline = () => {
           }}>
             
             {/* Header Row */}
-            <div className="hio-cell hio-header-cell border-b border-r swimlane-header">SWIMLANE</div>
+            <div className="hio-cell hio-header-cell border-b border-r"></div>
             {years.map((year) => (
-              <div key={year} className="hio-cell hio-header-cell border-b border-r hio-grid-vlines" style={{ position: 'relative' }}>
+              <div key={year} className="hio-cell hio-header-cell border-b border-r" style={{ position: 'relative' }}>
                 {year}
                 {year === data.currentYear && (
                   <div className="today-marker">
@@ -146,18 +146,18 @@ const Step2Timeline = () => {
             {data.swimlanes.map((lane, index) => {
               // Get milestones for this lane
               const laneMilestones = data.milestones.filter(m => m.swimlane === lane);
-              const isStripe = index % 2 !== 0;
+              const isEven = index % 2 === 0;
 
               return (
                 <div key={lane} className="hio-row-contents" style={{ display: 'contents' }}>
-                  <div className={`hio-cell border-r border-b fw-500 swimlane-header ${isStripe ? 'bg-stripe' : 'bg-light'}`}>{lane}</div>
+                  <div className={`hio-cell border-r border-b fw-500 ${isEven ? 'bg-light' : ''}`}>{lane}</div>
                   
                   {/* Years cells for timeline */}
                   {years.map(year => {
                     const allYearMilestones = laneMilestones.filter(m => m.year === year);
                     const visibleYearMilestones = allYearMilestones.filter(m => m.isSelected);
                     return (
-                      <div key={`${lane}-${year}`} className={`hio-cell border-r border-b hio-timeline-cell hio-grid-vlines ${isStripe ? 'bg-stripe' : 'bg-light'}`}>
+                      <div key={`${lane}-${year}`} className={`hio-cell border-r border-b hio-timeline-cell ${isEven ? 'bg-light' : ''}`}>
                         <div className="dotted-midline"></div>
                         
                         {/* Segmented Today Line (only in swimlanes) */}
@@ -186,9 +186,9 @@ const Step2Timeline = () => {
                   })}
                   
                   {/* Summary trailing cells for swimlanes (usually empty or placeholder PTRS) */}
-                  <div className={`hio-cell border-r border-b hio-grid-vlines ${isStripe ? 'bg-stripe' : 'bg-light'}`}></div>
-                  <div className={`hio-cell border-r border-b hio-grid-vlines ${isStripe ? 'bg-stripe' : 'bg-light'}`}></div>
-                  <div className={`hio-cell border-b hio-grid-vlines ${isStripe ? 'bg-stripe' : 'bg-light'}`}>{index * 10 + 15}%</div>
+                  <div className={`hio-cell border-r border-b ${isEven ? 'bg-light' : ''}`}></div>
+                  <div className={`hio-cell border-r border-b ${isEven ? 'bg-light' : ''}`}></div>
+                  <div className={`hio-cell border-b ${isEven ? 'bg-light' : ''}`}>{index * 10 + 15}%</div>
                 </div>
               );
             })}
@@ -221,58 +221,12 @@ const Step2Timeline = () => {
       </section>
 
       <section>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <h2 style={{ margin: 0, color: 'var(--accent-primary)' }}>Variance Commentary</h2>
-          <button 
-            className="btn btn-secondary btn-sm ai-btn" 
-            onClick={() => {
-              // Rule-based AI Analysis Logic
-              const totalVariance = data.financials.find(f => f.label.includes('IPE+EPE'))?.data || {};
-              const yearsWithData = Object.entries(totalVariance).filter(([_, val]) => val);
-              
-              let actuals = "Analysis of current timeline and spend reveals that ";
-              let budget = "Variance vs Budget is primarily driven by ";
-
-              const overspends = yearsWithData.filter(([_, val]) => val.includes('-'));
-              const underspends = yearsWithData.filter(([_, val]) => val.includes('+'));
-
-              if (overspends.length > 0) {
-                actuals += `significant overspends were observed in ${overspends.map(o => o[0]).join(', ')} due to accelerated milestone achievement and increased clinical resourcing. `;
-                budget += `unplanned clinical capacity requirements in ${overspends[0]?.[0]}. `;
-              } else {
-                actuals += `expenditure is largely tracking within governed limits for most years. `;
-              }
-
-              if (underspends.length > 0) {
-                actuals += `Underspend in ${underspends.map(u => u[0]).join(', ')} reflects optimized protocol execution and phaser delays in vendor onboarding. `;
-                budget += `timing differences in ${underspends[0]?.[0]} which are expected to re-phase. `;
-              }
-
-              updateData({ hioCommentary: { actuals, budget } });
-            }}
-          >
-            🤖 Generate AI Analysis
-          </button>
-        </div>
-
+        <h2 style={{ marginBottom: '1rem', color: 'var(--accent-primary)' }}>Variance Commentary</h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div>
-            <div className="ai-toolbar">
-              <button 
-                className="btn btn-secondary btn-sm ai-btn"
-                onClick={() => {
-                  const current = data.hioCommentary.actuals;
-                  if (!current) return;
-                  const paraphrased = current.includes('drivers') ? current : "Key drivers for the observed variance include optimized vendor management and accelerated site activation, totaling a net timing benefit across the primary stage.";
-                  updateData({ hioCommentary: { ...data.hioCommentary, actuals: paraphrased } });
-                }}
-              >
-                ✨ Paraphrase
-              </button>
-            </div>
             <div style={{ background: 'var(--accent-primary)', color: 'white', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>Actuals</div>
             <textarea 
-              rows={5} 
+              rows={3} 
               placeholder="Describe main drivers for over-/under spend..."
               value={data.hioCommentary.actuals}
               onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, actuals: e.target.value } })}
@@ -280,22 +234,9 @@ const Step2Timeline = () => {
             />
           </div>
           <div>
-            <div className="ai-toolbar">
-              <button 
-                className="btn btn-secondary btn-sm ai-btn"
-                onClick={() => {
-                  const current = data.hioCommentary.budget;
-                  if (!current) return;
-                  const paraphrased = "The variances compared to the previously governed budget are mainly attributed to rephasing of clinical activities and strategic resourcing shifts to meet accelerated POC timelines.";
-                  updateData({ hioCommentary: { ...data.hioCommentary, budget: paraphrased } });
-                }}
-              >
-                ✨ Paraphrase
-              </button>
-            </div>
             <div style={{ background: '#fcece8', color: '#000', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>Budget</div>
             <textarea 
-              rows={5} 
+              rows={3} 
               placeholder="Describe variance vs budget"
               value={data.hioCommentary.budget}
               onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, budget: e.target.value } })}
