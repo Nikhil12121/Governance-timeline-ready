@@ -38,6 +38,14 @@ export type Risk = {
   mitigation: string;
 };
 
+export type ValueCreationItem = {
+  id: string;
+  metric: string;
+  lastGoverned: string;
+  current: string;
+  change: string;
+};
+
 export type GovernanceData = {
   projectId: string;
   projectName: string;
@@ -56,6 +64,17 @@ export type GovernanceData = {
     context: string;
     teamProposal: string;
     keyQuestions: string;
+  };
+  reasonsToBelieve: {
+    unmetNeed: string;
+    moa: string;
+    preclinical: string;
+    clinical: string;
+    reasonsNotToBelieve: string;
+  };
+  valueCreation: {
+    items: ValueCreationItem[];
+    comments: string;
   };
   summaryType: string;
   summaryInstruction: string;
@@ -81,7 +100,27 @@ const initialData: GovernanceData = {
   date: new Date().toISOString().split('T')[0],
   consultationText: '',
   consultationPoints: { decision: [], input: [], awareness: [] },
-  executiveSummary: { context: '', teamProposal: '', keyQuestions: '' },
+  executiveSummary: { 
+    context: 'Recent Phase II readout demonstrated strong efficacy (p < 0.01) but highlighted a need for expanded safety monitoring. Initial engagements with regulatory bodies suggest supportive sentiment for protocol amendment, although this extends timelines by 6 months. Competitor X recently announced trial delays, giving us a brief window to capture market share.', 
+    teamProposal: 'Execute the expanded Phase II protocol to capture a broader label indication. Accept the timeline shift to Q3 2027 to ensure higher peak year sales potential and robust safety profile.', 
+    keyQuestions: '• Does the board endorse the trade-off of a 6-month delay for an expanded primary label?\n• Does the board approve the additional £1.2M resourcing required for safety monitoring in 2027?' 
+  },
+  reasonsToBelieve: {
+    unmetNeed: '• High unmet need in 3rd line setting\n• Currently approved therapies show <30% ORR\n• Significant patient burden with existing SoC',
+    moa: '• First-in-class dual-mechanism inhibitor\n• Highly selective for target receptor vs wild type\n• Prolonged half-life allows once-weekly dosing',
+    preclinical: '• Robust tumor regression in 3 distinct xenograft models\n• Synergistic effect when combined with current SoC\n• No observed off-target toxicity in GLP tox studies',
+    clinical: '• Proof of concept established in early Phase I/IIa\n• Early signals of durability of response (>6 months)\n• Favorable safety profile to date, no dose-limiting toxicities',
+    reasonsNotToBelieve: '• Unknown long-term safety profile\n• Competitive landscape rapidly evolving with 2 other agents in Phase II\n• Formulation scale-up risks remain'
+  },
+  valueCreation: {
+    items: [
+      { id: 'vc1', metric: 'PTRS', lastGoverned: '25%', current: '30%', change: '+5%' },
+      { id: 'vc2', metric: 'Total Cost (EPE)', lastGoverned: '£150M', current: '£165M', change: '+£15M' },
+      { id: 'vc3', metric: 'Timeline to filing', lastGoverned: 'Q1 2027', current: 'Q3 2027', change: '+6 months' },
+      { id: 'vc4', metric: 'Peak Year Sales', lastGoverned: '£1.2B', current: '£1.5B', change: '+£300M' }
+    ],
+    comments: "The protocol amendment delays the timeline and slightly increases cost but drives a significant upgrade in peak year sales and technical probability of success."
+  },
   summaryType: 'Executive',
   summaryInstruction: '',
   generatedSummary: [],

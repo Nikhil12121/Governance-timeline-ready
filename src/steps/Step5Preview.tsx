@@ -194,83 +194,288 @@ const Step5Preview = () => {
         </div>
       </div>
     ),
-    // Slide 4: Consultation Points (Detailed Breakdown)
+    // Slide 3: Executive Summary (Context, Proposal, Questions)
     (
-      <div style={slideStyle} key="slide_points">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
-            Why does the team consult the board?
-          </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>{data.projectId}</span>
+      <div style={slideStyle} key="slide_executive_summary">
+        {/* Top left CSI */}
+        <div style={{ position: 'absolute', top: '0.5rem', left: '1rem', fontSize: '0.65rem', color: '#666' }}>
+          CSI External Use
         </div>
-        
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
 
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', height: '100%' }}>
-            <div style={{ background: '#F8FAFC', padding: '1.25rem', borderRadius: '8px', border: '1px solid #E2E8F0', borderTop: '6px solid #10B981', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: '#10B981', marginBottom: '1.25rem', fontSize: '1.2rem', fontWeight: 700, borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>For Decision</h3>
-              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: '#334155', lineHeight: '1.5' }}>
-                {data.consultationPoints.decision.map((pt, i) => pt ? <li key={`d-${i}`} style={{ marginBottom: '0.75rem' }}>{pt}</li> : null)}
-              </ul>
-            </div>
-            <div style={{ background: '#F8FAFC', padding: '1.25rem', borderRadius: '8px', border: '1px solid #E2E8F0', borderTop: '6px solid #3B82F6', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: '#3B82F6', marginBottom: '1.25rem', fontSize: '1.2rem', fontWeight: 700, borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>For Input</h3>
-              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: '#334155', lineHeight: '1.5' }}>
-                {data.consultationPoints.input.map((pt, i) => pt ? <li key={`i-${i}`} style={{ marginBottom: '0.75rem' }}>{pt}</li> : null)}
-              </ul>
-            </div>
-            <div style={{ background: '#F8FAFC', padding: '1.25rem', borderRadius: '8px', border: '1px solid #E2E8F0', borderTop: '6px solid #F59E0B', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: '#F59E0B', marginBottom: '1.25rem', fontSize: '1.2rem', fontWeight: 700, borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>For Awareness</h3>
-              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: '#334155', lineHeight: '1.5' }}>
-                {data.consultationPoints.awareness.map((pt, i) => pt ? <li key={`a-${i}`} style={{ marginBottom: '0.75rem' }}>{pt}</li> : null)}
-              </ul>
+        {/* Container for main content */}
+        <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          
+          {/* Header Row */}
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', marginTop: '0.5rem' }}>
+            <div style={{ 
+              width: 0, height: 0, 
+              borderTop: '8px solid transparent', 
+              borderBottom: '8px solid transparent', 
+              borderLeft: '12px solid #F04E23', 
+              marginRight: '12px' 
+            }}></div>
+            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+              Executive Summary: {data.projectName} {data.boardHeading} {new Date(data.date).toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }).replace(' ', '-')}
+            </h2>
+          </div>
+
+          {/* Request to Governance section */}
+          <div style={{ marginBottom: '1rem', paddingLeft: '1.5rem' }}>
+            <h3 style={{ margin: '0 0 0.25rem 0', color: '#F04E23', fontSize: '1.1rem', fontWeight: 400 }}>Request to Governance</h3>
+            <div style={{ fontSize: '0.75rem', color: '#333', lineHeight: '1.4' }}>
+              <div><strong>For DECISION:</strong> {data.consultationPoints.decision.length > 0 ? data.consultationPoints.decision.join(' / ') : 'Does DRB endorse the development plan design (options, PTRS and costs)?'}</div>
+              <div><strong>For INPUT:</strong> {data.consultationPoints.input.length > 0 ? data.consultationPoints.input.join(' / ') : 'The team seeks Board input on... / The Board seeks team input on...'}</div>
             </div>
           </div>
+
+          {/* Three Bands */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem' }}>
+            
+            {/* CONTEXT */}
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div style={{ background: '#F04E23', color: 'white', padding: '0.25rem 0.5rem', fontSize: '0.85rem', fontWeight: 500, textTransform: 'uppercase' }}>
+                Context
+              </div>
+              <div style={{ border: '2px solid #F04E23', borderTop: 'none', padding: '0.5rem', fontSize: '0.75rem', color: '#333', flex: 1 }}>
+                {data.executiveSummary.context.split('\n').map((p, i) => <p key={i} style={{ margin: '0 0 4px 0' }}>{p}</p>)}
+              </div>
+            </div>
+
+            {/* TEAM PROPOSAL */}
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div style={{ background: '#F04E23', color: 'white', padding: '0.25rem 0.5rem', fontSize: '0.85rem', fontWeight: 500, textTransform: 'uppercase' }}>
+                Team Proposal
+              </div>
+              <div style={{ border: '2px solid #F04E23', borderTop: 'none', padding: '0.5rem', fontSize: '0.75rem', color: '#333', flex: 1 }}>
+                {data.executiveSummary.teamProposal.split('\n').map((p, i) => <p key={i} style={{ margin: '0 0 4px 0' }}>{p}</p>)}
+              </div>
+            </div>
+
+            {/* KEY QUESTIONS */}
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div style={{ background: '#F04E23', color: 'white', padding: '0.25rem 0.5rem', fontSize: '0.85rem', fontWeight: 500, textTransform: 'uppercase' }}>
+                Key Questions to be discussed
+              </div>
+              <div style={{ border: '2px solid #F04E23', borderTop: 'none', padding: '0.5rem', fontSize: '0.75rem', color: '#333', flex: 1 }}>
+                <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
+                  {data.executiveSummary.keyQuestions.split('\n').map((q, i) => {
+                    const cleanQ = q.replace(/^•\s*/, '');
+                    return cleanQ ? <li key={i} style={{ marginBottom: '4px', color: '#F04E23' }}><span style={{ color: '#333' }}>{cleanQ}</span></li> : null;
+                  })}
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Right Logo */}
+        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right' }}>
+          <div style={{ color: '#F04E23', fontSize: '1.5rem', fontWeight: 800, fontFamily: 'system-ui', lineHeight: 1 }}>GSK</div>
+          <div style={{ color: '#666', fontSize: '0.55rem', marginTop: '2px' }}>CSI External Use</div>
+        </div>
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+          3
         </div>
       </div>
     ),
-    // Slide 5: High-level Investment Overview
+    // Slide 4: Reasons to Believe
     (
-      <div style={slideStyle} key="slide2">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
-            Why does the team consult the board?
-          </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>{data.projectId}</span>
+      <div style={slideStyle} key="slide_reasons_to_believe">
+        {/* Top left CSI */}
+        <div style={{ position: 'absolute', top: '0.5rem', left: '1rem', fontSize: '0.65rem', color: '#666' }}>
+          CSI External Use
         </div>
-        
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
 
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', height: '100%' }}>
-            <div style={{ background: '#F8FAFC', padding: '1.25rem', borderRadius: '8px', border: '1px solid #E2E8F0', borderTop: '6px solid #10B981', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: '#10B981', marginBottom: '1.25rem', fontSize: '1.2rem', fontWeight: 700, borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>For Decision</h3>
-              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: '#334155', lineHeight: '1.5' }}>
-                {data.consultationPoints.decision.map((pt, i) => pt ? <li key={`d-${i}`} style={{ marginBottom: '0.75rem' }}>{pt}</li> : null)}
-              </ul>
-            </div>
-            <div style={{ background: '#F8FAFC', padding: '1.25rem', borderRadius: '8px', border: '1px solid #E2E8F0', borderTop: '6px solid #3B82F6', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: '#3B82F6', marginBottom: '1.25rem', fontSize: '1.2rem', fontWeight: 700, borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>For Input</h3>
-              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: '#334155', lineHeight: '1.5' }}>
-                {data.consultationPoints.input.map((pt, i) => pt ? <li key={`i-${i}`} style={{ marginBottom: '0.75rem' }}>{pt}</li> : null)}
-              </ul>
-            </div>
-            <div style={{ background: '#F8FAFC', padding: '1.25rem', borderRadius: '8px', border: '1px solid #E2E8F0', borderTop: '6px solid #F59E0B', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ color: '#F59E0B', marginBottom: '1.25rem', fontSize: '1.2rem', fontWeight: 700, borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>For Awareness</h3>
-              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: '#334155', lineHeight: '1.5' }}>
-                {data.consultationPoints.awareness.map((pt, i) => pt ? <li key={`a-${i}`} style={{ marginBottom: '0.75rem' }}>{pt}</li> : null)}
-              </ul>
-            </div>
+        {/* Container for main content */}
+        <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          
+          {/* Header Row */}
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
+            <div style={{ 
+              width: 0, height: 0, 
+              borderTop: '8px solid transparent', 
+              borderBottom: '8px solid transparent', 
+              borderLeft: '12px solid #F04E23', 
+              marginRight: '12px' 
+            }}></div>
+            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+              Reasons to Believe in the Asset's Potential
+            </h2>
           </div>
+
+          <div style={{ paddingLeft: '1.5rem', marginBottom: '1rem' }}>
+            <h3 style={{ margin: '0.2rem 0 0 0', color: '#333', fontSize: '1.4rem', fontWeight: 400 }}>{data.projectName} / {data.projectId}</h3>
+          </div>
+
+          {/* Grid Content */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem' }}>
+            
+            {/* Left Column */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              
+              <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#111', marginBottom: '0.25rem' }}>Unmet need – key disease(s)</div>
+                <div style={{ background: '#F1F1F1', padding: '0.75rem', flex: 1, fontSize: '0.75rem', color: '#333' }}>
+                  <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+                    {data.reasonsToBelieve.unmetNeed.split('\n').map((q, i) => {
+                      const cleanQ = q.replace(/^•\s*/, '');
+                      return cleanQ ? <li key={i} style={{ marginBottom: '2px' }}>{cleanQ}</li> : null;
+                    })}
+                  </ul>
+                </div>
+              </div>
+
+              <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#111', marginBottom: '0.25rem' }}>MoA and differentiation</div>
+                <div style={{ background: '#F1F1F1', padding: '0.75rem', flex: 1, fontSize: '0.75rem', color: '#333' }}>
+                  <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+                    {data.reasonsToBelieve.moa.split('\n').map((q, i) => {
+                      const cleanQ = q.replace(/^•\s*/, '');
+                      return cleanQ ? <li key={i} style={{ marginBottom: '2px' }}>{cleanQ}</li> : null;
+                    })}
+                  </ul>
+                </div>
+              </div>
+
+              <div style={{ flex: '0.9 1 0', display: 'flex', flexDirection: 'column', paddingBottom: '2.5rem' }}>
+                <fieldset style={{ border: '2px solid #F04E23', padding: '0.2rem 1rem', margin: 0, height: '100%', boxSizing: 'border-box' }}>
+                  <legend style={{ color: '#111', fontWeight: 700, fontSize: '0.85rem', margin: '0 auto', padding: '0 1rem' }}>Reasons not to believe</legend>
+                  <div style={{ fontSize: '0.75rem', color: '#333', marginTop: '0.25rem' }}>
+                    <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+                      {data.reasonsToBelieve.reasonsNotToBelieve.split('\n').map((q, i) => {
+                        const cleanQ = q.replace(/^•\s*/, '');
+                        return cleanQ ? <li key={i} style={{ marginBottom: '2px', color: '#F04E23' }}><span style={{ color: '#333' }}>{cleanQ}</span></li> : null;
+                      })}
+                    </ul>
+                  </div>
+                </fieldset>
+              </div>
+
+            </div>
+
+            {/* Right Column */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingBottom: '2.5rem' }}>
+              
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#111', marginBottom: '0.25rem' }}>Key biological / preclinical data supporting step change in SoC</div>
+                <div style={{ background: '#F1F1F1', padding: '0.75rem', flex: 1, fontSize: '0.75rem', color: '#333' }}>
+                  <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+                    {data.reasonsToBelieve.preclinical.split('\n').map((q, i) => {
+                      const cleanQ = q.replace(/^•\s*/, '');
+                      return cleanQ ? <li key={i} style={{ marginBottom: '2px' }}>{cleanQ}</li> : null;
+                    })}
+                  </ul>
+                </div>
+              </div>
+
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#111', marginBottom: '0.25rem' }}>Key clinical data supporting step change in SoC</div>
+                <div style={{ background: '#F1F1F1', padding: '0.75rem', flex: 1, fontSize: '0.75rem', color: '#333' }}>
+                  <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+                    {data.reasonsToBelieve.clinical.split('\n').map((q, i) => {
+                      const cleanQ = q.replace(/^•\s*/, '');
+                      return cleanQ ? <li key={i} style={{ marginBottom: '2px' }}>{cleanQ}</li> : null;
+                    })}
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Right Logo */}
+        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right' }}>
+          <div style={{ color: '#F04E23', fontSize: '1.5rem', fontWeight: 800, fontFamily: 'system-ui', lineHeight: 1 }}>GSK</div>
+          <div style={{ color: '#666', fontSize: '0.55rem', marginTop: '2px' }}>CSI External Use</div>
+        </div>
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+          4
+        </div>
+      </div>
+    // Slide 5: Value Creation Evolution
+    (
+      <div style={slideStyle} key="slide_value_creation">
+        {/* Top left CSI */}
+        <div style={{ position: 'absolute', top: '0.5rem', left: '1rem', fontSize: '0.65rem', color: '#666' }}>
+          CSI External Use
+        </div>
+
+        {/* Container for main content */}
+        <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          
+          {/* Header Row */}
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', marginBottom: '1.5rem' }}>
+            <div style={{ 
+              width: 0, height: 0, 
+              borderTop: '8px solid transparent', 
+              borderBottom: '8px solid transparent', 
+              borderLeft: '12px solid #F04E23', 
+              marginRight: '12px' 
+            }}></div>
+            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+              Value Creation Evolution: Key Changes vs Last Governance
+            </h2>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem' }}>
+            
+            {/* Table wrapper */}
+            <div style={{ border: '2px solid #F04E23', borderRadius: '4px', overflow: 'hidden' }}>
+              <div style={{ background: '#F04E23', color: 'white', padding: '0.5rem 1rem', fontSize: '0.95rem', fontWeight: 600, textTransform: 'uppercase' }}>
+                Metrics Comparison
+              </div>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', color: '#333' }}>
+                <thead>
+                  <tr style={{ background: '#F1F1F1' }}>
+                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Metric</th>
+                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Last Governed</th>
+                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Current Recommendation</th>
+                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Change / Impact</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.valueCreation.items.map((item, idx) => (
+                    <tr key={item.id} style={{ borderBottom: idx === data.valueCreation.items.length - 1 ? 'none' : '1px solid #eee' }}>
+                      <td style={{ padding: '0.75rem', fontWeight: '600', color: '#111' }}>{item.metric}</td>
+                      <td style={{ padding: '0.75rem', color: '#555' }}>{item.lastGoverned}</td>
+                      <td style={{ padding: '0.75rem', color: '#111', fontWeight: '500' }}>{item.current}</td>
+                      <td style={{ padding: '0.75rem', color: item.change.includes('+') && !item.metric.includes('Cost') && !item.metric.includes('Timeline') ? '#10B981' : item.change.includes('-') && (item.metric.includes('Cost') || item.metric.includes('Timeline')) ? '#10B981' : '#F04E23', fontWeight: '600' }}>
+                        {item.change}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Narrative / Context */}
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingBottom: '2.5rem' }}>
+              <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#111', marginBottom: '0.25rem' }}>Team Commentary</div>
+              <div style={{ background: '#F1F1F1', padding: '1rem', flex: 1, fontSize: '0.85rem', color: '#333', borderLeft: '4px solid #F04E23' }}>
+                <p style={{ margin: 0, lineHeight: '1.6' }}>{data.valueCreation.comments}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Right Logo */}
+        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right' }}>
+          <div style={{ color: '#F04E23', fontSize: '1.5rem', fontWeight: 800, fontFamily: 'system-ui', lineHeight: 1 }}>GSK</div>
+          <div style={{ color: '#666', fontSize: '0.55rem', marginTop: '2px' }}>CSI External Use</div>
+        </div>
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+          5
         </div>
       </div>
     ),
-    // Slide 3: High-level Investment Overview
+    // Slide 6: High-level Investment Overview
     (
       <div style={slideStyle} key="slide3">
         {/* Professional PPT Header */}
