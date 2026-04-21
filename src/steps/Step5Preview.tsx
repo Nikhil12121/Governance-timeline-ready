@@ -74,9 +74,7 @@ const Step5Preview = () => {
     position: 'relative',
     overflow: 'hidden',
     display: 'flex',
-    flexDirection: 'column',
-    fontFamily: 'system-ui, -apple-system, sans-serif',
-    boxSizing: 'border-box'
+    flexDirection: 'column'
   };
 
   const headerStyle: React.CSSProperties = {
@@ -148,10 +146,10 @@ const Step5Preview = () => {
       <div style={slideStyle} key="slide_structure">
         {/* Header */}
         <div style={{ ...headerStyle, borderBottom: 'none', padding: '0.75rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.2rem', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+          <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.4rem', fontWeight: 300, display: 'flex', alignItems: 'center' }}>
             <span style={{ 
-              display: 'inline-block', width: '12px', height: '12px', 
-              background: '#F04E23', borderRadius: '50% 0 50% 50%', marginRight: '8px' 
+              display: 'inline-block', width: '16px', height: '16px', 
+              background: '#F04E23', borderRadius: '50% 0 50% 50%', marginRight: '10px' 
             }}></span>
             DRB Governance Material Structure
           </h2>
@@ -274,8 +272,8 @@ const Step5Preview = () => {
               borderLeft: '12px solid #F04E23', 
               marginRight: '12px' 
             }}></div>
-            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.2rem', fontWeight: 600, fontFamily: 'system-ui, sans-serif' }}>
-              EXECUTIVE SUMMARY: {data.projectName}
+            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+              Executive Summary: {data.projectName} {data.boardHeading} {new Date(data.date).toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }).replace(' ', '-')}
             </h2>
           </div>
 
@@ -480,8 +478,8 @@ const Step5Preview = () => {
                   borderLeft: '12px solid #F04E23', 
                   marginRight: '12px' 
                 }}></div>
-                <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.2rem', fontWeight: 600, fontFamily: 'system-ui, sans-serif' }}>
-                  VALUE CREATION EVOLUTION
+                <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.4rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+                  Value Creation Evolution
                 </h2>
               </div>
               <div style={{ paddingLeft: '1.5rem', marginTop: '0.5rem' }}>
@@ -807,8 +805,8 @@ const Step5Preview = () => {
     ),
     // Slide 7: High-level Investment Overview (Integrated Professional View)
     (
-      <div style={{ ...slideStyle, padding: '0.5rem 1rem' }} key="slide_hio_pro">
-        <div style={{ transform: 'scale(0.92)', transformOrigin: 'top center', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ ...slideStyle, padding: '1.5rem 1.5rem' }} key="slide_hio_pro">
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             {/* PPT Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
           <div>
@@ -826,7 +824,7 @@ const Step5Preview = () => {
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'minmax(100px, 1fr) repeat(10, 1fr) 0.6fr 0.6fr 0.6fr', 
-          fontSize: '0.55rem', 
+          fontSize: '0.65rem', 
           border: '1px solid #999', 
           background: 'white',
           position: 'relative',
@@ -905,13 +903,13 @@ const Step5Preview = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '0.4rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ background: '#F04E23', color: 'white', padding: '2px 8px', fontSize: '0.6rem', fontWeight: 700 }}>Actuals</div>
-            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.55rem', color: '#475569', minHeight: '35px', borderRadius: '0 0 4px 4px', lineHeight: 1.1 }}>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.7rem', color: '#444', borderRadius: '0 0 4px 4px', lineHeight: 1.2 }}>
               {data.hioCommentary.actuals}
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ background: '#eee', color: '#000', padding: '2px 8px', fontSize: '0.6rem', fontWeight: 700, border: '1px solid #999' }}>Budget</div>
-            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.55rem', color: '#475569', minHeight: '35px', borderRadius: '0 0 4px 4px', lineHeight: 1.1 }}>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.7rem', color: '#444', borderRadius: '0 0 4px 4px', lineHeight: 1.2 }}>
               {data.hioCommentary.budget}
             </div>
           </div>
@@ -935,11 +933,11 @@ const Step5Preview = () => {
     (
       <div style={slideStyle} key="slide4">
         {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1rem 2rem 0.25rem' }}>
-          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.2rem', fontWeight: 600 }}>
+        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
+          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
             {data.projectId}: Resourcing estimates shared with Functional Leads
           </h2>
-          <span style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500 }}>Validated from RM System</span>
+          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Validated from RM System</span>
         </div>
         
         {/* GSK Accent Line */}
@@ -1025,11 +1023,11 @@ const Step5Preview = () => {
     (
       <div style={slideStyle} key="slide6">
         {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1rem 2rem 0.25rem' }}>
-          <h2 style={{ margin: 0, color: '#000', fontSize: '1.2rem', fontWeight: 600 }}>
+        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
+          <h2 style={{ margin: 0, color: '#000', fontSize: '1.8rem', fontWeight: 600 }}>
             Risks & Dependencies
           </h2>
-          <span style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500 }}>Critical Board Awareness</span>
+          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Critical Board Awareness</span>
         </div>
         
         {/* GSK Accent Line */}
