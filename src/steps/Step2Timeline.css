@@ -70,10 +70,9 @@
   top: 50%;
   left: 0;
   right: 0;
-  height: 10px;
+  height: 4px;
   transform: translateY(-50%);
   background: var(--accent-primary);
-  border-radius: 4px;
   opacity: 1;
   z-index: 2;
 }
@@ -95,8 +94,8 @@
 }
 
 .milestone-marker.selected {
-  color: var(--accent-primary);
-  filter: drop-shadow(0 2px 4px rgba(240, 78, 35, 0.3));
+  color: #000;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
 .milestone-label {

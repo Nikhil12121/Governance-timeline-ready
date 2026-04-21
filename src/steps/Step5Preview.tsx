@@ -860,10 +860,10 @@ const Step5Preview = () => {
                   const hasBar = data.milestones.some(m => m.swimlane === lane && m.year === year);
                   return (
                     <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '30px' }}>
-                       {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '6px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 1 }} />}
+                       {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 1 }} />}
                        {ms.map(m => (
                          <div key={m.id} style={{ position: 'absolute', left: `${m.position}%`, top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 6 }}>
-                            <span style={{ color: '#F04E23', fontSize: '8px' }}>▲</span>
+                            <span style={{ color: '#000', fontSize: '8px' }}>▲</span>
                             <span style={{ fontSize: '6px', whiteSpace: 'nowrap', fontWeight: 700, background: 'rgba(255,255,255,0.8)', padding: '0 2px' }}>{m.name}</span>
                          </div>
                        ))}
