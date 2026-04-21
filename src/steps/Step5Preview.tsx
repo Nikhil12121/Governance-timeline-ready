@@ -469,7 +469,7 @@ const Step5Preview = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.valueCreation.items.map((item, idx) => (
+                {data.valueCreation.items.map((item) => (
                   <tr key={item.id}>
                     {/* Pink metric cell */}
                     <td style={{ background: '#FCE4D6', border: '1px solid #C55A11', padding: '0.5rem', textAlign: 'center', fontSize: '0.75rem', color: '#111' }}>
