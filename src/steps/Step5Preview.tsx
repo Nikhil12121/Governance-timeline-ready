@@ -397,6 +397,7 @@ const Step5Preview = () => {
           4
         </div>
       </div>
+    ),
     // Slide 5: Value Creation Evolution
     (
       <div style={slideStyle} key="slide_value_creation">
