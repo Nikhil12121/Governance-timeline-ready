@@ -347,7 +347,7 @@ const Step5Preview = () => {
         </div>
 
         {/* Container for main content */}
-        <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <div style={{ padding: '1rem 1.5rem 0.5rem', display: 'flex', flexDirection: 'column', height: '100%', boxSizing: 'border-box' }}>
           
           {/* Header Row */}
           <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
@@ -368,10 +368,10 @@ const Step5Preview = () => {
           </div>
 
           {/* Grid Content */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem', overflow: 'hidden' }}>
             
             {/* Left Column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', overflow: 'hidden' }}>
               
               <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ fontWeight: 700, fontSize: '0.65rem', color: '#111', marginBottom: '0.1rem' }}>UNMET NEED – KEY DISEASE(S)</div>
@@ -397,10 +397,10 @@ const Step5Preview = () => {
                 </div>
               </div>
 
-              <div style={{ flex: '0.9 1 0', display: 'flex', flexDirection: 'column', paddingBottom: '0.2rem' }}>
-                <fieldset style={{ border: '2px solid #F04E23', padding: '0.1rem 0.4rem', margin: 0, height: '100%', boxSizing: 'border-box' }}>
-                  <legend style={{ color: '#111', fontWeight: 700, fontSize: '0.65rem', margin: '0 auto', padding: '0 0.5rem' }}>REASONS NOT TO BELIEVE</legend>
-                  <div style={{ fontSize: '0.55rem', color: '#333', marginTop: '0.1rem', lineHeight: 1.1 }}>
+              <div style={{ flex: 'none', display: 'flex', flexDirection: 'column', height: '18%' }}>
+                <fieldset style={{ border: '1.5px solid #F04E23', padding: '0.1rem 0.4rem', margin: 0, height: '100%', boxSizing: 'border-box' }}>
+                  <legend style={{ color: '#111', fontWeight: 800, fontSize: '0.6rem', margin: '0 auto', padding: '0 0.5rem' }}>REASONS NOT TO BELIEVE</legend>
+                  <div style={{ fontSize: '0.52rem', color: '#333', marginTop: '0', lineHeight: 1.05 }}>
                     <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                       {data.reasonsToBelieve.reasonsNotToBelieve.split('\n').map((q, i) => {
                         const cleanQ = q.replace(/^•\s*/, '');
@@ -414,11 +414,11 @@ const Step5Preview = () => {
             </div>
 
             {/* Right Column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', paddingBottom: '0.2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', height: '100%', overflow: 'hidden' }}>
               
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 700, fontSize: '0.65rem', color: '#111', marginBottom: '0.1rem' }}>KEY BIOLOGICAL / PRECLINICAL DATA</div>
-                <div style={{ background: '#F1F1F1', padding: '0.25rem 0.5rem', flex: 1, fontSize: '0.55rem', color: '#333', lineHeight: 1.2 }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                <div style={{ fontWeight: 700, fontSize: '0.62rem', color: '#111', marginBottom: '0.05rem' }}>KEY BIOLOGICAL / PRECLINICAL DATA</div>
+                <div style={{ background: '#F1F1F1', padding: '0.2rem 0.4rem', flex: 1, fontSize: '0.52rem', color: '#333', lineHeight: 1.1 }}>
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {data.reasonsToBelieve.preclinical.split('\n').map((q, i) => {
                       const cleanQ = q.replace(/^•\s*/, '');
@@ -428,9 +428,9 @@ const Step5Preview = () => {
                 </div>
               </div>
 
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 700, fontSize: '0.65rem', color: '#111', marginBottom: '0.1rem' }}>KEY CLINICAL DATA</div>
-                <div style={{ background: '#F1F1F1', padding: '0.25rem 0.5rem', flex: 1, fontSize: '0.55rem', color: '#333', lineHeight: 1.2 }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                <div style={{ fontWeight: 700, fontSize: '0.62rem', color: '#111', marginBottom: '0.05rem' }}>KEY CLINICAL DATA</div>
+                <div style={{ background: '#F1F1F1', padding: '0.2rem 0.4rem', flex: 1, fontSize: '0.52rem', color: '#333', lineHeight: 1.1 }}>
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {data.reasonsToBelieve.clinical.split('\n').map((q, i) => {
                       const cleanQ = q.replace(/^•\s*/, '');
