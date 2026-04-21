@@ -41,9 +41,9 @@ export type Risk = {
 export type ValueCreationItem = {
   id: string;
   metric: string;
+  currentEstimate: string;
   lastGoverned: string;
-  current: string;
-  change: string;
+  comment: string;
 };
 
 export type GovernanceData = {
@@ -114,12 +114,17 @@ const initialData: GovernanceData = {
   },
   valueCreation: {
     items: [
-      { id: 'vc1', metric: 'PTRS', lastGoverned: '25%', current: '30%', change: '+5%' },
-      { id: 'vc2', metric: 'Total Cost (EPE)', lastGoverned: '£150M', current: '£165M', change: '+£15M' },
-      { id: 'vc3', metric: 'Timeline to filing', lastGoverned: 'Q1 2027', current: 'Q3 2027', change: '+6 months' },
-      { id: 'vc4', metric: 'Peak Year Sales', lastGoverned: '£1.2B', current: '£1.5B', change: '+£300M' }
+      { id: 'vc1', metric: "(e)NPV (£'M)", currentEstimate: 'n/a', lastGoverned: '', comment: '' },
+      { id: 'vc2', metric: "(e)ROI", currentEstimate: 'n/a', lastGoverned: '', comment: '' },
+      { id: 'vc3', metric: "PTRS (%)", currentEstimate: 'green-up', lastGoverned: '', comment: '' },
+      { id: 'vc4', metric: "Total Dev Cost (£'M)", currentEstimate: 'red-up', lastGoverned: '', comment: '' },
+      { id: 'vc5', metric: "Launch Year", currentEstimate: 'similar', lastGoverned: '', comment: '' },
+      { id: 'vc6', metric: "2031 Sales (£'M)", currentEstimate: 'n/a', lastGoverned: '', comment: '' },
+      { id: 'vc7', metric: "PYS (£'M)", currentEstimate: 'n/a', lastGoverned: '', comment: '' },
+      { id: 'vc8', metric: "Year of Peak Sales", currentEstimate: 'n/a', lastGoverned: '', comment: '' },
+      { id: 'vc9', metric: "Payback Period", currentEstimate: 'n/a', lastGoverned: '', comment: '' }
     ],
-    comments: "The protocol amendment delays the timeline and slightly increases cost but drives a significant upgrade in peak year sales and technical probability of success."
+    comments: ""
   },
   summaryType: 'Executive',
   summaryInstruction: '',

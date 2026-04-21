@@ -410,57 +410,90 @@ const Step5Preview = () => {
         <div style={{ padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
           
           {/* Header Row */}
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', marginBottom: '1.5rem' }}>
-            <div style={{ 
-              width: 0, height: 0, 
-              borderTop: '8px solid transparent', 
-              borderBottom: '8px solid transparent', 
-              borderLeft: '12px solid #F04E23', 
-              marginRight: '12px' 
-            }}></div>
-            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
-              Value Creation Evolution: Key Changes vs Last Governance
-            </h2>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginTop: '0.5rem', marginBottom: '1.5rem' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ 
+                  width: 0, height: 0, 
+                  borderTop: '8px solid transparent', 
+                  borderBottom: '8px solid transparent', 
+                  borderLeft: '12px solid #F04E23', 
+                  marginRight: '12px' 
+                }}></div>
+                <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+                  Value Creation Evolution
+                </h2>
+              </div>
+              <div style={{ paddingLeft: '1.5rem', marginTop: '0.5rem' }}>
+                <h3 style={{ margin: 0, color: '#111', fontSize: '1.4rem', fontWeight: 400 }}>Key changes vs last governance/forecast</h3>
+              </div>
+            </div>
+            
+            {/* Legend block */}
+            <div style={{ display: 'flex', flexDirection: 'column', fontSize: '0.6rem', textAlign: 'center' }}>
+              <div style={{ background: '#0284C7', color: 'white', padding: '0.2rem 0.5rem', fontStyle: 'italic', marginBottom: '2px' }}>
+                Indicate directional impact in "current base case"
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', padding: '0.2rem 0', fontWeight: 'bold' }}>
+                <div>Legend</div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '0.55rem', fontWeight: 'normal' }}>
+                  <span>n/a</span>
+                  <span style={{ color: '#10B981', fontSize: '0.7rem' }}>⇑</span>
+                  <span style={{ color: '#EF4444', fontSize: '0.7rem' }}>⇑</span>
+                  <span style={{ fontSize: '0.7rem' }}>⇔</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', fontSize: '0.55rem', fontWeight: 'normal' }}>
+                  <span>Unknown</span>
+                  <span>Better</span>
+                  <span>Worse</span>
+                  <span>Similar</span>
+                </div>
+              </div>
+              <div style={{ background: '#0284C7', color: 'white', padding: '0.4rem 0.5rem', marginTop: '2px', fontStyle: 'italic', textAlign: 'left' }}>
+                Key contact: Decision Sciences / Finance Partner
+              </div>
+            </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem', paddingBottom: '2.5rem' }}>
             
-            {/* Table wrapper */}
-            <div style={{ border: '2px solid #F04E23', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ background: '#F04E23', color: 'white', padding: '0.5rem 1rem', fontSize: '0.95rem', fontWeight: 600, textTransform: 'uppercase' }}>
-                Metrics Comparison
-              </div>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', color: '#333' }}>
-                <thead>
-                  <tr style={{ background: '#F1F1F1' }}>
-                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Metric</th>
-                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Last Governed</th>
-                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Current Recommendation</th>
-                    <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '600', borderBottom: '1px solid #ddd' }}>Change / Impact</th>
+            {/* Main Table */}
+            <table style={{ width: '100%', borderCollapse: 'collapse', height: '100%', tableLayout: 'fixed' }}>
+              <thead>
+                <tr>
+                  {/* Empty top left corner */}
+                  <th style={{ width: '20%', border: 'none' }}></th>
+                  <th style={{ width: '25%', background: '#F04E23', color: 'white', padding: '0.5rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Current Estimate</th>
+                  <th style={{ width: '25%', background: '#555', color: 'white', padding: '0.5rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Last Governed</th>
+                  <th style={{ width: '30%', background: '#555', color: 'white', padding: '0.5rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.valueCreation.items.map((item, idx) => (
+                  <tr key={item.id}>
+                    {/* Pink metric cell */}
+                    <td style={{ background: '#FCE4D6', border: '1px solid #C55A11', padding: '0.5rem', textAlign: 'center', fontSize: '0.75rem', color: '#111' }}>
+                      {item.metric}
+                    </td>
+                    {/* Current Estimate cell */}
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.5rem', textAlign: 'center', background: 'white' }}>
+                      {item.currentEstimate === 'green-up' ? <div style={{ color: '#10B981', fontSize: '1.2rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
+                       item.currentEstimate === 'red-up' ? <div style={{ color: '#EF4444', fontSize: '1.2rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
+                       item.currentEstimate === 'similar' ? <div style={{ color: '#111', fontSize: '1.2rem', fontWeight: 800, lineHeight: 1 }}>⇔</div> :
+                       <div style={{ color: '#333', fontSize: '0.75rem' }}>{item.currentEstimate}</div>}
+                    </td>
+                    {/* Last Governed cell */}
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.5rem', textAlign: 'center', background: 'white', fontSize: '0.75rem' }}>
+                      {item.lastGoverned}
+                    </td>
+                    {/* Comment cell */}
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.5rem', background: 'white', fontSize: '0.75rem', verticalAlign: 'top' }}>
+                      {item.comment}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {data.valueCreation.items.map((item, idx) => (
-                    <tr key={item.id} style={{ borderBottom: idx === data.valueCreation.items.length - 1 ? 'none' : '1px solid #eee' }}>
-                      <td style={{ padding: '0.75rem', fontWeight: '600', color: '#111' }}>{item.metric}</td>
-                      <td style={{ padding: '0.75rem', color: '#555' }}>{item.lastGoverned}</td>
-                      <td style={{ padding: '0.75rem', color: '#111', fontWeight: '500' }}>{item.current}</td>
-                      <td style={{ padding: '0.75rem', color: item.change.includes('+') && !item.metric.includes('Cost') && !item.metric.includes('Timeline') ? '#10B981' : item.change.includes('-') && (item.metric.includes('Cost') || item.metric.includes('Timeline')) ? '#10B981' : '#F04E23', fontWeight: '600' }}>
-                        {item.change}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Narrative / Context */}
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingBottom: '2.5rem' }}>
-              <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#111', marginBottom: '0.25rem' }}>Team Commentary</div>
-              <div style={{ background: '#F1F1F1', padding: '1rem', flex: 1, fontSize: '0.85rem', color: '#333', borderLeft: '4px solid #F04E23' }}>
-                <p style={{ margin: 0, lineHeight: '1.6' }}>{data.valueCreation.comments}</p>
-              </div>
-            </div>
+                ))}
+              </tbody>
+            </table>
 
           </div>
         </div>
@@ -472,7 +505,7 @@ const Step5Preview = () => {
         </div>
         {/* Page Number */}
         <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
-          5
+          6
         </div>
       </div>
     ),

@@ -210,26 +210,33 @@ const Step1Inputs = () => {
           <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse', marginBottom: '1.5rem' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid var(--border-medium)' }}>
-                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>Metric</th>
-                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>Last Governed</th>
-                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>Current</th>
-                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>Change</th>
+                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '25%' }}>Metric</th>
+                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '20%' }}>Current Estimate</th>
+                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '20%' }}>Last Governed</th>
+                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '35%' }}>Comment</th>
               </tr>
             </thead>
             <tbody>
               {data.valueCreation.items.map((item, idx) => (
                 <tr key={item.id} style={{ borderBottom: '1px solid var(--border-light)' }}>
+                  <td style={{ padding: '0.5rem', fontWeight: 500, fontSize: '0.85rem' }}>
+                    {item.metric}
+                  </td>
                   <td style={{ padding: '0.5rem' }}>
-                    <input 
-                      type="text" 
-                      value={item.metric} 
+                    <select 
+                      value={item.currentEstimate} 
                       onChange={e => {
                         const newItems = [...data.valueCreation.items];
-                        newItems[idx].metric = e.target.value;
+                        newItems[idx].currentEstimate = e.target.value;
                         updateData({ valueCreation: { ...data.valueCreation, items: newItems } });
                       }}
-                      style={{ padding: '0.25rem', width: '100%', background: 'transparent', border: '1px solid transparent' }}
-                    />
+                      style={{ padding: '0.25rem', width: '100%', background: 'white' }}
+                    >
+                      <option value="n/a">n/a</option>
+                      <option value="green-up">Better (Green Up)</option>
+                      <option value="red-up">Worse (Red Up)</option>
+                      <option value="similar">Similar (Arrows)</option>
+                    </select>
                   </td>
                   <td style={{ padding: '0.5rem' }}>
                     <input 
@@ -246,22 +253,10 @@ const Step1Inputs = () => {
                   <td style={{ padding: '0.5rem' }}>
                     <input 
                       type="text" 
-                      value={item.current} 
+                      value={item.comment} 
                       onChange={e => {
                         const newItems = [...data.valueCreation.items];
-                        newItems[idx].current = e.target.value;
-                        updateData({ valueCreation: { ...data.valueCreation, items: newItems } });
-                      }}
-                      style={{ padding: '0.25rem', width: '100%', background: 'white' }}
-                    />
-                  </td>
-                  <td style={{ padding: '0.5rem' }}>
-                    <input 
-                      type="text" 
-                      value={item.change} 
-                      onChange={e => {
-                        const newItems = [...data.valueCreation.items];
-                        newItems[idx].change = e.target.value;
+                        newItems[idx].comment = e.target.value;
                         updateData({ valueCreation: { ...data.valueCreation, items: newItems } });
                       }}
                       style={{ padding: '0.25rem', width: '100%', background: 'white' }}
@@ -271,16 +266,6 @@ const Step1Inputs = () => {
               ))}
             </tbody>
           </table>
-
-          <div>
-            <label style={{ color: 'var(--info)', fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Final Comments / Narrative</label>
-            <textarea 
-              rows={3} 
-              value={data.valueCreation.comments}
-              onChange={e => updateData({ valueCreation: { ...data.valueCreation, comments: e.target.value } })}
-              placeholder="Provide context for the changes shown in the table above..."
-            />
-          </div>
         </div>
       </section>
     </div>
