@@ -844,7 +844,7 @@ const Step5Preview = () => {
                   <div style={{ position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                      <span style={{ fontSize: '0.45rem', fontWeight: 700, color: '#333' }}>Today</span>
                      <div style={{ width: 0, height: 0, borderLeft: '4px solid transparent', borderRight: '4px solid transparent', borderTop: '6px solid #333' }} />
-                     <div style={{ width: '1px', background: '#333', position: 'absolute', top: '16px', bottom: '-4px', zIndex: 10, pointerEvents: 'none' }} />
+                     <div style={{ width: '2px', background: '#000', position: 'absolute', top: '16px', height: 'calc(100% + 15px)', zIndex: 20, pointerEvents: 'none' }} />
                   </div>
                 )}
              </div>
@@ -862,9 +862,9 @@ const Step5Preview = () => {
                   const hasBar = data.milestones.some(m => m.swimlane === lane && m.year === year);
                   return (
                     <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '12px' }}>
-                       {year === 2026 && (
-                         <div style={{ width: '1px', background: '#333', position: 'absolute', top: 0, bottom: 0, left: '50%', zIndex: 10, pointerEvents: 'none' }} />
-                       )}
+                        {year === 2026 && (
+                          <div style={{ width: '2px', background: '#000', position: 'absolute', top: 0, bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 20, pointerEvents: 'none' }} />
+                        )}
                        {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '3px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 1 }} />}
                        {ms.map(m => (
                          <div key={m.id} style={{ position: 'absolute', left: `${m.position}%`, top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 6 }}>
