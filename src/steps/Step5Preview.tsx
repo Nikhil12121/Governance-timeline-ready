@@ -613,48 +613,215 @@ const Step5Preview = () => {
         </div>
       </div>
     ),
-    // Slide 7: Risks & Dependencies
+    // Slide 7: CDP Options and Recommendation
     (
-      <div style={slideStyle} key="slide6">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#000', fontSize: '1.8rem', fontWeight: 600 }}>
-            Risks & Dependencies
-          </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Critical Board Awareness</span>
+      <div style={slideStyle} key="slide_cdp_options">
+        {/* Top left CSI */}
+        <div style={{ position: 'absolute', top: '0.5rem', left: '1rem', fontSize: '0.65rem', color: '#666' }}>
+          CSI External Use
         </div>
-        
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
 
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem' }}>
-            {data.risks.slice(0, 4).map(risk => (
-              <div key={risk.id} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ background: risk.impact === 'High' ? '#fee2e2' : risk.impact === 'Medium' ? '#fef3c7' : '#dcfce7', padding: '0.75rem 1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1e293b' }}>{risk.description || "Project Risk"}</span>
-                  <span style={{ 
-                    fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px',
-                    background: risk.impact === 'High' ? '#ef4444' : risk.impact === 'Medium' ? '#f59e0b' : '#10b981',
-                    color: 'white'
-                  }}>{risk.impact}</span>
-                </div>
-                <div style={{ padding: '1rem', flex: 1 }}>
-                  <p style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.5rem' }}>Mitigation Plan</p>
-                  <p style={{ fontSize: '0.85rem', color: '#334155', lineHeight: '1.4' }}>{risk.mitigation || "Ongoing monitoring and assessment..."}</p>
+        {/* Top Right Callout */}
+        <div style={{ position: 'absolute', top: '0', right: '0', background: '#0284C7', color: 'white', padding: '0.4rem 1rem', fontSize: '0.7rem', borderBottomLeftRadius: '4px', textAlign: 'center' }}>
+          <i>Recommended to show alternative development options<br/>RAG only for PYS (and if available eROI)</i>
+        </div>
+
+        <div style={{ padding: '2.5rem 1.5rem 1rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          {/* Header */}
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
+            <div style={{ 
+              width: 0, height: 0, 
+              borderTop: '8px solid transparent', 
+              borderBottom: '8px solid transparent', 
+              borderLeft: '12px solid #F04E23', 
+              marginRight: '12px' 
+            }}></div>
+            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+              CDP Options and Recommendation
+            </h2>
+          </div>
+
+          <div style={{ display: 'flex', flex: 1, gap: '0.5rem' }}>
+            {/* Left: Timeline Grid (70%) */}
+            <div style={{ flex: '0 0 72%', display: 'flex', flexDirection: 'column', border: '1px solid #ccc' }}>
+              {/* Year Header */}
+              <div style={{ display: 'flex', background: '#611111', color: 'white', fontSize: '0.75rem', fontWeight: 600 }}>
+                <div style={{ flex: '0 0 100px' }}></div> {/* Option Label Column */}
+                {[0, 1, 2, 3, 4, 5].map((y) => (
+                  <div key={y} style={{ flex: 1, textAlign: 'center', padding: '0.25rem', borderLeft: '1px solid rgba(255,255,255,0.2)' }}>
+                    Year{y > 0 ? `+${y}` : ''}
+                  </div>
+                ))}
+              </div>
+              {/* Quarter Header */}
+              <div style={{ display: 'flex', background: '#FCE4D6', borderBottom: '1px solid #ccc', fontSize: '0.6rem', color: '#444' }}>
+                <div style={{ flex: '0 0 100px' }}></div>
+                {Array.from({ length: 24 }).map((_, i) => (
+                  <div key={i} style={{ flex: 1, textAlign: 'center', padding: '0.1rem', borderLeft: '1px solid #ccc' }}>
+                    Q{(i % 4) + 1}
+                  </div>
+                ))}
+              </div>
+
+              {/* Rows */}
+              <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column' }}>
+                {data.cdpOptions.map((option, optIdx) => (
+                  <div key={option.id} style={{ 
+                    flex: 1, 
+                    display: 'flex', 
+                    borderBottom: optIdx < data.cdpOptions.length - 1 ? '1px solid #ccc' : 'none',
+                    position: 'relative'
+                  }}>
+                    {/* Option Identifier */}
+                    <div style={{ 
+                      flex: '0 0 100px', 
+                      background: option.id === 'opt1' ? '#F04E23' : '#64748B', 
+                      color: 'white', 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      textAlign: 'center',
+                      padding: '0.25rem',
+                      lineHeight: '1.1'
+                    }}>
+                      <div style={{ fontSize: '0.7rem', fontWeight: 700 }}>{option.title}</div>
+                      <div style={{ fontSize: '0.55rem' }}>{option.subtitle}</div>
+                      {option.tagline && <div style={{ fontSize: '0.5rem', marginTop: '0.25rem', opacity: 0.9 }}>{option.tagline}</div>}
+                    </div>
+
+                    {/* Timeline Grid Area */}
+                    <div style={{ flex: 1, position: 'relative' }}>
+                      {/* Quarter Grid Lines */}
+                      <div style={{ position: 'absolute', inset: 0, display: 'flex', pointerEvents: 'none' }}>
+                        {Array.from({ length: 24 }).map((_, i) => (
+                          <div key={i} style={{ flex: 1, borderLeft: '1px solid #eee' }}></div>
+                        ))}
+                      </div>
+
+                      {/* Comment Box Overlay */}
+                      <div style={{ 
+                        position: 'absolute', 
+                        top: '10px', 
+                        left: '10%', 
+                        right: '10%', 
+                        background: 'white', 
+                        border: '1px solid #999', 
+                        borderRadius: '8px', 
+                        padding: '0.4rem', 
+                        fontSize: '0.55rem', 
+                        textAlign: 'center',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                        zIndex: 2,
+                        whiteSpace: 'pre-line'
+                      }}>
+                        {option.boxComment}
+                      </div>
+
+                      {/* Milestones (Diamonds) */}
+                      {option.milestones.map((ms, msIdx) => {
+                        const colWidth = 100 / 24;
+                        const pos = (ms.yearOffset * 4 + (ms.quarter - 1)) * colWidth + (colWidth / 2);
+                        return (
+                          <div key={msIdx} style={{ 
+                            position: 'absolute', 
+                            left: `${pos}%`, 
+                            bottom: '15px', 
+                            transform: 'translateX(-50%)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            zIndex: 3
+                          }}>
+                            <div style={{ 
+                              width: '8px', 
+                              height: '8px', 
+                              background: ms.name.includes('Read-out') || ms.name.includes('Filing') ? '#F04E23' : '#10B981', 
+                              transform: 'rotate(45deg)',
+                              marginBottom: '2px'
+                            }}></div>
+                            <div style={{ fontSize: '0.45rem', fontWeight: 600, color: '#444', whiteSpace: 'nowrap' }}>{ms.name}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Visual Watermark CSI */}
+                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(-30deg)', color: 'rgba(0,0,0,0.05)', fontSize: '2rem', fontWeight: 800, whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+                  CSI External Use
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Right: Key Valuation Inputs (28%) */}
+            <div style={{ flex: '0 0 28%', display: 'flex', flexDirection: 'column' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ccc' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #ccc' }}>
+                    <th style={{ padding: '0.5rem', fontSize: '0.7rem', fontWeight: 600, textAlign: 'left', background: '#f8fafc' }}>Key valuation inputs</th>
+                  </tr>
+                </thead>
+              </table>
+              <table style={{ width: '100%', borderCollapse: 'collapse', flex: 1, tableLayout: 'fixed' }}>
+                <thead>
+                  <tr style={{ fontSize: '0.6rem', color: '#444' }}>
+                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>PTRS</th>
+                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>LoP costs</th>
+                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>Launch, MMM YY</th>
+                    <th style={{ border: '1px solid #ccc', padding: '0.25rem' }}>Peak year sales / year</th>
+                    <th style={{ border: '1px solid #ccc', padding: '0.25rem', background: '#666', color: 'white' }}>eROI</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.cdpOptions.map((opt) => (
+                    <tr key={opt.id} style={{ height: '33.33%' }}>
+                      {[opt.valuation.ptrs, opt.valuation.lopCosts, opt.valuation.launchDate, opt.valuation.peakSales].map((v, i) => (
+                        <td key={i} style={{ 
+                          border: '1px solid #ccc', 
+                          padding: '0.25rem', 
+                          textAlign: 'center', 
+                          fontSize: '0.65rem', 
+                          fontWeight: 600,
+                          background: v.color === 'green' ? '#DCFCE7' : v.color === 'yellow' ? '#FEF3C7' : v.color === 'red' ? '#FEE2E2' : 'white'
+                        }}>
+                          {v.value}
+                        </td>
+                      ))}
+                      <td style={{ border: '1px solid #ccc', padding: '0.25rem', background: '#666', opacity: 0.8 }}></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <div style={{ marginTop: 'auto', background: '#F1F5F9', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '1rem' }}>
-             <h4 style={{ fontSize: '0.8rem', color: '#0F172A', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-               <span>⛓</span> Key Dependencies
-             </h4>
-             <p style={{ fontSize: '0.8rem', color: '#475569' }}>
-               Dependency on shared resource pool in Asia (Clinical Ops) and regulatory approval of the Phase II protocol amendment.
-             </p>
+          {/* Color Legend */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginTop: '1rem', paddingLeft: '100px', paddingRight: '28%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.65rem' }}>
+              <div style={{ width: '16px', height: '16px', background: '#DCFCE7', border: '1px solid #ccc' }}></div>
+              <span>More preferred / better</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.65rem' }}>
+              <div style={{ width: '16px', height: '16px', background: '#FEF3C7', border: '1px solid #ccc' }}></div>
+              <span>Equally preferred / neutral</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.65rem' }}>
+              <div style={{ width: '16px', height: '16px', background: '#FEE2E2', border: '1px solid #ccc' }}></div>
+              <span>Less preferred / worse</span>
+            </div>
           </div>
+        </div>
+
+        {/* Bottom Right Logo */}
+        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right' }}>
+          <div style={{ color: '#F04E23', fontSize: '1.5rem', fontWeight: 800, fontFamily: 'system-ui', lineHeight: 1 }}>GSK</div>
+          <div style={{ color: '#666', fontSize: '0.55rem', marginTop: '2px' }}>CSI External Use</div>
+        </div>
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+          7
         </div>
       </div>
     )
