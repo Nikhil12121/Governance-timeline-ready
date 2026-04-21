@@ -128,16 +128,16 @@ const initialData: GovernanceData = {
   consultationText: '',
   consultationPoints: { decision: [], input: [], awareness: [] },
   executiveSummary: { 
-    context: 'Recent Phase II readout demonstrated strong efficacy (p < 0.01) but highlighted a need for expanded safety monitoring. Initial engagements with regulatory bodies suggest supportive sentiment for protocol amendment, although this extends timelines by 6 months. Competitor X recently announced trial delays, giving us a brief window to capture market share.', 
-    teamProposal: 'Execute the expanded Phase II protocol to capture a broader label indication. Accept the timeline shift to Q3 2027 to ensure higher peak year sales potential and robust safety profile.', 
-    keyQuestions: '• Does the board endorse the trade-off of a 6-month delay for an expanded primary label?\n• Does the board approve the additional £1.2M resourcing required for safety monitoring in 2027?' 
+    context: 'The Asset has demonstrated a best-in-class selectivity profile in the T790M resistant population. Recent data highlights a potential for significant label expansion into 1L patients with CNS involvement, representing a £420M incremental opportunity. The competitive landscape remains fluid, but our current First-in-Human (FIH) to Launch trajectory is 12% faster than industry standard.', 
+    teamProposal: 'Authorize full funding for the "EXCELSIOR" Phase III program. Pivot the manufacturing scale-up to high-throughput sites in Singapore to mitigate EU supply chain risks identified in Q3.', 
+    keyQuestions: '• Does the board approve the strategic pivot to Singapore for CMC primary supply?\n• Is the board comfortable with the 3% PTRS reduction following adjusted hazard ratio projections?' 
   },
   reasonsToBelieve: {
-    unmetNeed: '• High unmet need in 3rd line setting\n• Currently approved therapies show <30% ORR\n• Significant patient burden with existing SoC',
-    moa: '• First-in-class dual-mechanism inhibitor\n• Highly selective for target receptor vs wild type\n• Prolonged half-life allows once-weekly dosing',
-    preclinical: '• Robust tumor regression in 3 distinct xenograft models\n• Synergistic effect when combined with current SoC\n• No observed off-target toxicity in GLP tox studies',
-    clinical: '• Proof of concept established in early Phase I/IIa\n• Early signals of durability of response (>6 months)\n• Favorable safety profile to date, no dose-limiting toxicities',
-    reasonsNotToBelieve: '• Unknown long-term safety profile\n• Competitive landscape rapidly evolving with 2 other agents in Phase II\n• Formulation scale-up risks remain'
+    unmetNeed: '• Significant therapeutic gap in 3rd line oncology treatments where current ORR remains <15%.\n• High CNS relapse rates in standard-of-care patient cohorts.\n• Patient burden with IV regimens necessitates the once-daily oral profile of our asset.',
+    moa: '• First-in-class dual-mechanism inhibitor targeting both DNA repair and apoptotic pathways.\n• Superior selectivity minimizes systemic toxicity vs. competitor agents (3x wider therapeutic window).\n• Optimized pharmacokinetic profile supports 24hr target suppression at therapeutic doses.',
+    preclinical: '• Demonstrated 100% tumor stagnation in PDX models representing primary resistance markers.\n• Synergistic activity confirmed when paired with current frontline immuno-oncology standards.\n• Safety margins established in non-human primate studies indicate low neurotoxicity risk.',
+    clinical: '• Phase II cohort (n=85) showed 42% confirmed ORR in Heavily Pre-treated patients.\n• Duration of response (DoR) exceeded 14 months, significantly outperforming benchmark SoC (8mo).\n• Manageable safety profile with Grade 3/4 AEs below 10% occurrence rate.',
+    reasonsNotToBelieve: '• Unknown long-term cardiac safety profile which requires extended Phase III monitoring.\n• Emerging competitor agent in early Phase I showing high potency in similar markers.\n• Complex formulation/encapsulation process may delay launch quantities if site validation fails.'
   },
   valueCreation: {
     items: [
@@ -155,14 +155,15 @@ const initialData: GovernanceData = {
   },
   valuationInputs: {
     indications: [
-      { id: 'ind1', indication: 'NSCLC 1st Line', lineOfTherapy: '1L', targetPopulation: 'PD-L1 High', peakShare: '25%' },
-      { id: 'ind2', indication: 'Head & Neck', lineOfTherapy: '2L', targetPopulation: 'All comers', peakShare: '15%' }
+      { id: 'ind1', indication: 'NSCLC 1st Line', lineOfTherapy: '1L', targetPopulation: '55k (Metastatic)', peakShare: '35%' },
+      { id: 'ind2', indication: 'HNSCC (r/m)', lineOfTherapy: '2L', targetPopulation: '22k (PD-L1+)', peakShare: '25%' },
+      { id: 'ind3', indication: 'Adjuvant NSCLC', lineOfTherapy: 'Adj', targetPopulation: '15k (Stage III)', peakShare: '15%' }
     ],
     metrics: {
-      'PTRS': '30%',
-      'eNPV': '£1.5B',
-      'eROI': '2.4',
-      'Peak Sales': '£1.8B'
+      'PTRS': '28%',
+      'eNPV': '£1,420M',
+      'eROI': '2.5',
+      'Peak Sales': '£1,850M'
     }
   },
   slideComments: [
@@ -175,60 +176,57 @@ const initialData: GovernanceData = {
   startYear: 2023,
   endYear: 2034,
   currentYear: 2026,
-  swimlanes: ['Preclinical', 'Phase 1', 'Phase 2', 'Phase 3', 'Reg/Submission', 'Launch'],
+  swimlanes: ['Clinical Development', 'Regulatory Affairs', 'CMC & Supply', 'Commercial Strategy'],
   milestones: [
-    { id: 'm1', name: 'C2D', year: 2023, swimlane: 'Preclinical', position: 20, isSelected: true },
-    { id: 'm2', name: 'C2C', year: 2024, swimlane: 'Preclinical', position: 50, isSelected: true },
-    { id: 'm3', name: 'C2P1', year: 2025, swimlane: 'Preclinical', position: 10, isSelected: true },
-    { id: 'm4', name: 'FTIH', year: 2024, swimlane: 'Phase 1', position: 80, isSelected: true },
-    { id: 'm5', name: 'Readout', year: 2025, swimlane: 'Phase 1', position: 90, isSelected: true },
-    { id: 'm6', name: 'C2P2', year: 2026, swimlane: 'Phase 1', position: 10, isSelected: true },
-    { id: 'm7', name: 'IA', year: 2026, swimlane: 'Phase 2', position: 40, isSelected: true },
-    { id: 'm8', name: 'Readout', year: 2027, swimlane: 'Phase 2', position: 20, isSelected: true },
-    { id: 'm9', name: 'C2P3', year: 2027, swimlane: 'Phase 2', position: 80, isSelected: true },
+    { id: 'm1', name: 'Phase II Start', year: 2023, isSelected: true, swimlane: 'Clinical Development', position: 20 },
+    { id: 'm2', name: 'Phase III Start', year: 2024, isSelected: true, swimlane: 'Clinical Development', position: 60 },
+    { id: 'm3', name: 'US Filing (NDA)', year: 2026, isSelected: true, swimlane: 'Regulatory Affairs', position: 30 },
+    { id: 'm4', name: 'EU Filing (MAA)', year: 2026, isSelected: true, swimlane: 'Regulatory Affairs', position: 80 },
+    { id: 'm5', name: 'Global Launch', year: 2027, isSelected: true, swimlane: 'Commercial Strategy', position: 40 },
+    { id: 'm6', name: 'Site Validation', year: 2023, isSelected: true, swimlane: 'CMC & Supply', position: 75 }
   ],
   financials: [
-    { label: 'EPE*', data: { 2023: '£5.6m', 2024: '£5.6m', 2025: '£5.6m', 2026: '£205.6m', 2027: '£5.6m', 2028: '£5.6m', 2029: '£205.6m', 2030: '£5.6m', 2031: '£5.6m', 2032: '£5.6m' }, summaryEPE: '£600m' },
-    { label: 'IPE', data: { 2023: '£5.6m', 2024: '£5.6m', 2025: '£5.6m', 2026: '£5.6m', 2027: '£5.6m', 2028: '£5.6m', 2029: '£5.6m', 2030: '£5.6m', 2031: '£5.6m', 2032: '£5.6m' }, summaryIPE: '£200m' },
-    { label: 'FTE', data: { 2023: '10', 2024: '10', 2025: '10', 2026: '10', 2027: '10', 2028: '10', 2029: '10', 2030: '10', 2031: '10', 2032: '10' } },
-    { label: 'IPE+EPE vs Act/Budget', data: { 2023: '-£1.2m', 2024: '+£2m', 2025: '-£1.2m', 2026: '-£1.2m', 2027: '+£2m', 2028: '+£2m', 2029: '+£2m', 2030: '', 2031: '', 2032: '' } },
-    { label: 'EPE vs Act/Budget', data: { 2023: '-£1.2m', 2024: '-£1.2m', 2025: '-£1.2m', 2026: '-£1.2m', 2027: '-£1.2m', 2028: '-£1.2m', 2029: '-£1.2m', 2030: '', 2031: '', 2032: '' } }
+    { label: 'EPE* (£M)', data: { 2023: '£55.0m', 2024: '£85.0m', 2025: '£120.0m', 2026: '£95.0m', 2027: '£45.0m', 2028: '£35.0m', 2029: '£25.0m', 2030: '£20.0m', 2031: '£15.0m', 2032: '£10.0m' }, summaryEPE: '£600M' },
+    { label: 'IPE (£M)', data: { 2023: '£25.0m', 2024: '£35.0m', 2025: '£45.0m', 2026: '£30.0m', 2027: '£20.0m', 2028: '£15.0m', 2029: '£12.0m', 2030: '£10.0m', 2031: '£8.0m', 2032: '£5.0m' }, summaryIPE: '£250M' },
+    { label: 'FTE (FTEs)', data: { 2023: '45', 2024: '65', 2025: '85', 2026: '75', 2027: '40', 2028: '30', 2029: '20', 2030: '15', 2031: '12', 2032: '10' } },
+    { label: 'IPE+EPE vs Act/Budget (£M)', data: { 2023: '-£5.2m', 2024: '+£8.5m', 2025: '-£2.1m', 2026: '-£1.4m', 2027: '+£0.5m', 2028: '+£1.2m' } },
+    { label: 'EPE vs Act/Budget (£M)', data: { 2023: '-£3.1m', 2024: '+£6.2m', 2025: '-£1.5m', 2026: '-£0.8m', 2027: '+£0.2m', 2028: '+£0.8m' } }
   ],
   resourcingData: [
     {
       id: 'cmo', name: 'Chief Medical Office', isCategory: true,
       children: [
-        { id: 'sf', name: 'Safety', cyFTE: ['0.5','0.5','0.8','0.8'], cyIPE: '£50k', y1FTE: '1.2', y1IPE: '£120k', y2FTE: '1.5', y2IPE: '£150k', y3FTE: '1.5', y3IPE: '£150k', projAlgoFTE: '4.5', projFnHeadFTE: '4.5', projIPE: '£470k', priorFTE: '4.0', priorIPE: '£400k', signOff: 'Approved' },
-        { id: 'rg', name: 'Regulatory', cyFTE: ['0.2','0.2','0.5','0.5'], cyIPE: '£20k', y1FTE: '0.8', y1IPE: '£80k', y2FTE: '2.0', y2IPE: '£200k', y3FTE: '2.5', y3IPE: '£250k', projAlgoFTE: '5.5', projFnHeadFTE: '5.5', projIPE: '£550k', priorFTE: '5.0', priorIPE: '£500k', signOff: 'Approved' }
+        { id: 'sf', name: 'Safety', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'rg', name: 'Regulatory', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' }
       ]
     },
     {
-      id: 'do', name: 'Development Operations', cyFTE: ['1.5','1.5','2.5','2.5'], cyIPE: '£150k', y1FTE: '4.5', y1IPE: '£450k', y2FTE: '6.0', y2IPE: '£600k', y3FTE: '6.0', y3IPE: '£600k', projAlgoFTE: '19.0', projFnHeadFTE: '19.0', projIPE: '£1.8M', priorFTE: '18.0', priorIPE: '£1.7M', signOff: 'Pending'
+      id: 'do', name: 'Development Operations', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a'
     },
     {
       id: 'tds', name: 'Transformational & Development Services', isCategory: true,
       children: [
-        { id: 'ad', name: 'Asia Development', cyFTE: ['0.1','0.1','0.3','0.3'], cyIPE: '£10k', y1FTE: '1.5', y1IPE: '£150k', y2FTE: '1.5', y2IPE: '£150k', y3FTE: '1.5', y3IPE: '£150k', projAlgoFTE: '4.9', projFnHeadFTE: '4.9', projIPE: '£460k', priorFTE: '4.5', priorIPE: '£420k', signOff: 'Approved' },
-        { id: 'ep1', name: 'Epidemiology', cyFTE: ['0.4','0.4','0.4','0.4'], cyIPE: '£40k', y1FTE: '0.4', y1IPE: '£40k', y2FTE: '0.4', y2IPE: '£40k', y3FTE: '0.4', y3IPE: '£40k', projAlgoFTE: '1.6', projFnHeadFTE: '1.6', projIPE: '£160k', priorFTE: '1.6', priorIPE: '£160k', signOff: 'Approved' },
-        { id: 'ep2', name: 'Epidemiology', cyFTE: ['0.2','0.2','0.2','0.2'], cyIPE: '£20k', y1FTE: '0.2', y1IPE: '£20k', y2FTE: '0.2', y2IPE: '£20k', y3FTE: '0.2', y3IPE: '£20k', projAlgoFTE: '0.8', projFnHeadFTE: '0.8', projIPE: '£80k', priorFTE: '0.8', priorIPE: '£80k', signOff: 'Approved' }
+        { id: 'ad', name: 'Asia Development', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'ep1', name: 'Epidemiology', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'ep2', name: 'Epidemiology', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' }
       ]
     },
     {
       id: 'dds', name: 'Drug Development and Supply', isCategory: true,
       children: [
-        { id: 'ds', name: 'Drug Substance', cyFTE: ['2.0','2.0','3.0','3.0'], cyIPE: '£200k', y1FTE: '5.0', y1IPE: '£500k', y2FTE: '8.0', y2IPE: '£800k', y3FTE: '10.0', y3IPE: '£1M', projAlgoFTE: '28.0', projFnHeadFTE: '28.0', projIPE: '£2.5M', priorFTE: '25.0', priorIPE: '£2.2M', signOff: 'Approved' },
-        { id: 'dp', name: 'Drug Product', cyFTE: ['1.0','1.0','1.5','1.5'], cyIPE: '£100k', y1FTE: '2.5', y1IPE: '£250k', y2FTE: '4.0', y2IPE: '£400k', y3FTE: '5.0', y3IPE: '£500k', projAlgoFTE: '14.0', projFnHeadFTE: '14.0', projIPE: '£1.3M', priorFTE: '12.0', priorIPE: '£1.1M', signOff: 'Approved' },
-        { id: 'cs', name: 'Clinical Supply', cyFTE: ['1.5','1.5','4.0','4.0'], cyIPE: '£150k', y1FTE: '8.0', y1IPE: '£800k', y2FTE: '12.0', y2IPE: '£1.2M', y3FTE: '15.0', y3IPE: '£1.5M', projAlgoFTE: '40.5', projFnHeadFTE: '40.5', projIPE: '£3.8M', priorFTE: '35.0', priorIPE: '£3.2M', signOff: 'Approved' }
+        { id: 'ds', name: 'Drug Substance', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'dp', name: 'Drug Product', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'cs', name: 'Clinical Supply', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' }
       ]
     },
     {
       id: 'ta', name: 'Therapy Area', isCategory: true,
       children: [
-        { id: 'bs', name: 'Biostatistics', cyFTE: ['0.5','0.5','1.2','1.2'], cyIPE: '£50k', y1FTE: '2.5', y1IPE: '£250k', y2FTE: '3.0', y2IPE: '£300k', y3FTE: '3.0', y3IPE: '£300k', projAlgoFTE: '10.2', projFnHeadFTE: '10.2', projIPE: '£950k', priorFTE: '9.5', priorIPE: '£880k', signOff: 'Approved' },
-        { id: 'csc', name: 'Clinical Science', cyFTE: ['1.0','1.0','2.5','2.5'], cyIPE: '£100k', y1FTE: '4.0', y1IPE: '£400k', y2FTE: '6.0', y2IPE: '£600k', y3FTE: '6.0', y3IPE: '£600k', projAlgoFTE: '19.5', projFnHeadFTE: '19.5', projIPE: '£1.9M', priorFTE: '18.0', priorIPE: '£1.7M', signOff: 'Approved' },
-        { id: 'ppm', name: 'Pipeline Project Management', cyFTE: ['0.8','0.8','1.0','1.0'], cyIPE: '£80k', y1FTE: '1.0', y1IPE: '£100k', y2FTE: '1.0', y2IPE: '£100k', y3FTE: '1.0', y3IPE: '£100k', projAlgoFTE: '3.8', projFnHeadFTE: '3.8', projIPE: '£380k', priorFTE: '3.8', priorIPE: '£380k', signOff: 'Approved' },
-        { id: 'rs', name: 'Research', cyFTE: ['3.0','3.0','1.5','1.5'], cyIPE: '£300k', y1FTE: '0.8', y1IPE: '£80k', y2FTE: '0.5', y2IPE: '£50k', y3FTE: '0.5', y3IPE: '£50k', projAlgoFTE: '6.3', projFnHeadFTE: '6.3', projIPE: '£580k', priorFTE: '8.0', priorIPE: '£750k', signOff: 'Approved' },
-        { id: 'xdl', name: 'xDL', cyFTE: ['0.4','0.4','1.0','1.0'], cyIPE: '£40k', y1FTE: '2.5', y1IPE: '£250k', y2FTE: '3.5', y2IPE: '£350k', y3FTE: '4.0', y3IPE: '£400k', projAlgoFTE: '11.4', projFnHeadFTE: '11.4', projIPE: '£1.1M', priorFTE: '10.0', priorIPE: '£950k', signOff: 'Approved' }
+        { id: 'bs', name: 'Biostatistics', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'csc', name: 'Clinical Science', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'ppm', name: 'Pipeline Project Management', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'rs', name: 'Research', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
+        { id: 'xdl', name: 'xDL', cyFTE: ['','','',''], cyIPE: '', y1FTE: '', y1IPE: '', y2FTE: '', y2IPE: '', y3FTE: '', y3IPE: '', projAlgoFTE: '', projFnHeadFTE: 'n/a', projIPE: '', priorFTE: '', priorIPE: '', signOff: 'n/a' },
       ]
     }
   ],
@@ -237,8 +235,8 @@ const initialData: GovernanceData = {
     { id: 'r2', description: 'Regulatory submission timeline shift', impact: 'Medium', mitigation: 'Early engagement with FDA planned' }
   ],
   hioCommentary: {
-    actuals: 'Describe main drivers for over-/under spend on past stage',
-    budget: 'Describe variance vs budget'
+    actuals: 'Strategic investment in early-stage clinical milestones led to marginal overspends in 2024, which have been effectively mitigated by operational cost-savings identified in the North American supply chain.',
+    budget: 'The current budget trajectory aligns with the board-approved forecast, with variances primarily driven by phasing shifts in clinical supply and external partner milestones.'
   }
 };
 
