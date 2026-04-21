@@ -50,12 +50,13 @@ const Step6Download = () => {
 
     try {
       // @ts-ignore
-      if (typeof window.PptxGenJS === 'undefined') {
-        throw new Error('PptxGenJS library not loaded from CDN');
+      const PptxClass = window.PptxGenJS || window.pptxgen;
+      if (!PptxClass) {
+        throw new Error('PptxGenJS library not found. Please refresh and check your connection.');
       }
       
       // @ts-ignore
-      let pptx = new window.PptxGenJS();
+      let pptx = new PptxClass();
       pptx.layout = 'LAYOUT_16x9';
 
       // ==========================================
@@ -101,14 +102,14 @@ const Step6Download = () => {
       let slide3 = pptx.addSlide();
       addSlideHeader(slide3, `Executive Summary: ${data.projectId}`);
       // Context Section
-      slide3.addText('CONTEXT', { x: 0.5, y: 1.2, w: 9, h: 0.3, fill: 'F04E23', color: 'FFFFFF', bold: true, fontSize: 12 });
-      slide3.addText(data.executiveSummary.context, { x: 0.5, y: 1.5, w: 9, h: 1, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
+      slide3.addText('CONTEXT', { x: 0.5, y: 1.2, w: 9, h: 0.3, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 12 });
+      slide3.addText(data.executiveSummary?.context || '', { x: 0.5, y: 1.5, w: 9, h: 1, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
       // Proposal Section
-      slide3.addText('TEAM PROPOSAL', { x: 0.5, y: 2.7, w: 9, h: 0.3, fill: 'F04E23', color: 'FFFFFF', bold: true, fontSize: 12 });
-      slide3.addText(data.executiveSummary.teamProposal, { x: 0.5, y: 3.0, w: 9, h: 1, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
+      slide3.addText('TEAM PROPOSAL', { x: 0.5, y: 2.7, w: 9, h: 0.3, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 12 });
+      slide3.addText(data.executiveSummary?.teamProposal || '', { x: 0.5, y: 3.0, w: 9, h: 1, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
       // Questions Section
-      slide3.addText('KEY QUESTIONS', { x: 0.5, y: 4.2, w: 9, h: 0.3, fill: 'F04E23', color: 'FFFFFF', bold: true, fontSize: 12 });
-      slide3.addText(data.executiveSummary.keyQuestions, { x: 0.5, y: 4.5, w: 9, h: 0.7, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
+      slide3.addText('KEY QUESTIONS', { x: 0.5, y: 4.2, w: 9, h: 0.3, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 12 });
+      slide3.addText(data.executiveSummary?.keyQuestions || '', { x: 0.5, y: 4.5, w: 9, h: 0.7, fontSize: 10, color: '333333', border: { pt: 1, color: 'F04E23' }, align: 'left', valign: 'top' });
 
       // ==========================================
       // SLIDE 4: REASONS TO BELIEVE
@@ -125,7 +126,7 @@ const Step6Download = () => {
 
       rtbSections.forEach(sec => {
         slide4.addText(sec.title, { x: sec.x, y: sec.y, w: 4.4, h: 0.25, fontSize: 10, bold: true, color: '111111' });
-        slide4.addText(sec.text, { x: sec.x, y: sec.y + 0.3, w: 4.4, h: 1, fontSize: 9, color: '333333', fill: 'F1F1F1' });
+        slide4.addText(sec.text, { x: sec.x, y: sec.y + 0.3, w: 4.4, h: 1, fontSize: 9, color: '333333', fill: { color: 'F1F1F1' } });
       });
 
       // Reasons not to believe (RED BOX)
@@ -192,10 +193,10 @@ const Step6Download = () => {
       slide7.addText('Today', { x: lineX - 0.2, y: 0.9, w: 0.4, h: 0.2, fontSize: 8, color: '333333', align: 'center', bold: true });
 
       // Commentary at bottom
-      slide7.addText('ACTUALS', { x: 0.5, y: 4.2, w: 4.4, h: 0.2, fill: 'F04E23', color: 'FFFFFF', bold: true, fontSize: 9 });
-      slide7.addText(data.hioCommentary.actuals, { x: 0.5, y: 4.4, w: 4.4, h: 0.6, fontSize: 8, color: '333333', border: { pt: 1, color: '999999' } });
-      slide7.addText('BUDGET', { x: 5.1, y: 4.2, w: 4.4, h: 0.2, fill: 'BBBBBB', color: '000000', bold: true, fontSize: 9 });
-      slide7.addText(data.hioCommentary.budget, { x: 5.1, y: 4.4, w: 4.4, h: 0.6, fontSize: 8, color: '333333', border: { pt: 1, color: '999999' } });
+      slide7.addText('ACTUALS', { x: 0.5, y: 4.2, w: 4.4, h: 0.2, fill: { color: 'F04E23' }, color: 'FFFFFF', bold: true, fontSize: 9 });
+      slide7.addText(data.hioCommentary?.actuals || '', { x: 0.5, y: 4.4, w: 4.4, h: 0.6, fontSize: 8, color: '333333', border: { pt: 1, color: '999999' } });
+      slide7.addText('BUDGET', { x: 5.1, y: 4.2, w: 4.4, h: 0.2, fill: { color: 'BBBBBB' }, color: '000000', bold: true, fontSize: 9 });
+      slide7.addText(data.hioCommentary?.budget || '', { x: 5.1, y: 4.4, w: 4.4, h: 0.6, fontSize: 8, color: '333333', border: { pt: 1, color: '999999' } });
 
       // ==========================================
       // SLIDE 8: RESOURCING
@@ -251,7 +252,7 @@ const Step6Download = () => {
         const xPos = i % 2 === 0 ? 0.5 : 5.1;
         const yPos = 1.3 + (Math.floor(i / 2) * 1.5);
         if (i < 4) {
-          slide9.addText(risk.description, { x: xPos, y: yPos, w: 4.4, h: 0.3, fill: risk.impact === 'High' ? 'FEE2E2' : 'FEF3C7', fontSize: 10, bold: true });
+          slide9.addText(risk.description, { x: xPos, y: yPos, w: 4.4, h: 0.3, fill: { color: risk.impact === 'High' ? 'FEE2E2' : 'FEF3C7' }, fontSize: 10, bold: true });
           slide9.addText(`Impact: ${risk.impact}\nMitigation: ${risk.mitigation}`, { x: xPos, y: yPos + 0.35, w: 4.4, h: 0.8, fontSize: 9, color: '334155', border: { pt: 0.5, color: 'E2E8F0' } });
         }
       });
@@ -259,9 +260,9 @@ const Step6Download = () => {
       await pptx.writeFile({ fileName: `${data.projectId}_Governance_Deck.pptx` });
 
       setDownloadComplete(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating PPT:', error);
-      alert('Failed to generate PowerPoint. Please ensure you are connected to the internet to load the PPT engine.');
+      alert(`Failed to generate PowerPoint: ${error?.message || 'Unknown error'}. Please refresh and try again.`);
     } finally {
       setIsDownloading(false);
     }
