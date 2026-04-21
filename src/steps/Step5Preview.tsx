@@ -826,7 +826,8 @@ const Step5Preview = () => {
           fontSize: '0.6rem', 
           border: '1px solid #999', 
           background: 'white',
-          position: 'relative'
+          position: 'relative',
+          marginTop: '25px'
         }}>
            {/* Vertical "Today" Marker Line - spans whole grid height */}
            {(() => {
@@ -839,10 +840,10 @@ const Step5Preview = () => {
              <div key={year} style={{ borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc', position: 'relative' }}>
                 {year}
                 {year === 2026 && (
-                  <div style={{ position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                     <span style={{ fontSize: '0.5rem', fontWeight: 700, color: '#333' }}>Today</span>
-                     <div style={{ width: 0, height: 0, borderLeft: '4px solid transparent', borderRight: '4px solid transparent', borderTop: '6px solid #333' }} />
-                     <div style={{ width: '1px', height: '320px', background: '#333', position: 'absolute', top: '15px', zIndex: 5 }} />
+                  <div style={{ position: 'absolute', top: '-18px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 10 }}>
+                     <span style={{ fontSize: '0.5rem', fontWeight: 800, color: 'white', background: '#0F172A', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>Today</span>
+                     <div style={{ width: 0, height: 0, borderLeft: '3px solid transparent', borderRight: '3px solid transparent', borderTop: '4px solid #0F172A' }} />
+                     <div style={{ width: '1.5px', height: '320px', background: '#0F172A', position: 'absolute', top: '15px', zIndex: -1 }} />
                   </div>
                 )}
              </div>
