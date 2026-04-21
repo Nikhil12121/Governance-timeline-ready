@@ -522,7 +522,7 @@ const Step5Preview = () => {
                   {/* Empty top left corner */}
                   <th style={{ width: '20%', border: 'none' }}></th>
                   <th style={{ width: '25%', background: '#F04E23', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Current Estimate</th>
-                  <th style={{ width: '25%', background: '#555', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Last Governed</th>
+                  <th style={{ width: '25%', background: '#555', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Last Governed (12-Oct-2023)</th>
                   <th style={{ width: '30%', background: '#555', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Comment</th>
                 </tr>
               </thead>

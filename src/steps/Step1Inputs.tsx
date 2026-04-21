@@ -276,7 +276,7 @@ const Step1Inputs = () => {
               <tr style={{ borderBottom: '1px solid var(--border-medium)' }}>
                 <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '25%' }}>Metric</th>
                 <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '20%' }}>Current Estimate</th>
-                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '20%' }}>Last Governed</th>
+                <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '20%' }}>Last Governed (12-Oct-2023)</th>
                 <th style={{ padding: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', width: '35%' }}>Comment</th>
               </tr>
             </thead>
