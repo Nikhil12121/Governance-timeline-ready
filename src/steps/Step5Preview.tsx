@@ -805,7 +805,8 @@ const Step5Preview = () => {
     ),
     // Slide 7: High-level Investment Overview (Integrated Professional View)
     (
-      <div style={{ ...slideStyle, padding: '1rem 2rem' }} key="slide_hio_pro">
+      <div style={{ ...slideStyle, padding: '0.5rem 1rem' }} key="slide_hio_pro">
+        <div style={{ transform: 'scale(0.92)', transformOrigin: 'top center', height: '100%', display: 'flex', flexDirection: 'column' }}>
             {/* PPT Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
           <div>
@@ -827,7 +828,7 @@ const Step5Preview = () => {
           border: '1px solid #999', 
           background: 'white',
           position: 'relative',
-          marginTop: '20px'
+          marginTop: '5px'
         }}>
            {/* Vertical "Today" Marker Line - spans whole grid height */}
            {(() => {
@@ -860,7 +861,7 @@ const Step5Preview = () => {
                   const ms = data.milestones.filter(m => m.swimlane === lane && m.year === year && m.isSelected);
                   const hasBar = data.milestones.some(m => m.swimlane === lane && m.year === year);
                   return (
-                    <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '16px' }}>
+                    <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '12px' }}>
                        {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '3px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 1 }} />}
                        {ms.map(m => (
                          <div key={m.id} style={{ position: 'absolute', left: `${m.position}%`, top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 6 }}>
@@ -921,6 +922,7 @@ const Step5Preview = () => {
         {/* Page Number */}
         <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
           7
+        </div>
         </div>
       </div>
     ),
