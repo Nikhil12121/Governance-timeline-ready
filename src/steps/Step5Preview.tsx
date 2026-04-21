@@ -478,12 +478,12 @@ const Step5Preview = () => {
                   borderLeft: '12px solid #F04E23', 
                   marginRight: '12px' 
                 }}></div>
-                <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+                <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.4rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
                   Value Creation Evolution
                 </h2>
               </div>
               <div style={{ paddingLeft: '1.5rem', marginTop: '0.5rem' }}>
-                <h3 style={{ margin: 0, color: '#111', fontSize: '1.4rem', fontWeight: 400 }}>Key changes vs last governance/forecast</h3>
+                <h3 style={{ margin: 0, color: '#111', fontSize: '1.1rem', fontWeight: 400 }}>Key changes vs last governance/forecast</h3>
               </div>
             </div>
             
@@ -521,31 +521,31 @@ const Step5Preview = () => {
                 <tr>
                   {/* Empty top left corner */}
                   <th style={{ width: '20%', border: 'none' }}></th>
-                  <th style={{ width: '25%', background: '#F04E23', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Current Estimate</th>
-                  <th style={{ width: '25%', background: '#555', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Last Governed (12-Oct-2023)</th>
-                  <th style={{ width: '30%', background: '#555', color: 'white', padding: '0.3rem', fontWeight: 500, fontSize: '0.85rem', border: '1px solid white' }}>Comment</th>
+                  <th style={{ width: '25%', background: '#F04E23', color: 'white', padding: '0.2rem', fontWeight: 500, fontSize: '0.75rem', border: '1px solid white' }}>Current Estimate</th>
+                  <th style={{ width: '25%', background: '#555', color: 'white', padding: '0.2rem', fontWeight: 500, fontSize: '0.75rem', border: '1px solid white' }}>Last Governed (12-Oct-2023)</th>
+                  <th style={{ width: '30%', background: '#555', color: 'white', padding: '0.2rem', fontWeight: 500, fontSize: '0.75rem', border: '1px solid white' }}>Comment</th>
                 </tr>
               </thead>
               <tbody>
                 {data.valueCreation.items.map((item) => (
                   <tr key={item.id}>
                     {/* Pink metric cell */}
-                    <td style={{ background: '#FCE4D6', border: '1px solid #C55A11', padding: '0.15rem 0.5rem', textAlign: 'center', fontSize: '0.75rem', color: '#111' }}>
+                    <td style={{ background: '#FCE4D6', border: '1px solid #C55A11', padding: '0.1rem 0.4rem', textAlign: 'center', fontSize: '0.65rem', color: '#111' }}>
                       {item.metric}
                     </td>
                     {/* Current Estimate cell */}
-                    <td style={{ border: '1px solid #7F7F7F', padding: '0.15rem 0.5rem', textAlign: 'center', background: 'white' }}>
-                      {item.currentEstimate === 'green-up' ? <div style={{ color: '#10B981', fontSize: '1.1rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
-                       item.currentEstimate === 'red-up' ? <div style={{ color: '#EF4444', fontSize: '1.1rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
-                       item.currentEstimate === 'similar' ? <div style={{ color: '#111', fontSize: '1.1rem', fontWeight: 800, lineHeight: 1 }}>⇔</div> :
-                       <div style={{ color: '#333', fontSize: '0.75rem' }}>{item.currentEstimate}</div>}
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.1rem 0.4rem', textAlign: 'center', background: 'white' }}>
+                      {item.currentEstimate === 'green-up' ? <div style={{ color: '#10B981', fontSize: '0.9rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
+                       item.currentEstimate === 'red-up' ? <div style={{ color: '#EF4444', fontSize: '0.9rem', fontWeight: 800, lineHeight: 1 }}>⇑</div> :
+                       item.currentEstimate === 'similar' ? <div style={{ color: '#111', fontSize: '0.9rem', fontWeight: 800, lineHeight: 1 }}>⇔</div> :
+                       <div style={{ color: '#333', fontSize: '0.65rem' }}>{item.currentEstimate}</div>}
                     </td>
                     {/* Last Governed cell */}
-                    <td style={{ border: '1px solid #7F7F7F', padding: '0.15rem 0.5rem', textAlign: 'center', background: 'white', fontSize: '0.75rem' }}>
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.1rem 0.4rem', textAlign: 'center', background: 'white', fontSize: '0.65rem' }}>
                       {item.lastGoverned}
                     </td>
                     {/* Comment cell */}
-                    <td style={{ border: '1px solid #7F7F7F', padding: '0.15rem 0.5rem', background: 'white', fontSize: '0.75rem', verticalAlign: 'top' }}>
+                    <td style={{ border: '1px solid #7F7F7F', padding: '0.1rem 0.4rem', background: 'white', fontSize: '0.6rem', verticalAlign: 'top' }}>
                       {item.comment}
                     </td>
                   </tr>
@@ -822,8 +822,8 @@ const Step5Preview = () => {
         {/* The Big HIO Grid */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'minmax(120px, 1.2fr) repeat(10, 1fr) 0.6fr 0.6fr 0.8fr', 
-          fontSize: '0.6rem', 
+          gridTemplateColumns: 'minmax(100px, 1fr) repeat(10, 1fr) 0.6fr 0.6fr 0.6fr', 
+          fontSize: '0.55rem', 
           border: '1px solid #999', 
           background: 'white',
           position: 'relative',
