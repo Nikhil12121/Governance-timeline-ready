@@ -806,12 +806,12 @@ const Step5Preview = () => {
     // Slide 7: High-level Investment Overview (Integrated Professional View)
     (
       <div style={{ ...slideStyle, padding: '1rem 2rem' }} key="slide_hio_pro">
-        {/* PPT Header */}
+            {/* PPT Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                <div style={{ width: 0, height: 0, borderTop: '10px solid transparent', borderBottom: '10px solid transparent', borderLeft: '15px solid #F04E23' }} />
-               <h1 style={{ margin: 0, color: '#F04E23', fontSize: '2.2rem', fontWeight: 300, fontFamily: 'system-ui' }}>High-level Investment Overview</h1>
+               <h1 style={{ margin: 0, color: '#F04E23', fontSize: '1.2rem', fontWeight: 600, fontFamily: 'system-ui' }}>High-level Investment Overview</h1>
             </div>
           </div>
           <div style={{ background: '#0284C7', color: 'white', padding: '4px 12px', fontSize: '0.75rem', fontWeight: 500 }}>
@@ -860,8 +860,8 @@ const Step5Preview = () => {
                   const ms = data.milestones.filter(m => m.swimlane === lane && m.year === year && m.isSelected);
                   const hasBar = data.milestones.some(m => m.swimlane === lane && m.year === year);
                   return (
-                    <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '30px' }}>
-                       {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 1 }} />}
+                    <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '16px' }}>
+                       {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '3px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 1 }} />}
                        {ms.map(m => (
                          <div key={m.id} style={{ position: 'absolute', left: `${m.position}%`, top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 6 }}>
                             <span style={{ color: '#000', fontSize: '8px' }}>▲</span>
@@ -880,7 +880,7 @@ const Step5Preview = () => {
            {/* Financial Table Rows */}
            {data.financials.map(fin => (
              <React.Fragment key={fin.label}>
-                <div style={{ borderTop: '2px solid #333', borderRight: '1px solid #999', padding: '4px 8px', fontWeight: 700, textAlign: 'right', background: '#f8fafc' }}>{fin.label}</div>
+                <div style={{ borderTop: '2px solid #333', borderRight: '1px solid #999', padding: '2px 6px', fontWeight: 700, textAlign: 'right', background: '#f8fafc' }}>{fin.label}</div>
                 {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032].map(year => {
                   const val = fin.data[year] || '';
                   const color = val.includes('+') ? '#10b981' : val.includes('-') ? '#ef4444' : '#333';
@@ -896,16 +896,16 @@ const Step5Preview = () => {
         </div>
 
         {/* Variance Commentary Boxes */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '0.4rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ background: '#F04E23', color: 'white', padding: '4px 12px', fontSize: '0.7rem', fontWeight: 700 }}>Actuals</div>
-            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '8px', fontSize: '0.75rem', color: '#475569', minHeight: '60px', borderRadius: '0 0 4px 4px' }}>
+            <div style={{ background: '#F04E23', color: 'white', padding: '2px 8px', fontSize: '0.6rem', fontWeight: 700 }}>Actuals</div>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.55rem', color: '#475569', minHeight: '35px', borderRadius: '0 0 4px 4px', lineHeight: 1.1 }}>
               {data.hioCommentary.actuals}
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ background: '#eee', color: '#000', padding: '4px 12px', fontSize: '0.7rem', fontWeight: 700, border: '1px solid #999' }}>Budget</div>
-            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '8px', fontSize: '0.75rem', color: '#475569', minHeight: '60px', borderRadius: '0 0 4px 4px' }}>
+            <div style={{ background: '#eee', color: '#000', padding: '2px 8px', fontSize: '0.6rem', fontWeight: 700, border: '1px solid #999' }}>Budget</div>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.55rem', color: '#475569', minHeight: '35px', borderRadius: '0 0 4px 4px', lineHeight: 1.1 }}>
               {data.hioCommentary.budget}
             </div>
           </div>
