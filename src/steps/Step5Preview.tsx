@@ -805,8 +805,8 @@ const Step5Preview = () => {
     ),
     // Slide 7: High-level Investment Overview (Integrated Professional View)
     (
-      <div style={{ ...slideStyle, padding: '1.5rem 1.5rem' }} key="slide_hio_pro">
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ ...slideStyle, padding: '0.5rem 1rem' }} key="slide_hio_pro">
+        <div style={{ transform: 'scale(0.92)', transformOrigin: 'top center', height: '100%', display: 'flex', flexDirection: 'column' }}>
             {/* PPT Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
           <div>
@@ -824,7 +824,7 @@ const Step5Preview = () => {
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'minmax(100px, 1fr) repeat(10, 1fr) 0.6fr 0.6fr 0.6fr', 
-          fontSize: '0.65rem', 
+          fontSize: '0.55rem', 
           border: '1px solid #999', 
           background: 'white',
           position: 'relative',
@@ -903,13 +903,13 @@ const Step5Preview = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '0.4rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ background: '#F04E23', color: 'white', padding: '2px 8px', fontSize: '0.6rem', fontWeight: 700 }}>Actuals</div>
-            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.7rem', color: '#444', borderRadius: '0 0 4px 4px', lineHeight: 1.2 }}>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.55rem', color: '#475569', minHeight: '35px', borderRadius: '0 0 4px 4px', lineHeight: 1.1 }}>
               {data.hioCommentary.actuals}
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ background: '#eee', color: '#000', padding: '2px 8px', fontSize: '0.6rem', fontWeight: 700, border: '1px solid #999' }}>Budget</div>
-            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.7rem', color: '#444', borderRadius: '0 0 4px 4px', lineHeight: 1.2 }}>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '4px', fontSize: '0.55rem', color: '#475569', minHeight: '35px', borderRadius: '0 0 4px 4px', lineHeight: 1.1 }}>
               {data.hioCommentary.budget}
             </div>
           </div>
