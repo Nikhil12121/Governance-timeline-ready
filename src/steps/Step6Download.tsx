@@ -131,7 +131,7 @@ const Step6Download = () => {
 
       // Reasons not to believe (RED BOX)
       slide4.addText('REASONS NOT TO BELIEVE', { x: 0.5, y: 4.2, w: 4.4, h: 1, fontSize: 9, color: '333333', border: { pt: 2, color: 'F04E23' }, align: 'left', valign: 'top' });
-      slide4.addText(data.reasonsToBelieve.reasonsNotToBelieve, { x: 0.6, y: 4.5, w: 4.2, h: 0.6, fontSize: 8, color: '555555' });
+      slide4.addText(data.reasonsToBelieve?.reasonsNotToBelieve || '', { x: 0.6, y: 4.5, w: 4.2, h: 0.6, fontSize: 8, color: '555555' });
 
       // ==========================================
       // SLIDE 5: VALUE CREATION
@@ -170,7 +170,7 @@ const Step6Download = () => {
       ]);
 
       const finRows = data.financials.map(fin => [
-        fin.label, ...years.map(y => fin.data[y] || ''), fin.summaryEPE, fin.summaryIPE, ''
+        fin.label || '', ...years.map(y => fin.data[y] || ''), fin.summaryEPE || '', fin.summaryIPE || '', ''
       ]);
 
       const fullHioTable = [hioHeader, ...swimlaneRows, ...finRows];
@@ -218,8 +218,7 @@ const Step6Download = () => {
       data.resourcingData.forEach(cat => {
         // Category Header Row
         resRows.push([
-          { text: cat.name, options: { fill: 'F1F5F9', color: 'F04E23', bold: true } },
-          ...Array(13).fill('')
+          { text: cat.name, options: { fill: 'F1F5F9', color: 'F04E23', bold: true, colSpan: 15 } }
         ]);
         // Child Rows
         cat.children?.forEach(child => {
