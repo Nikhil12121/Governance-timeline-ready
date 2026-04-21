@@ -844,7 +844,7 @@ const Step5Preview = () => {
                   <div style={{ position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                      <span style={{ fontSize: '0.5rem', fontWeight: 700, color: '#333' }}>Today</span>
                      <div style={{ width: 0, height: 0, borderLeft: '4px solid transparent', borderRight: '4px solid transparent', borderTop: '6px solid #333' }} />
-                     <div style={{ width: '1px', height: '70px', background: '#333', position: 'absolute', top: '15px', zIndex: 5, pointerEvents: 'none' }} />
+                     <div style={{ width: '1px', height: '78px', background: '#333', position: 'absolute', top: '15px', zIndex: 5, pointerEvents: 'none' }} />
                   </div>
                 )}
              </div>
