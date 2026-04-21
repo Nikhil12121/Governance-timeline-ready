@@ -833,8 +833,7 @@ const Step5Preview = () => {
              return null; 
            })()}
            
-           {/* Grid Headers */}
-           <div style={{ borderRight: '1px solid #999', padding: '4px', fontWeight: 700, background: '#f8fafc' }}>SWIMLANE</div>
+           <div style={{ borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc' }}>SWIMLANE</div>
            {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032].map(year => (
              <div key={year} style={{ borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc', position: 'relative' }}>
                 {year}
@@ -852,29 +851,33 @@ const Step5Preview = () => {
            <div style={{ padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc' }}>Cum PTRS</div>
 
            {/* Swimlane Rows */}
-           {data.swimlanes.map((lane, idx) => (
-             <React.Fragment key={lane}>
-                <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px 8px', fontWeight: 600, background: '#f1f5f9' }}>{lane}</div>
-                {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032].map(year => {
-                  const ms = data.milestones.filter(m => m.swimlane === lane && m.year === year && m.isSelected);
-                  const hasBar = data.milestones.some(m => m.swimlane === lane && m.year === year);
-                  return (
-                    <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '30px' }}>
-                       {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 0.8 }} />}
-                       {ms.map(m => (
-                         <div key={m.id} style={{ position: 'absolute', left: `${m.position}%`, top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 6 }}>
-                            <span style={{ color: '#F04E23', fontSize: '8px' }}>▲</span>
-                            <span style={{ fontSize: '6px', whiteSpace: 'nowrap', fontWeight: 700, background: 'rgba(255,255,255,0.8)', padding: '0 2px' }}>{m.name}</span>
-                         </div>
-                       ))}
-                    </div>
-                  );
-                })}
-                <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px', textAlign: 'center' }}>£{idx*2+1}m</div>
-                <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px', textAlign: 'center' }}>£{idx}m</div>
-                <div style={{ borderTop: '1px solid #999', padding: '4px', textAlign: 'center' }}>{15 + idx*15}%</div>
-             </React.Fragment>
-           ))}
+           {data.swimlanes.map((lane, idx) => {
+             const isStripe = idx % 2 !== 0;
+             const bgColor = isStripe ? '#f1f5f9' : '#ffffff';
+             return (
+               <React.Fragment key={lane}>
+                  <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px 8px', fontWeight: 600, background: isStripe ? '#e2e8f0' : '#f1f5f9' }}>{lane}</div>
+                  {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032].map(year => {
+                    const ms = data.milestones.filter(m => m.swimlane === lane && m.year === year && m.isSelected);
+                    const hasBar = data.milestones.some(m => m.swimlane === lane && m.year === year);
+                    return (
+                      <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '32px', background: bgColor }}>
+                         {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 0.8 }} />}
+                         {ms.map(m => (
+                           <div key={m.id} style={{ position: 'absolute', left: `${m.position}%`, top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 6 }}>
+                              <span style={{ color: '#F04E23', fontSize: '8px' }}>▲</span>
+                              <span style={{ fontSize: '6px', whiteSpace: 'nowrap', fontWeight: 700, background: 'rgba(255,255,255,0.8)', padding: '0 2px' }}>{m.name}</span>
+                           </div>
+                         ))}
+                      </div>
+                    );
+                  })}
+                  <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px', textAlign: 'center', background: bgColor }}>£{idx*2+1}m</div>
+                  <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px', textAlign: 'center', background: bgColor }}>£{idx}m</div>
+                  <div style={{ borderTop: '1px solid #999', padding: '4px', textAlign: 'center', background: bgColor }}>{15 + idx*15}%</div>
+               </React.Fragment>
+             );
+           })}
 
            {/* Financial Table Rows */}
            {data.financials.map(fin => (

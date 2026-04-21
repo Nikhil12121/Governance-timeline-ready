@@ -22,7 +22,8 @@
 
 .border-b { border-bottom: 1px solid var(--border-light); }
 .border-r { border-right: 1px solid var(--border-light); }
-.bg-light { background-color: var(--row-highlight); }
+.bg-light { background-color: #f8fafc; }
+.bg-stripe { background-color: #f1f5f9; }
 .fw-500 { font-weight: 500; }
 .fw-600 { font-weight: 600; }
 
@@ -136,63 +137,45 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Row grouping for better horizontal tracking */
-.hio-row-contents {
-  display: contents;
+/* Segmented today line */
+.today-line-segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--text-primary), transparent);
+  transform: translateX(-50%);
+  z-index: 5;
+  opacity: 0.8;
 }
 
-.hio-grid > div:nth-child(14n + 1) {
-  border-left: 2px solid var(--border-medium);
+/* AI Toolbar Styles */
+.ai-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Horizontal separators between swimlanes */
-.hio-row-separator {
-  grid-column: 1 / -1;
-  height: 2px;
-  background: var(--border-medium);
-  opacity: 0.3;
-}
-
-/* Hover effect on rows - simplified approach for grid */
-.hio-row-group:hover .hio-cell {
-  background-color: #f1f5f9 !important;
-}
-
-.ai-button {
-  background: linear-gradient(135deg, #F04E23 0%, #f97316 100%);
-  color: white;
-  border: none;
-  border-radius: 4px;
+.ai-btn {
   padding: 4px 10px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   gap: 4px;
-  transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(240, 78, 35, 0.2);
 }
 
-.ai-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(240, 78, 35, 0.3);
-  filter: brightness(1.1);
+.hio-grid-vlines {
+  border-left: 1px solid rgba(0,0,0,0.05);
 }
 
-.ai-button:disabled {
-  background: #cbd5e1;
-  cursor: not-allowed;
-  box-shadow: none;
+.swimlane-header {
+  background: var(--bg-secondary);
+  border-right: 2px solid var(--border-medium) !important;
 }
 
-.pulse {
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+.milestone-label {
+  z-index: 20;
 }
 
