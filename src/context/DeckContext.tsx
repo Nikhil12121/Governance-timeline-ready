@@ -111,6 +111,10 @@ export type GovernanceData = {
   financials: FinancialRow[];
   resourcingData: ResourcingRow[];
   risks: Risk[];
+  hioCommentary: {
+    actuals: string;
+    budget: string;
+  };
 };
 
 const initialData: GovernanceData = {
@@ -231,7 +235,11 @@ const initialData: GovernanceData = {
   risks: [
     { id: 'r1', description: 'Supply chain delay for API', impact: 'High', mitigation: 'Second source vendor onboarded' },
     { id: 'r2', description: 'Regulatory submission timeline shift', impact: 'Medium', mitigation: 'Early engagement with FDA planned' }
-  ]
+  ],
+  hioCommentary: {
+    actuals: 'Describe main drivers for over-/under spend on past stage',
+    budget: 'Describe variance vs budget'
+  }
 };
 
 type DeckContextType = {

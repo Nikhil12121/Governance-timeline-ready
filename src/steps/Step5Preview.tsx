@@ -803,50 +803,119 @@ const Step5Preview = () => {
         </div>
       </div>
     ),
-    // Slide 7: High-level Investment Overview
+    // Slide 7: High-level Investment Overview (Integrated Professional View)
     (
-      <div style={slideStyle} key="slide3">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#0F172A', fontSize: '1.8rem', fontWeight: 600 }}>
-            High-level Investment Overview
-          </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Key contact: {data.owner}</span>
-        </div>
-        
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
-
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ flex: 1, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', position: 'relative', overflow: 'hidden', padding: '1rem' }}>
-             {/* Mini Gantt Grid */}
-             <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', height: '100%', gap: '1px', background: '#e2e8f0' }}>
-                <div style={{ background: '#f1f5f9', padding: '0.5rem', fontWeight: 600, fontSize: '0.75rem' }}>SWIMLANE</div>
-                <div style={{ background: '#f1f5f9', display: 'flex', justifyContent: 'space-around', padding: '0.5rem', fontWeight: 600, fontSize: '0.75rem' }}>
-                   {Array.from({ length: 10 }, (_, i) => 2023 + i).map(y => <span key={y}>{y}</span>)}
-                </div>
-                {data.swimlanes.slice(0, 4).map(lane => (
-                   <React.Fragment key={lane}>
-                      <div style={{ background: 'white', padding: '0.5rem', fontSize: '0.7rem', fontWeight: 500 }}>{lane}</div>
-                      <div style={{ background: 'white', position: 'relative' }}>
-                         <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#f1f5f9', transform: 'translateY(-50%)' }} />
-                         {data.milestones.filter(m => m.swimlane === lane && m.isSelected).map(m => (
-                            <div key={m.id} style={{ 
-                               position: 'absolute', 
-                               left: `${((m.year - 2023) * 10) + (m.position / 10)}%`, 
-                               top: '50%', 
-                               transform: 'translate(-50%, -50%)',
-                               display: 'flex', flexDirection: 'column', alignItems: 'center'
-                            }}>
-                               <span style={{ color: '#F04E23', fontSize: '10px' }}>▲</span>
-                               <span style={{ fontSize: '8px', whiteSpace: 'nowrap', fontWeight: 700 }}>{m.name}</span>
-                            </div>
-                         ))}
-                      </div>
-                   </React.Fragment>
-                ))}
-             </div>
+      <div style={{ ...slideStyle, padding: '1rem 2rem' }} key="slide_hio_pro">
+        {/* PPT Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+               <div style={{ width: 0, height: 0, borderTop: '10px solid transparent', borderBottom: '10px solid transparent', borderLeft: '15px solid #F04E23' }} />
+               <h1 style={{ margin: 0, color: '#F04E23', fontSize: '2.2rem', fontWeight: 300, fontFamily: 'system-ui' }}>High-level Investment Overview</h1>
+            </div>
           </div>
+          <div style={{ background: '#0284C7', color: 'white', padding: '4px 12px', fontSize: '0.75rem', fontWeight: 500 }}>
+            Key contact: Project manager / Finance
+          </div>
+        </div>
+
+        {/* The Big HIO Grid */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'minmax(120px, 1.2fr) repeat(10, 1fr) 0.6fr 0.6fr 0.8fr', 
+          fontSize: '0.6rem', 
+          border: '1px solid #999', 
+          background: 'white',
+          position: 'relative'
+        }}>
+           {/* Vertical "Today" Marker Line - spans whole grid height */}
+           {(() => {
+             return null; 
+           })()}
+           
+           {/* Grid Headers */}
+           <div style={{ borderRight: '1px solid #999', padding: '4px', fontWeight: 700, background: '#f8fafc' }}>SWIMLANE</div>
+           {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032].map(year => (
+             <div key={year} style={{ borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc', position: 'relative' }}>
+                {year}
+                {year === 2026 && (
+                  <div style={{ position: 'absolute', top: '-15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                     <span style={{ fontSize: '0.5rem', fontWeight: 700, color: '#333' }}>Today</span>
+                     <div style={{ width: 0, height: 0, borderLeft: '4px solid transparent', borderRight: '4px solid transparent', borderTop: '6px solid #333' }} />
+                     <div style={{ width: '1px', height: '320px', background: '#333', position: 'absolute', top: '15px', zIndex: 5 }} />
+                  </div>
+                )}
+             </div>
+           ))}
+           <div style={{ borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc' }}>EPE</div>
+           <div style={{ borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc' }}>IPE</div>
+           <div style={{ padding: '4px', textAlign: 'center', fontWeight: 700, background: '#f8fafc' }}>Cum PTRS</div>
+
+           {/* Swimlane Rows */}
+           {data.swimlanes.map((lane, idx) => (
+             <React.Fragment key={lane}>
+                <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px 8px', fontWeight: 600, background: '#f1f5f9' }}>{lane}</div>
+                {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032].map(year => {
+                  const ms = data.milestones.filter(m => m.swimlane === lane && m.year === year && m.isSelected);
+                  const hasBar = data.milestones.some(m => m.swimlane === lane && m.year === year);
+                  return (
+                    <div key={year} style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', position: 'relative', minHeight: '30px' }}>
+                       {hasBar && <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '4px', background: '#F04E23', transform: 'translateY(-50%)', opacity: 0.8 }} />}
+                       {ms.map(m => (
+                         <div key={m.id} style={{ position: 'absolute', left: `${m.position}%`, top: '50%', transform: 'translate(-50%, -50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 6 }}>
+                            <span style={{ color: '#F04E23', fontSize: '8px' }}>▲</span>
+                            <span style={{ fontSize: '6px', whiteSpace: 'nowrap', fontWeight: 700, background: 'rgba(255,255,255,0.8)', padding: '0 2px' }}>{m.name}</span>
+                         </div>
+                       ))}
+                    </div>
+                  );
+                })}
+                <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px', textAlign: 'center' }}>£{idx*2+1}m</div>
+                <div style={{ borderTop: '1px solid #999', borderRight: '1px solid #999', padding: '4px', textAlign: 'center' }}>£{idx}m</div>
+                <div style={{ borderTop: '1px solid #999', padding: '4px', textAlign: 'center' }}>{15 + idx*15}%</div>
+             </React.Fragment>
+           ))}
+
+           {/* Financial Table Rows */}
+           {data.financials.map(fin => (
+             <React.Fragment key={fin.label}>
+                <div style={{ borderTop: '2px solid #333', borderRight: '1px solid #999', padding: '4px 8px', fontWeight: 700, textAlign: 'right', background: '#f8fafc' }}>{fin.label}</div>
+                {[2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032].map(year => {
+                  const val = fin.data[year] || '';
+                  const color = val.includes('+') ? '#10b981' : val.includes('-') ? '#ef4444' : '#333';
+                  return (
+                    <div key={year} style={{ borderTop: '2px solid #333', borderRight: '1px solid #999', padding: '4px', textAlign: 'center', color, fontWeight: color !== '#333' ? 700 : 400 }}>{val}</div>
+                  );
+                })}
+                <div style={{ borderTop: '2px solid #333', borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700 }}>{fin.summaryEPE}</div>
+                <div style={{ borderTop: '2px solid #333', borderRight: '1px solid #999', padding: '4px', textAlign: 'center', fontWeight: 700 }}>{fin.summaryIPE}</div>
+                <div style={{ borderTop: '2px solid #333', padding: '4px', textAlign: 'center' }}></div>
+             </React.Fragment>
+           ))}
+        </div>
+
+        {/* Variance Commentary Boxes */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ background: '#F04E23', color: 'white', padding: '4px 12px', fontSize: '0.7rem', fontWeight: 700 }}>Actuals</div>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '8px', fontSize: '0.75rem', color: '#475569', minHeight: '60px', borderRadius: '0 0 4px 4px' }}>
+              {data.hioCommentary.actuals}
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ background: '#eee', color: '#000', padding: '4px 12px', fontSize: '0.7rem', fontWeight: 700, border: '1px solid #999' }}>Budget</div>
+            <div style={{ border: '1px solid #999', borderTop: 'none', background: '#f1f5f9', padding: '8px', fontSize: '0.75rem', color: '#475569', minHeight: '60px', borderRadius: '0 0 4px 4px' }}>
+              {data.hioCommentary.budget}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer info */}
+        <div style={{ position: 'absolute', bottom: '1rem', right: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+           <div style={{ color: '#666', fontSize: '0.5rem', fontStyle: 'italic', maxWidth: '300px', textAlign: 'right' }}>
+             * Includes Payment milestones. Shows latest governed amount for past years
+           </div>
+           <div style={{ color: '#F04E23', fontSize: '1.2rem', fontWeight: 800 }}>GSK</div>
         </div>
         {/* Page Number */}
         <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>

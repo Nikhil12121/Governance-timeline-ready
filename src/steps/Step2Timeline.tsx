@@ -228,6 +228,8 @@ const Step2Timeline = () => {
             <textarea 
               rows={3} 
               placeholder="Describe main drivers for over-/under spend..."
+              value={data.hioCommentary.actuals}
+              onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, actuals: e.target.value } })}
               style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#e2e8f0' }}
             />
           </div>
@@ -236,6 +238,8 @@ const Step2Timeline = () => {
             <textarea 
               rows={3} 
               placeholder="Describe variance vs budget"
+              value={data.hioCommentary.budget}
+              onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, budget: e.target.value } })}
               style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#e2e8f0' }}
             />
           </div>
