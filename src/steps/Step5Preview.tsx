@@ -358,24 +358,24 @@ const Step5Preview = () => {
               borderLeft: '12px solid #F04E23', 
               marginRight: '12px' 
             }}></div>
-            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.4rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
-              Reasons to Believe in the Asset's Potential
+            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1rem', fontWeight: 600, fontFamily: 'system-ui, sans-serif' }}>
+              REASONS TO BELIEVE IN THE ASSET'S POTENTIAL
             </h2>
           </div>
 
           <div style={{ paddingLeft: '1.5rem', marginBottom: '1rem' }}>
-            <h3 style={{ margin: '0.2rem 0 0 0', color: '#333', fontSize: '1.1rem', fontWeight: 400 }}>{data.projectName} / {data.projectId}</h3>
+            <h3 style={{ margin: '0.1rem 0 0 0', color: '#333', fontSize: '0.85rem', fontWeight: 500 }}>{data.projectName} / {data.projectId}</h3>
           </div>
 
           {/* Grid Content */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', flex: 1, paddingLeft: '1.5rem', paddingRight: '1rem' }}>
             
             {/* Left Column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
               
               <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 600, fontSize: '0.75rem', color: '#111', marginBottom: '0.2rem' }}>Unmet need – key disease(s)</div>
-                <div style={{ background: '#F1F1F1', padding: '0.5rem', flex: 1, fontSize: '0.65rem', color: '#333' }}>
+                <div style={{ fontWeight: 700, fontSize: '0.65rem', color: '#111', marginBottom: '0.1rem' }}>UNMET NEED – KEY DISEASE(S)</div>
+                <div style={{ background: '#F1F1F1', padding: '0.25rem 0.5rem', flex: 1, fontSize: '0.55rem', color: '#333', lineHeight: 1.2 }}>
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {data.reasonsToBelieve.unmetNeed.split('\n').map((q, i) => {
                       const cleanQ = q.replace(/^•\s*/, '');
@@ -386,8 +386,8 @@ const Step5Preview = () => {
               </div>
 
               <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 600, fontSize: '0.75rem', color: '#111', marginBottom: '0.2rem' }}>MoA and differentiation</div>
-                <div style={{ background: '#F1F1F1', padding: '0.5rem', flex: 1, fontSize: '0.65rem', color: '#333' }}>
+                <div style={{ fontWeight: 700, fontSize: '0.65rem', color: '#111', marginBottom: '0.1rem' }}>MOA AND DIFFERENTIATION</div>
+                <div style={{ background: '#F1F1F1', padding: '0.25rem 0.5rem', flex: 1, fontSize: '0.55rem', color: '#333', lineHeight: 1.2 }}>
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {data.reasonsToBelieve.moa.split('\n').map((q, i) => {
                       const cleanQ = q.replace(/^•\s*/, '');
@@ -397,10 +397,10 @@ const Step5Preview = () => {
                 </div>
               </div>
 
-              <div style={{ flex: '0.9 1 0', display: 'flex', flexDirection: 'column', paddingBottom: '0.5rem' }}>
-                <fieldset style={{ border: '2px solid #F04E23', padding: '0.2rem 0.5rem', margin: 0, height: '100%', boxSizing: 'border-box' }}>
-                  <legend style={{ color: '#111', fontWeight: 700, fontSize: '0.75rem', margin: '0 auto', padding: '0 1rem' }}>Reasons not to believe</legend>
-                  <div style={{ fontSize: '0.65rem', color: '#333', marginTop: '0.2rem' }}>
+              <div style={{ flex: '0.9 1 0', display: 'flex', flexDirection: 'column', paddingBottom: '0.2rem' }}>
+                <fieldset style={{ border: '2px solid #F04E23', padding: '0.1rem 0.4rem', margin: 0, height: '100%', boxSizing: 'border-box' }}>
+                  <legend style={{ color: '#111', fontWeight: 700, fontSize: '0.65rem', margin: '0 auto', padding: '0 0.5rem' }}>REASONS NOT TO BELIEVE</legend>
+                  <div style={{ fontSize: '0.55rem', color: '#333', marginTop: '0.1rem', lineHeight: 1.1 }}>
                     <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                       {data.reasonsToBelieve.reasonsNotToBelieve.split('\n').map((q, i) => {
                         const cleanQ = q.replace(/^•\s*/, '');
@@ -414,11 +414,11 @@ const Step5Preview = () => {
             </div>
 
             {/* Right Column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', paddingBottom: '0.2rem' }}>
               
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 600, fontSize: '0.75rem', color: '#111', marginBottom: '0.2rem' }}>Key biological / preclinical data supporting step change in SoC</div>
-                <div style={{ background: '#F1F1F1', padding: '0.5rem', flex: 1, fontSize: '0.65rem', color: '#333' }}>
+                <div style={{ fontWeight: 700, fontSize: '0.65rem', color: '#111', marginBottom: '0.1rem' }}>KEY BIOLOGICAL / PRECLINICAL DATA</div>
+                <div style={{ background: '#F1F1F1', padding: '0.25rem 0.5rem', flex: 1, fontSize: '0.55rem', color: '#333', lineHeight: 1.2 }}>
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {data.reasonsToBelieve.preclinical.split('\n').map((q, i) => {
                       const cleanQ = q.replace(/^•\s*/, '');
@@ -429,8 +429,8 @@ const Step5Preview = () => {
               </div>
 
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 600, fontSize: '0.75rem', color: '#111', marginBottom: '0.2rem' }}>Key clinical data supporting step change in SoC</div>
-                <div style={{ background: '#F1F1F1', padding: '0.5rem', flex: 1, fontSize: '0.65rem', color: '#333' }}>
+                <div style={{ fontWeight: 700, fontSize: '0.65rem', color: '#111', marginBottom: '0.1rem' }}>KEY CLINICAL DATA</div>
+                <div style={{ background: '#F1F1F1', padding: '0.25rem 0.5rem', flex: 1, fontSize: '0.55rem', color: '#333', lineHeight: 1.2 }}>
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {data.reasonsToBelieve.clinical.split('\n').map((q, i) => {
                       const cleanQ = q.replace(/^•\s*/, '');
@@ -604,8 +604,8 @@ const Step5Preview = () => {
               borderLeft: '12px solid #F04E23', 
               marginRight: '12px' 
             }}></div>
-            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.4rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
-              Key evaluation inputs - {data.projectName} / {data.projectId}
+            <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1rem', fontWeight: 600, fontFamily: 'system-ui, sans-serif' }}>
+              KEY EVALUATION INPUTS - {data.projectName}
             </h2>
           </div>
 
@@ -616,10 +616,10 @@ const Step5Preview = () => {
               
               {/* Indications Table */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ background: '#F04E23', color: 'white', padding: '0.2rem 0.5rem', fontSize: '0.75rem', fontWeight: 600 }}>
-                  Primary indications / Target markets
+                <div style={{ background: '#F04E23', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.65rem', fontWeight: 700 }}>
+                  INDICATIONS / TARGET MARKETS
                 </div>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.75rem', border: '1px solid #F04E23' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.6rem', border: '1px solid #F04E23' }}>
                   <thead>
                     <tr style={{ background: '#f1f1f1' }}>
                       <th style={{ padding: '4px', border: '1px solid #F04E23', textAlign: 'left' }}>Indication</th>
