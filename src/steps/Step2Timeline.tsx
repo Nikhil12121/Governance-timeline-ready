@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useDeck } from '../context/DeckContext';
 import './Step2Timeline.css';
 
@@ -6,6 +6,41 @@ const Step2Timeline = () => {
   const { data, updateData } = useDeck();
   const [isExpanded, setIsExpanded] = useState(false);
   const [showMilestonesPanel, setShowMilestonesPanel] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const analyzeFinanceData = () => {
+    setIsAnalyzing(true);
+    setTimeout(() => {
+      const vsRow = data.financials[3]; // IPE+EPE vs Act/Budget
+      const entries = Object.entries(vsRow.data);
+      const spikes = entries.filter(([_, val]) => val.includes('+')).map(([y, v]) => `${y} (${v})`);
+      const dips = entries.filter(([_, val]) => val.includes('-')).map(([y, v]) => `${y} (${v})`);
+      
+      let insight = "Analysis of current HIO data suggests ";
+      if (dips.length > 0) insight += `initial under-spends in ${dips.slice(0,2).join(', ')} primarily driven by deferred operational costs. `;
+      if (spikes.length > 0) insight += `Significant acceleration is observed in ${spikes.slice(0,2).join(', ')} aligning with peak Phase II activities. `;
+      insight += "Project is currently on track relative to governed baseline with manageable variance.";
+      
+      updateData({ hioCommentary: { ...data.hioCommentary, actuals: insight } });
+      setIsAnalyzing(false);
+    }, 1200);
+  };
+
+  const paraphraseText = (type: 'actuals' | 'budget') => {
+    setIsAnalyzing(true);
+    setTimeout(() => {
+      const current = data.hioCommentary[type];
+      const professional = current
+        .replace(/spend/g, "expenditure")
+        .replace(/driven by/g, "attributable to")
+        .replace(/suggests/g, "indicates")
+        .replace(/on track/g, "tracking within governed tolerances")
+        .replace(/Observe/g, "Evidence indicates");
+      
+      updateData({ hioCommentary: { ...data.hioCommentary, [type]: professional } });
+      setIsAnalyzing(false);
+    }, 800);
+  };
   
   const years: number[] = [];
   for (let y = data.startYear; y <= data.endYear; y++) {
@@ -149,47 +184,52 @@ const Step2Timeline = () => {
               const isEven = index % 2 === 0;
 
               return (
-                <div key={lane} className="hio-row-contents" style={{ display: 'contents' }}>
-                  <div className={`hio-cell border-r border-b fw-500 ${isEven ? 'bg-light' : ''}`}>{lane}</div>
+                <Fragment key={lane}>
+                  {/* Visual separator for better horizontal tracking */}
+                  <div className="hio-row-separator" />
                   
-                  {/* Years cells for timeline */}
-                  {years.map(year => {
-                    const allYearMilestones = laneMilestones.filter(m => m.year === year);
-                    const visibleYearMilestones = allYearMilestones.filter(m => m.isSelected);
-                    return (
-                      <div key={`${lane}-${year}`} className={`hio-cell border-r border-b hio-timeline-cell ${isEven ? 'bg-light' : ''}`}>
-                        <div className="dotted-midline"></div>
-                        
-                        {/* Segmented Today Line (only in swimlanes) */}
-                        {year === data.currentYear && (
-                          <div className="today-line-segment"></div>
-                        )}
-                        
-                        {/* Render Orange Bar if there are ANY milestones in this year (independent of selection) */}
-                        {allYearMilestones.length > 0 && (
-                          <div className="gantt-bar"></div>
-                        )}
-
-                        {visibleYearMilestones.map(m => (
-                          <div 
-                            key={m.id} 
-                            className="milestone-marker selected"
-                            style={{ left: `${m.position}%` }}
-                            title={`${m.name}`}
-                          >
-                            ▲
-                            <span className="milestone-label">{m.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  })}
-                  
-                  {/* Summary trailing cells for swimlanes (usually empty or placeholder PTRS) */}
-                  <div className={`hio-cell border-r border-b ${isEven ? 'bg-light' : ''}`}></div>
-                  <div className={`hio-cell border-r border-b ${isEven ? 'bg-light' : ''}`}></div>
-                  <div className={`hio-cell border-b ${isEven ? 'bg-light' : ''}`}>{index * 10 + 15}%</div>
-                </div>
+                  <div className={`hio-row-contents hio-row-group`} style={{ display: 'contents' }}>
+                    <div className={`hio-cell border-r border-b fw-500 ${isEven ? 'bg-light' : ''}`} style={{ transition: 'background-color 0.2s' }}>{lane}</div>
+                    
+                    {/* Years cells for timeline */}
+                    {years.map(year => {
+                      const allYearMilestones = laneMilestones.filter(m => m.year === year);
+                      const visibleYearMilestones = allYearMilestones.filter(m => m.isSelected);
+                      return (
+                        <div key={`${lane}-${year}`} className={`hio-cell border-r border-b hio-timeline-cell ${isEven ? 'bg-light' : ''}`} style={{ transition: 'background-color 0.2s' }}>
+                          <div className="dotted-midline"></div>
+                          
+                          {/* Segmented Today Line (only in swimlanes) */}
+                          {year === data.currentYear && (
+                            <div className="today-line-segment" style={{ opacity: 0.4 }}></div>
+                          )}
+                          
+                          {/* Render Orange Bar if there are ANY milestones in this year (independent of selection) */}
+                          {allYearMilestones.length > 0 && (
+                            <div className="gantt-bar"></div>
+                          )}
+  
+                          {visibleYearMilestones.map(m => (
+                            <div 
+                              key={m.id} 
+                              className="milestone-marker selected"
+                              style={{ left: `${m.position}%` }}
+                              title={`${m.name}`}
+                            >
+                              ▲
+                              <span className="milestone-label">{m.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
+                    
+                    {/* Summary trailing cells for swimlanes (usually empty or placeholder PTRS) */}
+                    <div className={`hio-cell border-r border-b ${isEven ? 'bg-light' : ''}`} style={{ transition: 'background-color 0.2s' }}></div>
+                    <div className={`hio-cell border-r border-b ${isEven ? 'bg-light' : ''}`} style={{ transition: 'background-color 0.2s' }}></div>
+                    <div className={`hio-cell border-b ${isEven ? 'bg-light' : ''}`} style={{ transition: 'background-color 0.2s' }}>{index * 10 + 15}%</div>
+                  </div>
+                </Fragment>
               );
             })}
 
@@ -221,26 +261,55 @@ const Step2Timeline = () => {
       </section>
 
       <section>
-        <h2 style={{ marginBottom: '1rem', color: 'var(--accent-primary)' }}>Variance Commentary</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <h2 style={{ margin: 0, color: 'var(--accent-primary)' }}>Variance Commentary</h2>
+          <button 
+            className={`ai-button ${isAnalyzing ? 'pulse' : ''}`} 
+            onClick={analyzeFinanceData}
+            disabled={isAnalyzing}
+          >
+            {isAnalyzing ? "✨ Analyzing Data..." : "✨ Auto-Analyze with AI"}
+          </button>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div>
-            <div style={{ background: 'var(--accent-primary)', color: 'white', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>Actuals</div>
+            <div style={{ background: 'var(--accent-primary)', color: 'white', padding: '0.4rem 0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '4px 4px 0 0' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>Actuals</span>
+              <button 
+                className="ai-button" 
+                style={{ background: 'rgba(255,255,255,0.2)', boxShadow: 'none' }}
+                onClick={() => paraphraseText('actuals')}
+                disabled={isAnalyzing || !data.hioCommentary.actuals}
+              >
+                🪄 Paraphrase
+              </button>
+            </div>
             <textarea 
-              rows={3} 
-              placeholder="Describe main drivers for over-/under spend..."
+              rows={4} 
+              placeholder="Describe main drivers for over-/under spend on past stage..."
               value={data.hioCommentary.actuals}
               onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, actuals: e.target.value } })}
-              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#e2e8f0' }}
+              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#f8fafc', fontSize: '0.85rem' }}
             />
           </div>
           <div>
-            <div style={{ background: '#fcece8', color: '#000', padding: '0.5rem', textAlign: 'center', borderRadius: '4px 4px 0 0' }}>Budget</div>
+            <div style={{ background: '#fcece8', color: '#000', padding: '0.4rem 0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '4px 4px 0 0', border: '1px solid var(--border-light)' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>Budget</span>
+              <button 
+                className="ai-button" 
+                style={{ background: 'rgba(0,0,0,0.05)', color: '#333', boxShadow: 'none' }}
+                onClick={() => paraphraseText('budget')}
+                disabled={isAnalyzing || !data.hioCommentary.budget}
+              >
+                🪄 Paraphrase
+              </button>
+            </div>
             <textarea 
-              rows={3} 
-              placeholder="Describe variance vs budget"
+              rows={4} 
+              placeholder="Describe variance vs budget..."
               value={data.hioCommentary.budget}
               onChange={(e) => updateData({ hioCommentary: { ...data.hioCommentary, budget: e.target.value } })}
-              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#e2e8f0' }}
+              style={{ borderRadius: '0 0 4px 4px', borderTop: 'none', background: '#f8fafc', fontSize: '0.85rem' }}
             />
           </div>
         </div>
