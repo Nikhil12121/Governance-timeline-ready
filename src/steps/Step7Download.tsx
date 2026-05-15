@@ -242,19 +242,114 @@ const Step6Download = () => {
       });
 
       // ==========================================
-      // SLIDE 9: RISKS
+      // SLIDE 16: RISKS & STRATEGIES
       // ==========================================
       let slide9 = pptx.addSlide();
-      addSlideHeader(slide9, 'Risks & Dependencies', 'Critical Board Awareness');
       
-      (data.risks || []).forEach((risk, i) => {
-        const xPos = i % 2 === 0 ? 0.5 : 5.1;
-        const yPos = 1.3 + (Math.floor(i / 2) * 1.5);
-        if (i < 4) {
-          slide9.addText(risk.description || 'Risk', { x: xPos, y: yPos, w: 4.4, h: 0.3, fill: { color: risk.impact === 'High' ? 'FEE2E2' : 'FEF3C7' }, fontSize: 10, bold: true });
-          slide9.addText(`Impact: ${risk.impact || 'N/A'}\nMitigation: ${risk.mitigation || ''}`, { x: xPos, y: yPos + 0.35, w: 4.4, h: 0.8, fontSize: 9, color: '334155', border: { pt: 0.5, color: 'E2E8F0' } });
-        }
+      // Top left CSI
+      slide9.addText('CSI External Use', { x: 0.5, y: 0.2, w: 2, h: 0.2, fontSize: 8, color: '64748B' });
+      // Triangle
+      slide9.addShape('triangle', { x: 0.2, y: 0.5, w: 0.15, h: 0.2, fill: { color: 'F04E23' }, rotate: 90 });
+      // Title
+      slide9.addText('Important Risks and Mitigation Strategies', { x: 0.5, y: 0.45, w: 8, h: 0.4, fontSize: 22, color: 'F04E23', bold: false, fontFace: 'Arial' });
+      // Subtitle
+      slide9.addText('Include up to 5 top risks, their impacts, and strategies to address each', { x: 0.5, y: 0.85, w: 9, h: 0.3, fontSize: 14, color: '333333' });
+      
+      // Top Right Blue Box
+      slide9.addText('Pull directly from Project Risk Tool\nKey contact: Project Manager', { x: 6.5, y: 0, w: 3.5, h: 0.4, fill: { color: '0284C7' }, color: 'FFFFFF', fontSize: 8, italic: true, align: 'right' });
+
+      // Table Header
+      const compHeadOpt = { fill: { color: 'C53030' }, color: 'FFFFFF', bold: true, align: 'center', border: { pt: 1, color: 'E2E8F0' } };
+      const compHeaders = [
+        safeCell('', { border: { pt: 1, color: 'E2E8F0' } }),
+        ...(data.riskComparators || []).map(c => safeCell(c.assetName, compHeadOpt))
+      ];
+
+      // Table Rows
+      const compRows = [
+        { field: 'studyBrand', label: 'Study Brand' },
+        { field: 'population', label: 'Population' },
+        { field: 'enrolment', label: 'Enrolment' },
+        { field: 'randomisation', label: 'Randomisation' },
+        { field: 'treatmentDuration', label: 'Treatment duration' },
+        { field: 'endpoint', label: 'Endpoint' },
+        { field: 'otherComparators', label: '<<Other key comparators>>' }
+      ].map(r => [
+        safeCell(r.label, { bold: true, border: { pt: 1, color: 'E2E8F0' } }),
+        ...(data.riskComparators || []).map(c => safeCell(c[r.field as keyof typeof c] || '', { border: { pt: 1, color: 'E2E8F0' } }))
+      ]);
+
+      slide9.addTable([compHeaders, ...compRows], { 
+        x: 0.5, y: 1.5, w: 9, rowH: 0.4, fontSize: 10, border: { pt: 1, color: 'F04E23' } 
       });
+
+
+
+      // Logo footer
+      slide9.addText('GSK', { x: 8.8, y: 5.1, w: 1, h: 0.4, fontSize: 24, bold: true, color: 'F04E23', align: 'right' });
+      slide9.addText('CSI External Use', { x: 8.8, y: 5.4, w: 1, h: 0.2, fontSize: 8, color: '64748B', align: 'right' });
+      slide9.addText('16', { x: 0.5, y: 5.4, w: 0.5, h: 0.2, fontSize: 8, color: '64748B' });
+
+      // ==========================================
+      // SLIDE 10: IES Template - Executive Summary
+      // ==========================================
+      let slide10 = pptx.addSlide();
+      
+      // Triangle and Title
+      slide10.addShape('triangle', { x: 0.2, y: 0.5, w: 0.15, h: 0.2, fill: { color: 'F04E23' }, rotate: 90 });
+      slide10.addText('IES Template - Executive Summary', { x: 0.5, y: 0.45, w: 8, h: 0.4, fontSize: 22, color: 'F04E23', bold: false, fontFace: 'Arial' });
+      slide10.addText('Key unmet needs & claims overview', { x: 0.5, y: 0.85, w: 9, h: 0.3, fontSize: 14, color: '111111' });
+
+      // Diagram Top Right
+      slide10.addText('TPP     →     IES     ↔', { x: 6, y: 0.4, w: 2, h: 0.4, fontSize: 10, bold: true, color: '333333' });
+      slide10.addShape('rect', { x: 8, y: 0.2, w: 1.5, h: 0.8, fill: { color: 'FCE4D6' }, line: { color: 'F04E23', width: 1 } });
+      slide10.addText('Clinical development plan\nGlobal Epi plan\nData generation plan', { x: 8, y: 0.2, w: 1.5, h: 0.8, fontSize: 7, color: '333333', align: 'center' });
+
+      // Top Table (Indication / TPP Alignment)
+      const topHeadOpt = { fill: { color: '004B9B' }, color: 'FFFFFF', bold: true, border: { pt: 1, color: 'FFFFFF' }, fontSize: 10 };
+      const topRows = [
+        [safeCell('Indication', topHeadOpt), safeCell('TPP alignment', topHeadOpt)],
+        [safeCell(data.iesData?.indication || '', { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 10 }), 
+         safeCell(data.iesData?.tppAlignment || '', { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 10 })]
+      ];
+      slide10.addTable(topRows, { x: 0.5, y: 1.4, w: 6, rowH: 0.3 });
+
+      // PALT alignment date
+      slide10.addShape('rect', { x: 6.8, y: 1.4, w: 2.7, h: 0.6, fill: { color: 'FCE4D6' } });
+      slide10.addText('PALT alignment date: ' + (data.iesData?.paltDate || ''), { x: 6.8, y: 1.4, w: 2.7, h: 0.6, fontSize: 10, align: 'center', color: '111111' });
+
+      // Main Table
+      const mainHeadOpt = { fill: { color: '004B9B' }, color: 'FFFFFF', bold: true, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8, align: 'left', valign: 'top' };
+      const mainHeader = [
+        safeCell('Strategic Pillars', mainHeadOpt),
+        safeCell('Which TPP (or SSOs) aspect will the evidence support', mainHeadOpt),
+        safeCell('Main stakeholder (who will use the evidence)', mainHeadOpt),
+        safeCell('Type of evidence (CT, Observational...)', mainHeadOpt),
+        safeCell('Priority (H,M, L)', mainHeadOpt),
+        safeCell('Function generating the evidence', mainHeadOpt),
+        safeCell('When is it needed to be most effective', mainHeadOpt)
+      ];
+
+      const mainRows = (data.iesData?.rows || []).map(row => [
+        safeCell(row.pillar, { fill: { color: 'B4B4D5' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8, bold: true }),
+        safeCell(row.tppAspect, { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8 }),
+        safeCell(row.stakeholder, { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8 }),
+        safeCell(row.evidenceType, { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8 }),
+        safeCell(row.priority, { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8, align: 'center' }),
+        safeCell(row.functionGenerating, { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8 }),
+        safeCell(row.whenNeeded, { fill: { color: 'E6E6FA' }, border: { pt: 1, color: 'FFFFFF' }, fontSize: 8 })
+      ]);
+
+      slide10.addTable([mainHeader, ...mainRows], { x: 0.8, y: 2.2, w: 8.7, rowH: 0.5, border: { pt: 1, color: 'FFFFFF' } });
+
+      // Rotated text
+      slide10.addShape('rect', { x: -0.8, y: 3.5, w: 3, h: 0.3, fill: { color: 'FEF08A' }, border: { pt: 1, color: 'FFFFFF' }, rotate: 270 });
+      slide10.addText('Example (illustrative)         Description', { x: -0.8, y: 3.5, w: 3, h: 0.3, fontSize: 8, bold: true, align: 'center', rotate: 270 });
+
+      // Footer
+      slide10.addText('GSK', { x: 8.8, y: 5.1, w: 1, h: 0.4, fontSize: 24, bold: true, color: 'F04E23', align: 'right' });
+      slide10.addText('CSI External Use', { x: 8.8, y: 5.4, w: 1, h: 0.2, fontSize: 8, color: '64748B', align: 'right' });
+      slide10.addText('13', { x: 0.5, y: 5.4, w: 0.5, h: 0.2, fontSize: 8, color: '64748B' });
 
       await pptx.writeFile({ fileName: `${data.projectId || 'Project'}_Governance_Deck.pptx` });
 

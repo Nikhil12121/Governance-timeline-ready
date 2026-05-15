@@ -4,8 +4,9 @@ import Step1Inputs from './steps/Step1Inputs';
 import Step2Timeline from './steps/Step2Timeline';
 import Step3Resourcing from './steps/Step3Resourcing';
 import Step4Risks from './steps/Step4Risks';
-import Step5Preview from './steps/Step5Preview';
-import Step6Download from './steps/Step6Download';
+import Step5IES from './steps/Step5IES';
+import Step6Preview from './steps/Step6Preview';
+import Step7Download from './steps/Step7Download';
 
 function AppContent() {
   const { currentStep, setCurrentStep } = useDeck();
@@ -25,8 +26,9 @@ function AppContent() {
           {currentStep === 2 && <Step2Timeline />}
           {currentStep === 3 && <Step3Resourcing />}
           {currentStep === 4 && <Step4Risks />}
-          {currentStep === 5 && <Step5Preview />}
-          {currentStep === 6 && <Step6Download />}
+          {currentStep === 5 && <Step5IES />}
+          {currentStep === 6 && <Step6Preview />}
+          {currentStep === 7 && <Step7Download />}
         </div>
       </main>
 
@@ -40,10 +42,10 @@ function AppContent() {
         </button>
         <button 
           className="btn btn-primary" 
-          disabled={currentStep === 6}
+          disabled={currentStep === 7}
           onClick={() => setCurrentStep(currentStep + 1)}
         >
-          {currentStep === 5 ? 'Continue to Finalize' : 'Next Step'}
+          {currentStep === 6 ? 'Continue to Finalize' : 'Next Step'}
         </button>
       </footer>
     </div>

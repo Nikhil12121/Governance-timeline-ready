@@ -7,8 +7,9 @@ const steps = [
   { id: 2, name: 'Timeline & HIO' },
   { id: 3, name: 'Resourcing' },
   { id: 4, name: 'Risk & Resilience' },
-  { id: 5, name: 'Deck Preview' },
-  { id: 6, name: 'Download' }
+  { id: 5, name: 'IES Template' },
+  { id: 6, name: 'Deck Preview' },
+  { id: 7, name: 'Download' }
 ];
 
 export const Stepper = () => {

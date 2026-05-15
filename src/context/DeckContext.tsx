@@ -38,6 +38,36 @@ export type Risk = {
   mitigation: string;
 };
 
+export type RiskComparatorColumn = {
+  id: string;
+  assetName: string;
+  studyBrand: string;
+  population: string;
+  enrolment: string;
+  randomisation: string;
+  treatmentDuration: string;
+  endpoint: string;
+  otherComparators: string;
+};
+
+export type IESRow = {
+  id: string;
+  pillar: string;
+  tppAspect: string;
+  stakeholder: string;
+  evidenceType: string;
+  priority: string;
+  functionGenerating: string;
+  whenNeeded: string;
+};
+
+export type IESData = {
+  indication: string;
+  tppAlignment: string;
+  paltDate: string;
+  rows: IESRow[];
+};
+
 export type ValueCreationItem = {
   id: string;
   metric: string;
@@ -111,6 +141,9 @@ export type GovernanceData = {
   financials: FinancialRow[];
   resourcingData: ResourcingRow[];
   risks: Risk[];
+  riskComparators: RiskComparatorColumn[];
+  iesData: IESData;
+  keyDependencies: string;
   hioCommentary: {
     actuals: string;
     budget: string;
@@ -236,6 +269,24 @@ const initialData: GovernanceData = {
     { id: 'r1', description: 'Supply chain delay for API', impact: 'High', mitigation: 'Second source vendor onboarded' },
     { id: 'r2', description: 'Regulatory submission timeline shift', impact: 'Medium', mitigation: 'Early engagement with FDA planned' }
   ],
+  riskComparators: [
+    { id: 'rc1', assetName: '(asset)', studyBrand: '', population: '', enrolment: '', randomisation: '', treatmentDuration: '', endpoint: '', otherComparators: '' },
+    { id: 'rc2', assetName: '(asset)', studyBrand: '', population: '', enrolment: '', randomisation: '', treatmentDuration: '', endpoint: '', otherComparators: '' },
+    { id: 'rc3', assetName: '(asset)', studyBrand: '', population: '', enrolment: '', randomisation: '', treatmentDuration: '', endpoint: '', otherComparators: '' },
+    { id: 'rc4', assetName: '(asset)', studyBrand: '', population: '', enrolment: '', randomisation: '', treatmentDuration: '', endpoint: '', otherComparators: '' },
+    { id: 'rc5', assetName: '(asset)', studyBrand: '', population: '', enrolment: '', randomisation: '', treatmentDuration: '', endpoint: '', otherComparators: '' }
+  ],
+  iesData: {
+    indication: 'NSCLC 1st Line',
+    tppAlignment: 'T790M resistant population',
+    paltDate: 'XXXX',
+    rows: [
+      { id: 'ies1', pillar: 'Strategic Pillar 1: Evidence to support use in immunocompromised patients', tppAspect: 'Safety and tolerability in vulnerable pop', stakeholder: 'Regulators, Payers', evidenceType: 'CT, Observational', priority: 'H', functionGenerating: 'Clinical', whenNeeded: 'Phase III Readout' },
+      { id: 'ies2', pillar: 'Strategic Pillar 2: Broaden label to early-stage adjuvant setting', tppAspect: 'Improved DFS over SoC', stakeholder: 'Clinicians, Payers', evidenceType: 'CT', priority: 'H', functionGenerating: 'Clinical', whenNeeded: 'Launch + 2 yrs' },
+      { id: 'ies3', pillar: 'Strategic Pillar 3: Real-world evidence on CNS metastases prevention', tppAspect: 'CNS efficacy claims', stakeholder: 'Clinicians, Patients', evidenceType: 'Observational', priority: 'M', functionGenerating: 'Epidemiology', whenNeeded: 'Launch + 1 yr' }
+    ]
+  },
+  keyDependencies: 'Dependency on shared resource pool in Asia (Clinical Ops) and regulatory approval of the Phase II protocol amendment.',
   hioCommentary: {
     actuals: 'Strategic investment in early-stage clinical milestones led to marginal overspends in 2024, which have been effectively mitigated by operational cost-savings identified in the North American supply chain.',
     budget: 'The current budget trajectory aligns with the board-approved forecast, with variances primarily driven by phasing shifts in clinical supply and external partner milestones.'

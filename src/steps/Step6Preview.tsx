@@ -1019,52 +1019,198 @@ const Step5Preview = () => {
         </div>
       </div>
     ),
-    // Slide 9: Risks & Dependencies
+    // Slide 9/16: Important Risks and Mitigation Strategies
     (
       <div style={slideStyle} key="slide6">
-        {/* Professional PPT Header */}
-        <div style={{ ...headerStyle, borderBottom: 'none', padding: '1.5rem 2rem 0.5rem' }}>
-          <h2 style={{ margin: 0, color: '#000', fontSize: '1.8rem', fontWeight: 600 }}>
-            Risks & Dependencies
+        {/* Top left CSI and Triangle */}
+        <div style={{ position: 'absolute', top: '1rem', left: '0', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ fontSize: '0.65rem', color: '#64748B', marginLeft: '1.5rem', marginBottom: '0.2rem' }}>
+            CSI External Use
+          </div>
+          <div style={{ 
+            width: 0, height: 0, 
+            borderTop: '10px solid transparent', 
+            borderBottom: '10px solid transparent', 
+            borderLeft: '15px solid #F04E23'
+          }}></div>
+        </div>
+
+        {/* Top Right Blue Box */}
+        <div style={{ position: 'absolute', top: '0', right: '0', background: '#0284C7', color: 'white', padding: '0.5rem 1rem', fontSize: '0.65rem', textAlign: 'right', fontStyle: 'italic' }}>
+          <div>Pull directly from Project Risk Tool</div>
+          <div>Key contact: Project Manager</div>
+        </div>
+
+        {/* Container for main content */}
+        <div style={{ padding: '2.5rem 1.5rem 1.5rem 1.5rem', display: 'flex', flexDirection: 'column', height: '100%', position: 'relative' }}>
+          
+          <h2 style={{ margin: '0 0 0.5rem 0', color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+            Important Risks and Mitigation Strategies
           </h2>
-          <span style={{ fontSize: '0.9rem', color: '#64748B', fontWeight: 500 }}>Critical Board Awareness</span>
+          <p style={{ margin: '0 0 1rem 0', color: '#334155', fontSize: '1.1rem', fontWeight: 300 }}>
+            Include up to 5 top risks, their impacts, and strategies to address each
+          </p>
+          
+          <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+            <table style={{ width: '100%', height: '100%', borderCollapse: 'collapse', border: '1px solid #F04E23', tableLayout: 'fixed' }}>
+              <thead>
+                <tr>
+                  <th style={{ width: '20%', borderRight: '1px solid #e2e8f0' }}></th>
+                  {data.riskComparators.map((col) => (
+                    <th key={col.id} style={{ width: '16%', background: '#C53030', color: 'white', borderRight: '1px solid #e2e8f0', padding: '0.25rem', fontWeight: 600, fontSize: '0.8rem' }}>
+                      {col.assetName}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { field: 'studyBrand', label: 'Study Brand' },
+                  { field: 'population', label: 'Population' },
+                  { field: 'enrolment', label: 'Enrolment' },
+                  { field: 'randomisation', label: 'Randomisation' },
+                  { field: 'treatmentDuration', label: 'Treatment duration' },
+                  { field: 'endpoint', label: 'Endpoint' },
+                  { field: 'otherComparators', label: '<<Other key comparators>>' }
+                ].map((row) => (
+                  <tr key={row.field}>
+                    <td style={{ padding: '0.2rem 0.5rem', border: '1px solid #e2e8f0', fontSize: '0.8rem', fontWeight: 500, color: '#000', verticalAlign: 'top' }}>
+                      {row.label}
+                    </td>
+                    {data.riskComparators.map((col) => (
+                      <td key={col.id} style={{ padding: '0.2rem 0.5rem', border: '1px solid #e2e8f0', fontSize: '0.75rem', color: '#333', verticalAlign: 'top' }}>
+                        {col[row.field as keyof typeof col]}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+
+          </div>
+        </div>
+
+        {/* Bottom Right Logo */}
+        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right' }}>
+          <div style={{ color: '#F04E23', fontSize: '1.5rem', fontWeight: 800, fontFamily: 'system-ui', lineHeight: 1 }}>GSK</div>
+          <div style={{ color: '#666', fontSize: '0.55rem', marginTop: '2px' }}>CSI External Use</div>
         </div>
         
-        {/* GSK Accent Line */}
-        <div style={{ height: '4px', width: '60px', background: '#F04E23', margin: '0 2rem 1.5rem' }}></div>
-
-        <div style={{ ...contentStyle, padding: '0 2rem 2rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1.5rem' }}>
-            {data.risks.slice(0, 4).map(risk => (
-              <div key={risk.id} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ background: risk.impact === 'High' ? '#fee2e2' : risk.impact === 'Medium' ? '#fef3c7' : '#dcfce7', padding: '0.75rem 1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1e293b' }}>{risk.description || "Project Risk"}</span>
-                  <span style={{ 
-                    fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px',
-                    background: risk.impact === 'High' ? '#ef4444' : risk.impact === 'Medium' ? '#f59e0b' : '#10b981',
-                    color: 'white'
-                  }}>{risk.impact}</span>
-                </div>
-                <div style={{ padding: '1rem', flex: 1 }}>
-                  <p style={{ fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, marginBottom: '0.5rem' }}>Mitigation Plan</p>
-                  <p style={{ fontSize: '0.85rem', color: '#334155', lineHeight: '1.4' }}>{risk.mitigation || "Ongoing monitoring and assessment..."}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginTop: 'auto', background: '#F1F5F9', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '1rem' }}>
-             <h4 style={{ fontSize: '0.8rem', color: '#0F172A', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-               <span>⛓</span> Key Dependencies
-             </h4>
-             <p style={{ fontSize: '0.8rem', color: '#475569' }}>
-               Dependency on shared resource pool in Asia (Clinical Ops) and regulatory approval of the Phase II protocol amendment.
-             </p>
-          </div>
-        </div>
         {/* Page Number */}
         <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
-          9
+          16
+        </div>
+      </div>
+    ),
+    // Slide 10: IES Template - Executive Summary
+    (
+      <div style={slideStyle} key="slide_ies">
+        
+        {/* Header Section */}
+        <div style={{ position: 'absolute', top: '1rem', left: '1rem', right: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ 
+                width: 0, height: 0, 
+                borderTop: '12px solid transparent', 
+                borderBottom: '12px solid transparent', 
+                borderLeft: '18px solid #F04E23', 
+                marginRight: '8px' 
+              }}></div>
+              <h2 style={{ margin: 0, color: '#F04E23', fontSize: '1.8rem', fontWeight: 300, fontFamily: 'system-ui, sans-serif' }}>
+                IES Template - Executive Summary
+              </h2>
+            </div>
+            <h3 style={{ margin: '0.2rem 0 0 1.6rem', color: '#111', fontSize: '1.4rem', fontWeight: 400 }}>
+              Key unmet needs & claims overview
+            </h3>
+          </div>
+
+          {/* Top Right Diagram */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.65rem', fontWeight: 600 }}>
+            <div style={{ background: '#f1f5f9', padding: '0.4rem 0.8rem', color: '#333' }}>TPP</div>
+            <div style={{ color: '#F04E23' }}>→</div>
+            <div style={{ background: '#f1f5f9', padding: '0.4rem 0.8rem', color: '#333' }}>IES</div>
+            <div style={{ color: '#F04E23' }}>↔</div>
+            <div style={{ background: '#FCE4D6', border: '1px solid #F04E23', padding: '0.4rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+              <div style={{ background: 'white', padding: '0.2rem 0.4rem', textAlign: 'center' }}>Clinical development plan</div>
+              <div style={{ background: 'white', padding: '0.2rem 0.4rem', textAlign: 'center' }}>Global Epi plan</div>
+              <div style={{ background: 'white', padding: '0.2rem 0.4rem', textAlign: 'center' }}>Data generation plan</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Content Container */}
+        <div style={{ padding: '6rem 1rem 2rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', height: '100%' }}>
+          
+          {/* Top Table */}
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'stretch' }}>
+            <table style={{ flex: 1, borderCollapse: 'collapse', fontSize: '0.75rem', tableLayout: 'fixed' }}>
+              <thead>
+                <tr>
+                  <th style={{ background: '#004B9B', color: 'white', padding: '0.3rem', textAlign: 'left', border: '1px solid white', width: '30%' }}>Indication</th>
+                  <th style={{ background: '#004B9B', color: 'white', padding: '0.3rem', textAlign: 'left', border: '1px solid white' }}>TPP alignment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ background: '#E6E6FA', padding: '0.3rem', border: '1px solid white' }}>{data.iesData.indication}</td>
+                  <td style={{ background: '#E6E6FA', padding: '0.3rem', border: '1px solid white' }}>{data.iesData.tppAlignment}</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div style={{ background: '#FCE4D6', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 2rem', fontSize: '0.85rem' }}>
+              <span>PALT alignment date: <span style={{ background: '#FEF08A', fontWeight: 600 }}>{data.iesData.paltDate}</span></span>
+            </div>
+          </div>
+
+          {/* Main Table */}
+          <div style={{ flex: 1, position: 'relative' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.7rem', tableLayout: 'fixed' }}>
+              <thead>
+                <tr style={{ background: '#004B9B', color: 'white' }}>
+                  <th style={{ padding: '0.4rem', border: '1px solid white', textAlign: 'left', width: '25%' }}>Strategic Pillars</th>
+                  <th style={{ padding: '0.4rem', border: '1px solid white', textAlign: 'left' }}>Which TPP (or SSOs) aspect will the evidence support</th>
+                  <th style={{ padding: '0.4rem', border: '1px solid white', textAlign: 'left' }}>Main stakeholder (who will use the evidence)</th>
+                  <th style={{ padding: '0.4rem', border: '1px solid white', textAlign: 'left' }}>Type of evidence (CT, Observational...)</th>
+                  <th style={{ padding: '0.4rem', border: '1px solid white', textAlign: 'left', width: '60px' }}>Priority (H,M, L)</th>
+                  <th style={{ padding: '0.4rem', border: '1px solid white', textAlign: 'left' }}>Function generating the evidence</th>
+                  <th style={{ padding: '0.4rem', border: '1px solid white', textAlign: 'left' }}>When is it needed to be most effective</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.iesData.rows.map((row, i) => (
+                  <tr key={row.id}>
+                    <td style={{ background: '#B4B4D5', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top', color: '#111', fontWeight: 500 }}>{row.pillar}</td>
+                    <td style={{ background: '#E6E6FA', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top' }}>{row.tppAspect}</td>
+                    <td style={{ background: '#E6E6FA', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top' }}>{row.stakeholder}</td>
+                    <td style={{ background: '#E6E6FA', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top' }}>{row.evidenceType}</td>
+                    <td style={{ background: '#E6E6FA', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top', textAlign: 'center' }}>{row.priority}</td>
+                    <td style={{ background: '#E6E6FA', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top' }}>{row.functionGenerating}</td>
+                    <td style={{ background: '#E6E6FA', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top' }}>{row.whenNeeded}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            
+            {/* Rotated text */}
+            <div style={{ position: 'absolute', left: '-1rem', top: '2rem', height: 'calc(100% - 2rem)', width: '1rem', background: '#FEF08A', border: '1px solid white', writingMode: 'vertical-rl', transform: 'rotate(180deg)', textAlign: 'center', fontSize: '0.5rem', fontWeight: 600, padding: '0.5rem 0' }}>
+              Example (illustrative) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Description
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Right Logo */}
+        <div style={{ position: 'absolute', bottom: '1rem', right: '1.5rem', textAlign: 'right' }}>
+          <div style={{ color: '#F04E23', fontSize: '1.5rem', fontWeight: 800, fontFamily: 'system-ui', lineHeight: 1 }}>GSK</div>
+          <div style={{ color: '#666', fontSize: '0.55rem', marginTop: '2px' }}>CSI External Use</div>
+        </div>
+        
+        {/* Page Number */}
+        <div style={{ position: 'absolute', bottom: '1rem', left: '1.5rem', fontSize: '0.65rem', color: '#666' }}>
+          13
         </div>
       </div>
     )
