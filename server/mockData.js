@@ -73,6 +73,82 @@ const mockData = {
     { label: 'IPE+EPE vs Act/Budget (£M)', data: { 2023: '-£5.2m', 2024: '+£8.5m', 2025: '-£2.1m', 2026: '-£1.4m', 2027: '+£0.5m', 2028: '+£1.2m' } },
     { label: 'EPE vs Act/Budget (£M)', data: { 2023: '-£3.1m', 2024: '+£6.2m', 2025: '-£1.5m', 2026: '-£0.8m', 2027: '+£0.2m', 2028: '+£0.8m' } }
   ],
+  ganttComments: [
+    { id: 'gc1', text: 'Consider accelerating Phase III to match competitor timelines', year: 2025, swimlane: 'Clinical Development', x: 20, y: 10 }
+  ],
+  lifecycleGroups: [
+    { groupName: 'CMC & clinical', swimlanes: ['row0', 'row1'] },
+    { groupName: 'Primary Indication (Rheumatoid Arthritis)', swimlanes: ['row2', 'row3'] },
+    { groupName: 'Osteoarthritis', swimlanes: ['row4', 'row5', 'row6', 'row7', 'row8'] },
+    { groupName: 'IBD - UC', swimlanes: ['row9', 'row10'] }
+  ],
+  lifecycleBars: [
+    { id: 'b1', swimlane: 'row0', name: 'CMC development & Ph3 manufacture', startYear: 2023, endYear: 2025, colorClass: 'outline-red', rowIdx: 0 },
+    { id: 'b2', swimlane: 'row1', name: 'CMC process characterisation, comms supplies, and registration support', startYear: 2024, endYear: 2027, colorClass: 'outline-red', rowIdx: 1 },
+    { id: 'b3', swimlane: 'row2', name: 'RA Ph 2b dose range study', startYear: 2023, endYear: 2025, colorClass: 'outline-blue', rowIdx: 2 },
+    { id: 'b4', swimlane: 'row3', name: 'RA Ph 3 studies', startYear: 2025, endYear: 2028, colorClass: 'outline-blue', rowIdx: 3 },
+    { id: 'b5', swimlane: 'row4', name: 'HOA Ph 2a study', startYear: 2023, endYear: 2025, colorClass: 'outline-blue', rowIdx: 4 },
+    { id: 'b6', swimlane: 'row5', name: 'HOA Ph 2b study', startYear: 2025, endYear: 2027, colorClass: 'outline-blue', rowIdx: 5 },
+    { id: 'b7', swimlane: 'row6', name: 'HOA Ph 3 studies', startYear: 2027, endYear: 2030, colorClass: 'outline-blue', rowIdx: 6 },
+    { id: 'b8', swimlane: 'row7', name: 'Poly-articular OA Ph 3 studies', startYear: 2027, endYear: 2031, colorClass: 'outline-blue', rowIdx: 7 },
+    { id: 'b9', swimlane: 'row9', name: 'Ph 2a POC starts', startYear: 2025, endYear: 2027, colorClass: 'outline-blue', rowIdx: 9 },
+    { id: 'b10', swimlane: 'row10', name: 'Ph 2b/3 programme', startYear: 2027, endYear: 2030, colorClass: 'outline-blue', rowIdx: 10 }
+  ],
+  lifecycleMilestones: [
+    { id: 'lm1', name: 'P2 FSFD', year: 2023, isSelected: true, swimlane: 'row2', position: 10 },
+    { id: 'lm2', name: 'C2FD', year: 2024, isSelected: true, swimlane: 'row2', position: 80 },
+    { id: 'lm3', name: 'P3 FSFD', year: 2025, isSelected: true, swimlane: 'row3', position: 20 },
+    { id: 'lm4', name: 'C2FHL', year: 2028, isSelected: true, swimlane: 'row3', position: 10 },
+    { id: 'lm5', name: 'File', year: 2029, isSelected: true, swimlane: 'row3', position: 50 },
+    { id: 'lm6', name: 'Launch', year: 2030, isSelected: true, swimlane: 'row3', position: 20 },
+    { id: 'lm7', name: 'C2RX', year: 2024, isSelected: true, swimlane: 'row4', position: 90 },
+    { id: 'lm8', name: 'C2FD', year: 2026, isSelected: true, swimlane: 'row5', position: 80 },
+    { id: 'lm9', name: 'C2FD', year: 2024, isSelected: true, swimlane: 'row9', position: 20 },
+    { id: 'lm10', name: 'C2RX/3', year: 2027, isSelected: true, swimlane: 'row10', position: 10 }
+  ],
+  scenarioPlans: [
+    {
+      id: 'scen1', name: 'Enable RT study early start. Launch 2028', ptrs: '30%', totalEpe: '£850M',
+      bars: [
+        { id: 'b1', name: 'RA Ph 2b dose range study', startYear: 2023, endYear: 2025 },
+        { id: 'b2', name: 'RA Ph 3 studies', startYear: 2026, endYear: 2028 }
+      ],
+      milestones: [
+        { id: 'sm1_1', name: 'P2b FSFD', year: 2023, isSelected: true, swimlane: 'scen1', position: 20, barId: 'b1', placement: 'top' },
+        { id: 'sm1_2', name: 'C2FD', year: 2024, isSelected: true, swimlane: 'scen1', position: 10, barId: 'b1', placement: 'top' },
+        { id: 'sm1_3', name: 'DPD IA', year: 2024, isSelected: true, swimlane: 'scen1', position: 80, barId: 'b1', placement: 'bottom' },
+        { id: 'sm1_4', name: '1° EP', year: 2025, isSelected: true, swimlane: 'scen1', position: 10, barId: 'b1', placement: 'bottom' },
+        { id: 'sm1_5', name: 'P3 Start', year: 2026, isSelected: true, swimlane: 'scen1', position: 10, barId: 'b2', placement: 'top' },
+        { id: 'sm1_6', name: 'C2FHL', year: 2027, isSelected: true, swimlane: 'scen1', position: 20, barId: 'b2', placement: 'top' },
+        { id: 'sm1_7', name: 'Launch', year: 2028, isSelected: true, swimlane: 'scen1', position: 60, barId: 'b2', placement: 'top' }
+      ]
+    },
+    {
+      id: 'scen2', name: 'Acceleration plan phase 2b/3 approach. Launch 2027', ptrs: '28%', totalEpe: '£920M',
+      bars: [
+        { id: 'b3', name: 'Seamless Ph 2b/3 study', startYear: 2023, endYear: 2027 }
+      ],
+      milestones: [
+        { id: 'sm2_1', name: 'P2 FSFD', year: 2023, isSelected: true, swimlane: 'scen2', position: 40, barId: 'b3', placement: 'top' },
+        { id: 'sm2_2', name: 'C2FD', year: 2024, isSelected: true, swimlane: 'scen2', position: 20, barId: 'b3', placement: 'top' },
+        { id: 'sm2_3', name: 'W52 IDMC', year: 2024, isSelected: true, swimlane: 'scen2', position: 50, barId: 'b3', placement: 'bottom' },
+        { id: 'sm2_4', name: 'Launch', year: 2027, isSelected: true, swimlane: 'scen2', position: 80, barId: 'b3', placement: 'top' }
+      ]
+    },
+    {
+      id: 'scen3', name: 'Delay indication until futility reached. Launch 2029', ptrs: '25%', totalEpe: '£780M',
+      bars: [
+        { id: 'b4', name: 'RA Ph 2b dose range study', startYear: 2023, endYear: 2025 },
+        { id: 'b5', name: 'RA Ph 3 studies', startYear: 2027, endYear: 2029 }
+      ],
+      milestones: [
+        { id: 'sm3_1', name: 'P2b FSFD', year: 2023, isSelected: true, swimlane: 'scen3', position: 60, barId: 'b4', placement: 'top' },
+        { id: 'sm3_2', name: 'Futility', year: 2024, isSelected: true, swimlane: 'scen3', position: 30, barId: 'b4', placement: 'bottom' },
+        { id: 'sm3_3', name: 'P3 Start', year: 2027, isSelected: true, swimlane: 'scen3', position: 10, barId: 'b5', placement: 'top' },
+        { id: 'sm3_4', name: 'Launch', year: 2029, isSelected: true, swimlane: 'scen3', position: 50, barId: 'b5', placement: 'top' }
+      ]
+    }
+  ],
   resourcingData: [
     {
       id: 'cmo', name: 'Chief Medical Office', isCategory: true,

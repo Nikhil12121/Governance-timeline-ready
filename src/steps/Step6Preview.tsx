@@ -1181,7 +1181,7 @@ const Step5Preview = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.iesData.rows.map((row, i) => (
+                {data.iesData.rows.map((row) => (
                   <tr key={row.id}>
                     <td style={{ background: '#B4B4D5', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top', color: '#111', fontWeight: 500 }}>{row.pillar}</td>
                     <td style={{ background: '#E6E6FA', padding: '0.4rem', border: '1px solid white', verticalAlign: 'top' }}>{row.tppAspect}</td>
