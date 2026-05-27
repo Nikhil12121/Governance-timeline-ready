@@ -7,6 +7,8 @@ export type Milestone = {
   swimlane: string;
   position: number; 
   isSelected: boolean;
+  barId?: string;
+  placement?: 'top' | 'bottom';
 };
 
 export type FinancialRow = {
@@ -113,6 +115,7 @@ export type ScenarioPlan = {
   name: string;
   ptrs: string;
   totalEpe: string;
+  bars?: { id: string; name: string; startYear: number; endYear: number }[];
   milestones: Milestone[];
 };
 

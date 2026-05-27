@@ -6,10 +6,7 @@ const Step2Timeline = () => {
   const { data, updateData } = useDeck();
   const [activeTab, setActiveTab] = useState<number>(1);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showMilestonesPanel, setShowMilestonesPanel] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [recalculating, setRecalculating] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
 
   // Comment pin states
   const [activeCommentPopover, setActiveCommentPopover] = useState<{ x: number, y: number } | null>(null);
@@ -407,7 +404,7 @@ const Step2Timeline = () => {
           ))}
           <div className="hio-cell hio-header-cell border-b text-center">Total [£m]</div>
 
-          {data.scenarioPlans.map((scen, idx) => (
+          {data.scenarioPlans.map((scen) => (
             <React.Fragment key={scen.id}>
               <div className="hio-row-contents" style={{ display: 'contents' }}>
                 {/* Scenario Name */}
@@ -455,8 +452,6 @@ const Step2Timeline = () => {
                       
                       const isTop = m.placement === 'top';
                       const topOffset = isTop ? '22px' : 'calc(100% - 22px)';
-                      const lineTop = isTop ? '22px' : '50%';
-                      const lineHeight = 'calc(50% - 22px)';
                       const colorClass = isTop ? 't1-marker' : 'm-color-blue';
                       
                       return (

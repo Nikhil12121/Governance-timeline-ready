@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Nikhil12121.github.io/antigravity-governance/",
+  "homepage": "https://Nikhil12121.github.io/Governance-timeline-ready/",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist -r https://github.com/Nikhil12121/Governance-timeline-ready.git",
     "dev:frontend": "vite",
     "dev:backend": "cd server && nodemon server.js",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
